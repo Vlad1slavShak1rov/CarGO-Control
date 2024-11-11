@@ -13,7 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Media.Animation;
 using System.Security;
-
+using CarGO_Control.DataBase;
+using System.Security.Cryptography;
 
 namespace CarGO_Control
 {
@@ -22,7 +23,7 @@ namespace CarGO_Control
         public SignUpWindow()
         {
             InitializeComponent();
-            
+
         }
 
         private void LoginLabelCheck(object sender, TextCompositionEventArgs e)
@@ -38,7 +39,7 @@ namespace CarGO_Control
 
         private void DriverCheck(object sender, RoutedEventArgs e)
         {
-            Animation("C:\\Users\\sakir\\source\\repos\\CarGO Control\\CarGO Control\\Resources\\bbsqIiUZ4M4tC561FZ8onewDagtf7gcsGhfyVLW4DygeqhSOB.jpg"); 
+            Animation("C:\\Users\\sakir\\source\\repos\\CarGO Control\\CarGO Control\\Resources\\bbsqIiUZ4M4tC561FZ8onewDagtf7gcsGhfyVLW4DygeqhSOB.jpg");
         }
         private void OperatorCheck(object sender, RoutedEventArgs e)
         {
@@ -47,7 +48,7 @@ namespace CarGO_Control
 
         private void SignUpButton_Click(object sender, RoutedEventArgs e)
         {
-            if(PassBoxTwo.Password != PassBoxOne.Password)
+            if (PassBoxTwo.Password != PassBoxOne.Password)
             {
                 SMB.ShowWarningMessageBox("У вас разные пароли!");
             }
@@ -57,7 +58,17 @@ namespace CarGO_Control
             }
             else if (LoginTextBox.Text != "" && PassBoxOne.Password.Length >= 5 && PassBoxTwo.Password.Length >= 5)
             {
-                SMB.SuccessfulMSG("Успешно!");
+                if (CheckPass())
+                {
+                    Registration();
+                    SMB.SuccessfulMSG("Успешно!");
+                }
+                else
+                {
+                    SMB.ShowWarningMessageBox("Ваш пароль небезопасен\nВаш пароль должен содержать хотя бы одну " +
+                        "заглавную букву\nДолжен иметь хотя бы одну цифру\nНе чередоваться: 1111, 00000 и т.п.");
+                    
+                }
             }
             else
             {
@@ -78,5 +89,70 @@ namespace CarGO_Control
             imgDisplay.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
         }
 
+        private void Registration()
+        {
+            string password = HashFunction();
+            int RoleID = 0;
+            if (OperatorRadioButton.IsChecked == true) RoleID = 0;
+            else if (DriverRadioButton.IsChecked == true) RoleID = 1;
+            using (var context = new CarGoDBContext())
+            {
+                var user = new Users
+                {
+                    Login = LoginTextBox.Text,
+                    Password = password,
+                    RoleID = RoleID,
+                };
+
+                context.Add(user);
+                context.SaveChanges();
+            }
+        }
+
+        private bool CheckPass() 
+        {
+            bool Upper = false, Number = false;
+
+            string password = PassBoxOne.Password;
+            foreach (char c in password)
+            {
+                if (char.IsUpper(c))
+                {
+                    Upper = true;
+                    break;
+                }
+                
+            }
+            foreach (char c in password)
+            {
+                if (char.IsNumber(c))
+                {
+                    Number = true;
+                    break;
+                }
+
+            }
+            if(!Upper || !Number) return false;
+
+            return true;
+        }
+
+        string HashFunction()
+        {
+            using (var hmac = new HMACSHA256())
+            {
+                byte[] salt = hmac.Key;
+                // Хеширование пароля
+                var pbkdf2 = new Rfc2898DeriveBytes(PassBoxOne.Password, salt, 100000);
+                byte[] hash = pbkdf2.GetBytes(32); // Получаем 32 байта хеша
+
+                // Объединяем соль и хеш в одну строку для хранения
+                byte[] hashBytes = new byte[hash.Length + salt.Length];
+                Array.Copy(salt, 0, hashBytes, 0, salt.Length);
+                Array.Copy(hash, 0, hashBytes, salt.Length, hash.Length);
+
+                return Convert.ToBase64String(hashBytes); // Возвращаем хеш в виде строки
+            }
+        }
     }
 }
