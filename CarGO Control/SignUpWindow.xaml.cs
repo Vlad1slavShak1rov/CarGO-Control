@@ -67,7 +67,6 @@ namespace CarGO_Control
                 {
                     SMB.ShowWarningMessageBox("Ваш пароль небезопасен\nВаш пароль должен содержать хотя бы одну " +
                         "заглавную букву\nДолжен иметь хотя бы одну цифру\nНе чередоваться: 1111, 00000 и т.п.");
-                    
                 }
             }
             else
@@ -91,7 +90,7 @@ namespace CarGO_Control
 
         private void Registration()
         {
-            string password = HashFunction();
+            string password = HashFunction.HashPassword(PassBoxOne.Password);
             int RoleID = 0;
             if (OperatorRadioButton.IsChecked == true) RoleID = 0;
             else if (DriverRadioButton.IsChecked == true) RoleID = 1;
@@ -137,22 +136,5 @@ namespace CarGO_Control
             return true;
         }
 
-        string HashFunction()
-        {
-            using (var hmac = new HMACSHA256())
-            {
-                byte[] salt = hmac.Key;
-                // Хеширование пароля
-                var pbkdf2 = new Rfc2898DeriveBytes(PassBoxOne.Password, salt, 100000);
-                byte[] hash = pbkdf2.GetBytes(32); // Получаем 32 байта хеша
-
-                // Объединяем соль и хеш в одну строку для хранения
-                byte[] hashBytes = new byte[hash.Length + salt.Length];
-                Array.Copy(salt, 0, hashBytes, 0, salt.Length);
-                Array.Copy(hash, 0, hashBytes, salt.Length, hash.Length);
-
-                return Convert.ToBase64String(hashBytes); // Возвращаем хеш в виде строки
-            }
-        }
     }
 }

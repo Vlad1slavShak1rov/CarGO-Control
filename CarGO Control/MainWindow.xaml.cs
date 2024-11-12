@@ -11,6 +11,7 @@ using System.Windows.Shapes;
 using System.Security;
 using System.Runtime.InteropServices;
 using System.Windows.Controls.Primitives;
+using CarGO_Control.DataBase;
 
 namespace CarGO_Control
 {
@@ -30,35 +31,12 @@ namespace CarGO_Control
         {
             if (LoginBox.Text != string.Empty && PassBox.Password.Length >= 5)
             {
-                //TODO ПРВОЕРКА ПАРОЛЯ
-                /*
-                 * public static bool VerifyPassword(string password, string storedHash)
-{
-    byte[] hashBytes = Convert.FromBase64String(storedHash);
-    
-    // Извлечение соли из сохраненного хеша
-    byte[] salt = new byte[32]; // Размер соли
-    Array.Copy(hashBytes, 0, salt, 0, salt.Length);
-    
-    // Хеширование введенного пароля с использованием извлеченной соли
-    using (var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 100000))
-    {
-        byte[] hash = pbkdf2.GetBytes(32); // Получаем 32 байта хеша
-
-        // Сравнение хеша введенного пароля с сохраненным
-        for (int i = 0; i < hash.Length; i++)
-        {
-            if (hash[i] != hashBytes[i + salt.Length])
-            {
-                return false; // Пароль неверный
-            }
-        }
-    }
-    
-    return true; // Пароль верный
-}
-
-                 */
+                if (Authorization())
+                {
+                    SMB.SuccessfulMSG("Успешно!");
+                    //TODO
+                }
+                else SMB.ShowWarningMessageBox("Неправильно введен логин и/или пароль");
             }
             else if (PassBox.Password.Length < 5) SMB.ShowWarningMessageBox("Ваш пароль состоит из менее 5 символов");
             else SMB.ShowWarningMessageBox("У вас есть незаполненные поля!");
@@ -79,8 +57,7 @@ namespace CarGO_Control
                 e.Handled = true;
             }
 
-        }
-        
+        }       
         private void ToggleButton_Click(object sender, RoutedEventArgs e)
         {
            
@@ -102,6 +79,20 @@ namespace CarGO_Control
             _isShowing = !_isShowing;
         }
 
+        private bool Authorization()
+        {
+            using (var context = new CarGoDBContext())
+            {
+                string search = LoginBox.Text;
+                var users = context.Users.FirstOrDefault(p => p.Login == search);
+
+                if (users == null || users.Login != LoginBox.Text) return false;
+
+                if (users.Password == null || !HashFunction.VerifyPassword(PassBox.Password, users.Password)) return false;
+
+                return true;
+            }
+        }
 
     }
 }
