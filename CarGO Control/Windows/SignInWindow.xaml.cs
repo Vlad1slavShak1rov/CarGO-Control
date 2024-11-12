@@ -12,6 +12,7 @@ using System.Security;
 using System.Runtime.InteropServices;
 using System.Windows.Controls.Primitives;
 using CarGO_Control.DataBase;
+using CarGO_Control.Tools;
 
 namespace CarGO_Control
 {

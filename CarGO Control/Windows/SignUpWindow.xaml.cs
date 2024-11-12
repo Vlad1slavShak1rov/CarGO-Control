@@ -15,6 +15,7 @@ using System.Windows.Media.Animation;
 using System.Security;
 using CarGO_Control.DataBase;
 using System.Security.Cryptography;
+using CarGO_Control.Tools;
 
 namespace CarGO_Control
 {
