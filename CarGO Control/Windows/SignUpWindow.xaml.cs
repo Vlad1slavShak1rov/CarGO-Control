@@ -24,7 +24,6 @@ namespace CarGO_Control
         public SignUpWindow()
         {
             InitializeComponent();
-
         }
 
         private void LoginLabelCheck(object sender, TextCompositionEventArgs e)
@@ -49,31 +48,14 @@ namespace CarGO_Control
 
         private void SignUpButton_Click(object sender, RoutedEventArgs e)
         {
-            if (PassBoxTwo.Password != PassBoxOne.Password)
+            using (var context = new CarGoDBContext())
             {
-                SMB.ShowWarningMessageBox("У вас разные пароли!");
-            }
-            else if (PassBoxOne.Password.Length < 5 || PassBoxTwo.Password.Length < 5)
-            {
-                SMB.ShowWarningMessageBox("Пароли состоят из менее 5 символов");
-            }
-            else if (LoginTextBox.Text != "" && PassBoxOne.Password.Length >= 5 && PassBoxTwo.Password.Length >= 5)
-            {
-                if (CheckPass())
-                {
-                    Registration();
-                    SMB.SuccessfulMSG("Успешно!");
-                }
-                else
-                {
-                    SMB.ShowWarningMessageBox("Ваш пароль небезопасен\nВаш пароль должен содержать хотя бы одну " +
-                        "заглавную букву\nДолжен иметь хотя бы одну цифру\nНе чередоваться: 1111, 00000 и т.п.");
-                }
-            }
-            else
-            {
-                SMB.ShowWarningMessageBox("У вас есть незаполненные поля!");
-            }
+                var users = context.Users.
+                    FirstOrDefault(p => LoginTextBox.Text == p.Login);
+
+                if (users == null) Authorization();
+                else SMB.ShowWarningMessageBox("Пользователь с таким же логином уже зарегистрирован!");
+            } 
         }
 
         private void Animation(string path)
@@ -137,5 +119,33 @@ namespace CarGO_Control
             return true;
         }
 
+        private void Authorization()
+        {
+            if (PassBoxTwo.Password != PassBoxOne.Password)
+            {
+                SMB.ShowWarningMessageBox("У вас разные пароли!");
+            }
+            else if (PassBoxOne.Password.Length < 5 || PassBoxTwo.Password.Length < 5)
+            {
+                SMB.ShowWarningMessageBox("Пароли состоят из менее 5 символов");
+            }
+            else if (LoginTextBox.Text != "" && PassBoxOne.Password.Length >= 5 && PassBoxTwo.Password.Length >= 5)
+            {
+                if (CheckPass())
+                {
+                    Registration();
+                    SMB.SuccessfulMSG("Успешно!");
+                }
+                else
+                {
+                    SMB.ShowWarningMessageBox("Ваш пароль небезопасен\nВаш пароль должен содержать хотя бы одну " +
+                        "заглавную букву\nДолжен иметь хотя бы одну цифру\nНе чередоваться: 1111, 00000 и т.п.");
+                }
+            }
+            else
+            {
+                SMB.ShowWarningMessageBox("У вас есть незаполненные поля!");
+            }
+        }
     }
 }
