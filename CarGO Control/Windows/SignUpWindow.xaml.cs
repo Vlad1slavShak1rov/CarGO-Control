@@ -16,6 +16,7 @@ using System.Security;
 using CarGO_Control.DataBase;
 using System.Security.Cryptography;
 using CarGO_Control.Tools;
+using CarGO_Control.Windows;
 
 namespace CarGO_Control
 {
@@ -25,7 +26,7 @@ namespace CarGO_Control
         {
             InitializeComponent();
         }
-
+        int RoleID = 0;
         private void LoginLabelCheck(object sender, TextCompositionEventArgs e)
         {
             string forbiddenChars = "()!@#$%^&*_-+=.,<>№;:?*";
@@ -74,7 +75,7 @@ namespace CarGO_Control
         private void Registration()
         {
             string password = HashFunction.HashPassword(PassBoxOne.Password);
-            int RoleID = 0;
+            
             if (OperatorRadioButton.IsChecked == true) RoleID = 0;
             else if (DriverRadioButton.IsChecked == true) RoleID = 1;
             using (var context = new CarGoDBContext())
@@ -135,6 +136,19 @@ namespace CarGO_Control
                 {
                     Registration();
                     SMB.SuccessfulMSG("Успешно!");
+                    switch (RoleID)
+                    {
+                        case 0:
+                            var operatorWindow = MainWindowFactory.CreateWindow(MainWindowFactory.WindowType.Operator);
+                            operatorWindow.Show();
+                            this.Close();
+                            return;
+                        case 1:
+                            var driverWindow = MainWindowFactory.CreateWindow(MainWindowFactory.WindowType.Driver);
+                            driverWindow.Show();
+                            this.Close();
+                            return;
+                    }
                 }
                 else
                 {
@@ -146,6 +160,12 @@ namespace CarGO_Control
             {
                 SMB.ShowWarningMessageBox("У вас есть незаполненные поля!");
             }
+        }
+
+        private void BackWindow_Click(object sender, RoutedEventArgs e)
+        {
+            (new MainWindow()).Show();
+            this.Close();
         }
     }
 }

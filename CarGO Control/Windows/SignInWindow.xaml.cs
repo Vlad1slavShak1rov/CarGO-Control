@@ -35,7 +35,28 @@ namespace CarGO_Control
                 if (Authorization())
                 {
                     SMB.SuccessfulMSG("Успешно!");
-                    //TODO
+                    using (var context = new CarGoDBContext())
+                    {
+                        var users = context.Users.
+                            FirstOrDefault(p => p.Login == LoginBox.Text);
+                        int role = users.RoleID;
+                        switch (role)
+                        {
+                            case 0:
+                                var operatorWindow = MainWindowFactory.CreateWindow(MainWindowFactory.WindowType.Operator);
+                                operatorWindow.Show();
+                                this.Close();
+                                return;
+                            case 1:
+                                var driverWindow = MainWindowFactory.CreateWindow(MainWindowFactory.WindowType.Driver);
+                                driverWindow.Show();
+                                this.Close();
+                                return;
+
+                            default:
+                                return;
+                        }
+                    }
                 }
                 else SMB.ShowWarningMessageBox("Неправильно введен логин и/или пароль");
             }
@@ -94,6 +115,5 @@ namespace CarGO_Control
                 return true;
             }
         }
-
     }
 }

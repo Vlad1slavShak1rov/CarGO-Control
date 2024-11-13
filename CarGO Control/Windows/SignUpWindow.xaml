@@ -8,7 +8,7 @@
         Title="SignUpWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen">
     <Grid Margin="0,-22,-18,0">
         <Image Name="imgDisplay" Stretch="Fill"  Width="810" Height="433" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-3,16,0,0" />
-        <Rectangle Height="301" Stroke="Black" Width="220" Fill="Black" Opacity="0.65" Margin="0,55,0,0" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <Rectangle Height="333" Stroke="Black" Width="220" Fill="Black" Opacity="0.65" Margin="0,55,0,0" HorizontalAlignment="Center" VerticalAlignment="Top"/>
         <Label Content="Car" Margin="356,50,0,0" Foreground ="Red" FontSize="24" Height="37" Width="49" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         <Label Content="Go" Margin="395,50,0,0" RenderTransformOrigin="0.467,0.591" Width="44" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         <Label Content="Control" Margin="0,71,0,0" Foreground="White" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Top"/>
@@ -21,5 +21,6 @@
         <Label Content="Повторный пароль" HorizontalAlignment="Left" Margin="344,210,0,0" VerticalAlignment="Top" Foreground="White"/>
         <RadioButton Name = "DriverRadioButton" Content="Водитель" HorizontalAlignment="Center" Margin="-5,258,0,0" VerticalAlignment="Top" Foreground="White" IsChecked="True" Checked="OperatorCheck"/>
         <RadioButton Name = "OperatorRadioButton" Content="Оператор" HorizontalAlignment="Center" Margin="-1,273,0,0" VerticalAlignment="Top" Foreground="White" Checked="DriverCheck"/>
+        <Button Name="BackWindow" Height="25" Width="120" Margin="0,240,0,0" Content="Уже есть аккаунт?" Click="BackWindow_Click"/>
     </Grid>
 </Window>

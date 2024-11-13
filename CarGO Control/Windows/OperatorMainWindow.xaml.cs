@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace CarGO_Control.Windows
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    /// Логика взаимодействия для OperatorMainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class OperatorMainWindow : Window
     {
-        public MainWindow()
+        public OperatorMainWindow()
         {
             InitializeComponent();
         }
