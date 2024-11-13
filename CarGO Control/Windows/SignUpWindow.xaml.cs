@@ -76,8 +76,8 @@ namespace CarGO_Control
         {
             string password = HashFunction.HashPassword(PassBoxOne.Password);
             
-            if (OperatorRadioButton.IsChecked == true) RoleID = 0;
-            else if (DriverRadioButton.IsChecked == true) RoleID = 1;
+            if (OperatorRadioButton.IsChecked == true) RoleID = 1;
+            else if (DriverRadioButton.IsChecked == true) RoleID = 2;
             using (var context = new CarGoDBContext())
             {
                 var user = new Users
@@ -86,6 +86,26 @@ namespace CarGO_Control
                     Password = password,
                     RoleID = RoleID,
                 };
+
+                switch (RoleID)
+                {
+                    case 1:
+                        var op = new Operator
+                        {
+                            Name = LoginTextBox.Text,
+                            UserID = user.ID,
+                        };
+                        return;
+                    case 2:
+                        var dr = new Driver
+                        {
+                            UserID = user.ID,
+                            Name = LoginTextBox.Text,
+                            Experience = 0, //Нужно будет сделать это
+
+                        };
+                        return;
+                }
 
                 context.Add(user);
                 context.SaveChanges();

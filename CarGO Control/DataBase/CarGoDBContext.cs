@@ -19,7 +19,33 @@ namespace CarGO_Control.DataBase
         {
             optionsBuilder.UseSqlite("Data Source=C:\\Users\\sakir\\source\\repos\\CarGO Control\\CarGO Control\\DataBase\\DataBase.db");
         }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Users>()
+                .HasOne(u => u.Driver)
+                .WithOne(up => up.User)
+                .HasForeignKey<Driver>(up => up.UserID);
 
-        
+            modelBuilder.Entity<Users>()
+                .HasOne(u => u.Operator)
+                .WithOne(up => up.User)
+                .HasForeignKey<Operator>(up => up.UserID);
+
+            modelBuilder.Entity<Users>()
+                .HasOne(u => u.Roles)
+                .WithOne(up => up.Users)
+                .HasForeignKey<Roles>(up => up.RoleID);
+
+            modelBuilder.Entity<Driver>()
+                .HasOne(u => u.Transportation)
+                .WithOne(up => up.Driver)
+                .HasForeignKey<Driver>(up => up.IDTransportation);
+
+            modelBuilder.Entity<Transportation>()
+                .HasOne(u => u.Route)
+                .WithOne(up => up.Transport)
+                .HasForeignKey<Route>(up => up.TrackNumer);
+        }
+
     }
 }

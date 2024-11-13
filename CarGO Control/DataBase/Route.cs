@@ -10,12 +10,15 @@ namespace CarGO_Control.DataBase
     public class Route
     {
         [Key]
-        public int Id { get; set; }
+        public int ID { get; set; }
+        public int TrackNumer { get; set; }
         public string CityFrom { get; set; } = null!;
         public string CityTo { get; set; } = null!;
 
         public string RouteHTTP { get; set; } = null!;
         public DateTime DataOut { get; set; }
         public DateTime DataIn { get; set; }
+
+        public virtual Transportation Transport { get; set; }
     }
 }

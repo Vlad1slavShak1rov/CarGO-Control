@@ -10,7 +10,10 @@ namespace CarGO_Control.DataBase
     public class Roles
     {
         [Key]
+        public int Id { get; set; }
         public int RoleID { get; set; }
         public string RoleName { get; set; } = null!;
+
+        public virtual Users Users { get; set; }
     }
 }

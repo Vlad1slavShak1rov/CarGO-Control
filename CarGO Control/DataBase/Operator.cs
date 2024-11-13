@@ -12,5 +12,7 @@ namespace CarGO_Control.DataBase
         [Key]
         public int ID { get; set; }  
         public string Name { get; set; } = null!;
+        public int UserID { get; set; }
+        public virtual Users User { get; set; }
     }
 }

@@ -12,7 +12,10 @@ namespace CarGO_Control.DataBase
         [Key]
         public int ID { get; set; }
 
-        public int TrackNumber { get;set }
+        public int TrackNumber { get; set; }
+
+        public virtual Route Route { get; set; }
+        public virtual Driver Driver { get; set; }
     }
 
 }
