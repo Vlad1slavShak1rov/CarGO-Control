@@ -7,14 +7,12 @@ using System.Threading.Tasks;
 
 namespace CarGO_Control.DataBase
 {
-    public class Users
+    public class Transportation
     {
         [Key]
-        public int UserID { get; set; }
-        public string Login { get;set ; } = null!;
-        public string Password { get; set; } = null!;
+        public int ID { get; set; }
 
-        public int RoleID { get; set; }
-
+        public int TrackNumber { get;set }
     }
+
 }

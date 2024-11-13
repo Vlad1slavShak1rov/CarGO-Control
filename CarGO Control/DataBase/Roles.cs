@@ -12,7 +12,5 @@ namespace CarGO_Control.DataBase
         [Key]
         public int RoleID { get; set; }
         public string RoleName { get; set; } = null!;
-        // Навигационное свойство для связи с Users
-        public virtual ICollection<Users> Users { get; set; } = new List<Users>();
     }
 }

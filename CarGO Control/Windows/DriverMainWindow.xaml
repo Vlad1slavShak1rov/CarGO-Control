@@ -6,5 +6,8 @@
         xmlns:local="clr-namespace:CarGO_Control.Windows"
         mc:Ignorable="d"
         Title="DriverMainWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen">
-    <Grid/>
+    <Grid>
+        <Image Margin="0,0,0,0" Stretch="Fill" Source="C:\Users\sakir\source\repos\CarGO Control\CarGO Control\Resources\1671493031_kalix-club-p-oboi-dalnoboi-instagram-2.jpg"/>
+    </Grid>
+
 </Window>
