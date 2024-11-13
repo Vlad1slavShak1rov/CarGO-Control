@@ -26,7 +26,7 @@ namespace CarGO_Control.Migrations
                     b.Property<int>("Experience")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("IDTransportation")
+                    b.Property<int?>("IDTransportation")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
@@ -70,21 +70,14 @@ namespace CarGO_Control.Migrations
 
             modelBuilder.Entity("CarGO_Control.DataBase.Roles", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("RoleID")
+                    b.Property<int?>("RoleID")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("RoleName")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoleID")
-                        .IsUnique();
+                    b.HasKey("RoleID");
 
                     b.ToTable("Roles");
                 });
@@ -152,7 +145,7 @@ namespace CarGO_Control.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("RoleID")
+                    b.Property<int?>("RoleID")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("ID");
@@ -164,9 +157,7 @@ namespace CarGO_Control.Migrations
                 {
                     b.HasOne("CarGO_Control.DataBase.Transportation", "Transportation")
                         .WithOne("Driver")
-                        .HasForeignKey("CarGO_Control.DataBase.Driver", "IDTransportation")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CarGO_Control.DataBase.Driver", "IDTransportation");
 
                     b.HasOne("CarGO_Control.DataBase.Users", "User")
                         .WithOne("Driver")

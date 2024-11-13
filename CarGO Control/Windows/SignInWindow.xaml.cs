@@ -1,18 +1,7 @@
-﻿using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Security;
-using System.Runtime.InteropServices;
-using System.Windows.Controls.Primitives;
-using CarGO_Control.DataBase;
+﻿using CarGO_Control.DataBase;
 using CarGO_Control.Tools;
+using System.Windows;
+using System.Windows.Input;
 
 namespace CarGO_Control
 {
@@ -39,15 +28,15 @@ namespace CarGO_Control
                     {
                         var users = context.Users.
                             FirstOrDefault(p => p.Login == LoginBox.Text);
-                        int role = users.RoleID;
+                        int role = users?.RoleID ?? 0;
                         switch (role)
                         {
-                            case 0:
+                            case 1:
                                 var operatorWindow = MainWindowFactory.CreateWindow(MainWindowFactory.WindowType.Operator);
                                 operatorWindow.Show();
                                 this.Close();
                                 return;
-                            case 1:
+                            case 2:
                                 var driverWindow = MainWindowFactory.CreateWindow(MainWindowFactory.WindowType.Driver);
                                 driverWindow.Show();
                                 this.Close();
@@ -79,16 +68,16 @@ namespace CarGO_Control
                 e.Handled = true;
             }
 
-        }       
+        }
         private void ToggleButton_Click(object sender, RoutedEventArgs e)
         {
-           
+
 
             if (_isShowing)
             {
                 PassBox.Password = PasswordShowBox.Text;
                 PasswordShowBox.Visibility = Visibility.Hidden;
-                PassBox.PasswordChar = '●'; 
+                PassBox.PasswordChar = '●';
                 ToggleButton.Content = "Показать";
             }
             else
@@ -97,7 +86,7 @@ namespace CarGO_Control
                 PasswordShowBox.Visibility = Visibility.Visible;
                 ToggleButton.Content = "Скрыть";
             }
-            
+
             _isShowing = !_isShowing;
         }
 

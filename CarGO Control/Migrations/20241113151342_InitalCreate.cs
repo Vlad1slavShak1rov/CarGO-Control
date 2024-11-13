@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace CarGO_Control.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class InitalCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -32,7 +32,7 @@ namespace CarGO_Control.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Login = table.Column<string>(type: "TEXT", nullable: false),
                     Password = table.Column<string>(type: "TEXT", nullable: false),
-                    RoleID = table.Column<int>(type: "INTEGER", nullable: false)
+                    RoleID = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -72,7 +72,7 @@ namespace CarGO_Control.Migrations
                     UserID = table.Column<int>(type: "INTEGER", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
                     Experience = table.Column<int>(type: "INTEGER", nullable: false),
-                    IDTransportation = table.Column<int>(type: "INTEGER", nullable: false)
+                    IDTransportation = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -81,8 +81,7 @@ namespace CarGO_Control.Migrations
                         name: "FK_Drivers_Transportations_IDTransportation",
                         column: x => x.IDTransportation,
                         principalTable: "Transportations",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "ID");
                     table.ForeignKey(
                         name: "FK_Drivers_Users_UserID",
                         column: x => x.UserID,
@@ -115,14 +114,12 @@ namespace CarGO_Control.Migrations
                 name: "Roles",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
                     RoleID = table.Column<int>(type: "INTEGER", nullable: false),
                     RoleName = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Roles", x => x.Id);
+                    table.PrimaryKey("PK_Roles", x => x.RoleID);
                     table.ForeignKey(
                         name: "FK_Roles_Users_RoleID",
                         column: x => x.RoleID,
@@ -147,12 +144,6 @@ namespace CarGO_Control.Migrations
                 name: "IX_Operators_UserID",
                 table: "Operators",
                 column: "UserID",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Roles_RoleID",
-                table: "Roles",
-                column: "RoleID",
                 unique: true);
 
             migrationBuilder.CreateIndex(

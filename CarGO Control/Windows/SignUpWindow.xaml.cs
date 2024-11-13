@@ -17,6 +17,7 @@ using CarGO_Control.DataBase;
 using System.Security.Cryptography;
 using CarGO_Control.Tools;
 using CarGO_Control.Windows;
+using System.Windows.Navigation;
 
 namespace CarGO_Control
 {
@@ -27,6 +28,7 @@ namespace CarGO_Control
             InitializeComponent();
         }
         int RoleID = 0;
+        
         private void LoginLabelCheck(object sender, TextCompositionEventArgs e)
         {
             string forbiddenChars = "()!@#$%^&*_-+=.,<>№;:?*";
@@ -35,7 +37,6 @@ namespace CarGO_Control
             {
                 e.Handled = true;
             }
-
         }
 
         private void DriverCheck(object sender, RoutedEventArgs e)
@@ -74,10 +75,22 @@ namespace CarGO_Control
 
         private void Registration()
         {
+            int exp = 0;
+
+
+
             string password = HashFunction.HashPassword(PassBoxOne.Password);
-            
+
             if (OperatorRadioButton.IsChecked == true) RoleID = 1;
-            else if (DriverRadioButton.IsChecked == true) RoleID = 2;
+            else if (DriverRadioButton.IsChecked == true) 
+            { 
+                RoleID = 2;
+                questionWin form2 = new questionWin();
+                form2.ShowDialog();
+                exp = form2.Result;
+
+            }
+
             using (var context = new CarGoDBContext())
             {
                 var user = new Users
@@ -86,7 +99,8 @@ namespace CarGO_Control
                     Password = password,
                     RoleID = RoleID,
                 };
-
+                context.Add(user);
+                context.SaveChanges();
                 switch (RoleID)
                 {
                     case 1:
@@ -95,19 +109,20 @@ namespace CarGO_Control
                             Name = LoginTextBox.Text,
                             UserID = user.ID,
                         };
-                        return;
+                        context.Add(op);
+                        break;
                     case 2:
                         var dr = new Driver
                         {
                             UserID = user.ID,
                             Name = LoginTextBox.Text,
-                            Experience = 0, //Нужно будет сделать это
+                            Experience = exp,
+                            IDTransportation = 0,
 
                         };
-                        return;
+                        context.Add(dr);
+                        break;
                 }
-
-                context.Add(user);
                 context.SaveChanges();
             }
         }
@@ -158,12 +173,12 @@ namespace CarGO_Control
                     SMB.SuccessfulMSG("Успешно!");
                     switch (RoleID)
                     {
-                        case 0:
+                        case 1:
                             var operatorWindow = MainWindowFactory.CreateWindow(MainWindowFactory.WindowType.Operator);
                             operatorWindow.Show();
                             this.Close();
                             return;
-                        case 1:
+                        case 2:
                             var driverWindow = MainWindowFactory.CreateWindow(MainWindowFactory.WindowType.Driver);
                             driverWindow.Show();
                             this.Close();

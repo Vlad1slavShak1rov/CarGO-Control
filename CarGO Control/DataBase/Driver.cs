@@ -14,7 +14,7 @@ namespace CarGO_Control.DataBase
         public int UserID { get; set; }
         public string Name { get; set; } = null!;
         public int Experience { get; set; }
-        public int IDTransportation { get; set; }
+        public int? IDTransportation { get; set; }
 
         public Users User { get; set; }
         public Transportation Transportation { get; set; }

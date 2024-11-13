@@ -36,9 +36,9 @@ namespace CarGO_Control.DataBase
                 .WithOne(up => up.Users)
                 .HasForeignKey<Roles>(up => up.RoleID);
 
-            modelBuilder.Entity<Driver>()
-                .HasOne(u => u.Transportation)
-                .WithOne(up => up.Driver)
+            modelBuilder.Entity<Transportation>()
+                .HasOne(u => u.Driver)
+                .WithOne(up => up.Transportation)
                 .HasForeignKey<Driver>(up => up.IDTransportation);
 
             modelBuilder.Entity<Transportation>()

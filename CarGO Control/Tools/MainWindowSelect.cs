@@ -12,7 +12,7 @@ namespace CarGO_Control.Tools
     {
         public void Show()
         {
-            (new DriverMainWindow()).Show();
+            (new OperatorMainWindow()).Show();
             return;
         }
     }
@@ -21,8 +21,9 @@ namespace CarGO_Control.Tools
     {
         public void Show()
         {
-            (new OperatorMainWindow()).Show();
+            (new DriverMainWindow()).Show();
             return;
+           
         }
     }
 }
