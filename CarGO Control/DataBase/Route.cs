@@ -11,14 +11,19 @@ namespace CarGO_Control.DataBase
     {
         [Key]
         public int ID { get; set; }
+        public int? DriverID {  get; set; }
+        public int? IDCarGo {  get; set; }
+        public int? IDTruck { get; set; }
         public int TrackNumer { get; set; }
         public string CityFrom { get; set; } = null!;
         public string CityTo { get; set; } = null!;
-
         public string RouteHTTP { get; set; } = null!;
         public DateTime DataOut { get; set; }
         public DateTime DataIn { get; set; }
 
-        public virtual Transportation Transport { get; set; }
+        public virtual Driver Driver { get; set; }
+        public virtual Truck Truck { get; set; }
+        public virtual Cargo Cargo { get; set; }
+
     }
 }

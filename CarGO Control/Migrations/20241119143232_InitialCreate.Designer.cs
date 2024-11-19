@@ -11,14 +11,36 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarGO_Control.Migrations
 {
     [DbContext(typeof(CarGoDBContext))]
-    [Migration("20241113151342_InitalCreate")]
-    partial class InitalCreate
+    [Migration("20241119143232_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.10");
+
+            modelBuilder.Entity("CarGO_Control.DataBase.Cargo", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("CargoType")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Contents")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Weight")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Cargos");
+                });
 
             modelBuilder.Entity("CarGO_Control.DataBase.Driver", b =>
                 {
@@ -40,9 +62,6 @@ namespace CarGO_Control.Migrations
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("IDTransportation")
-                        .IsUnique();
 
                     b.HasIndex("UserID")
                         .IsUnique();
@@ -74,6 +93,7 @@ namespace CarGO_Control.Migrations
             modelBuilder.Entity("CarGO_Control.DataBase.Roles", b =>
                 {
                     b.Property<int?>("RoleID")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("RoleName")
@@ -105,6 +125,15 @@ namespace CarGO_Control.Migrations
                     b.Property<DateTime>("DataOut")
                         .HasColumnType("TEXT");
 
+                    b.Property<int?>("DriverID")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("IDCarGo")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("IDTruck")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("RouteHTTP")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -114,24 +143,41 @@ namespace CarGO_Control.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("TrackNumer")
+                    b.HasIndex("DriverID")
                         .IsUnique();
 
-                    b.ToTable("Route");
+                    b.HasIndex("IDCarGo")
+                        .IsUnique();
+
+                    b.HasIndex("IDTruck")
+                        .IsUnique();
+
+                    b.ToTable("Routes");
                 });
 
-            modelBuilder.Entity("CarGO_Control.DataBase.Transportation", b =>
+            modelBuilder.Entity("CarGO_Control.DataBase.Truck", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("TrackNumber")
+                    b.Property<string>("CarMake")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("DriverID")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("LicensePlate")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.HasKey("ID");
 
-                    b.ToTable("Transportations");
+                    b.HasIndex("DriverID")
+                        .IsUnique();
+
+                    b.ToTable("Trucks");
                 });
 
             modelBuilder.Entity("CarGO_Control.DataBase.Users", b =>
@@ -153,24 +199,21 @@ namespace CarGO_Control.Migrations
 
                     b.HasKey("ID");
 
+                    b.HasIndex("RoleID")
+                        .IsUnique();
+
                     b.ToTable("Users");
                 });
 
             modelBuilder.Entity("CarGO_Control.DataBase.Driver", b =>
                 {
-                    b.HasOne("CarGO_Control.DataBase.Transportation", "Transportation")
-                        .WithOne("Driver")
-                        .HasForeignKey("CarGO_Control.DataBase.Driver", "IDTransportation");
-
-                    b.HasOne("CarGO_Control.DataBase.Users", "User")
+                    b.HasOne("CarGO_Control.DataBase.Users", "Users")
                         .WithOne("Driver")
                         .HasForeignKey("CarGO_Control.DataBase.Driver", "UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Transportation");
-
-                    b.Navigation("User");
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("CarGO_Control.DataBase.Operator", b =>
@@ -184,33 +227,70 @@ namespace CarGO_Control.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("CarGO_Control.DataBase.Roles", b =>
-                {
-                    b.HasOne("CarGO_Control.DataBase.Users", "Users")
-                        .WithOne("Roles")
-                        .HasForeignKey("CarGO_Control.DataBase.Roles", "RoleID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Users");
-                });
-
             modelBuilder.Entity("CarGO_Control.DataBase.Route", b =>
                 {
-                    b.HasOne("CarGO_Control.DataBase.Transportation", "Transport")
+                    b.HasOne("CarGO_Control.DataBase.Driver", "Driver")
+                        .WithOne("Routes")
+                        .HasForeignKey("CarGO_Control.DataBase.Route", "DriverID");
+
+                    b.HasOne("CarGO_Control.DataBase.Cargo", "Cargo")
                         .WithOne("Route")
-                        .HasForeignKey("CarGO_Control.DataBase.Route", "TrackNumer")
+                        .HasForeignKey("CarGO_Control.DataBase.Route", "IDCarGo");
+
+                    b.HasOne("CarGO_Control.DataBase.Truck", "Truck")
+                        .WithOne("Route")
+                        .HasForeignKey("CarGO_Control.DataBase.Route", "IDTruck");
+
+                    b.Navigation("Cargo");
+
+                    b.Navigation("Driver");
+
+                    b.Navigation("Truck");
+                });
+
+            modelBuilder.Entity("CarGO_Control.DataBase.Truck", b =>
+                {
+                    b.HasOne("CarGO_Control.DataBase.Driver", "Driver")
+                        .WithOne("Trucks")
+                        .HasForeignKey("CarGO_Control.DataBase.Truck", "DriverID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Transport");
+                    b.Navigation("Driver");
                 });
 
-            modelBuilder.Entity("CarGO_Control.DataBase.Transportation", b =>
+            modelBuilder.Entity("CarGO_Control.DataBase.Users", b =>
                 {
-                    b.Navigation("Driver")
+                    b.HasOne("CarGO_Control.DataBase.Roles", "Roles")
+                        .WithOne("Users")
+                        .HasForeignKey("CarGO_Control.DataBase.Users", "RoleID");
+
+                    b.Navigation("Roles");
+                });
+
+            modelBuilder.Entity("CarGO_Control.DataBase.Cargo", b =>
+                {
+                    b.Navigation("Route")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("CarGO_Control.DataBase.Driver", b =>
+                {
+                    b.Navigation("Routes")
                         .IsRequired();
 
+                    b.Navigation("Trucks")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("CarGO_Control.DataBase.Roles", b =>
+                {
+                    b.Navigation("Users")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("CarGO_Control.DataBase.Truck", b =>
+                {
                     b.Navigation("Route")
                         .IsRequired();
                 });
@@ -221,9 +301,6 @@ namespace CarGO_Control.Migrations
                         .IsRequired();
 
                     b.Navigation("Operator")
-                        .IsRequired();
-
-                    b.Navigation("Roles")
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 
 namespace CarGO_Control.DataBase
 {
-    public class Transportation
+    public class Truck
     {
         [Key]
         public int ID { get; set; }
-
-        public int TrackNumber { get; set; }
+        public int DriverID {  get; set; }
+        public string LicensePlate { get; set; } = null!;
+        public string CarMake { get; set; } = null!;
 
         public virtual Route Route { get; set; }
         public virtual Driver Driver { get; set; }
     }
-
 }

@@ -13,11 +13,10 @@ namespace CarGO_Control.DataBase
         public int ID { get; set; }
         public string Login { get;set ; } = null!;
         public string Password { get; set; } = null!;
-
         public int? RoleID { get; set; }
 
+        public virtual Roles Roles { get; set; }
         public virtual Driver Driver { get; set; }
         public virtual Operator Operator { get; set; }
-        public virtual Roles Roles { get; set; }
     }
 }

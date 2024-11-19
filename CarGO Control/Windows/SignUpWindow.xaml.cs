@@ -77,8 +77,6 @@ namespace CarGO_Control
         {
             int exp = 0;
 
-
-
             string password = HashFunction.HashPassword(PassBoxOne.Password);
 
             if (OperatorRadioButton.IsChecked == true) RoleID = 1;
@@ -88,7 +86,6 @@ namespace CarGO_Control
                 questionWin form2 = new questionWin();
                 form2.ShowDialog();
                 exp = form2.Result;
-
             }
 
             using (var context = new CarGoDBContext())
@@ -101,6 +98,7 @@ namespace CarGO_Control
                 };
                 context.Add(user);
                 context.SaveChanges();
+
                 switch (RoleID)
                 {
                     case 1:
@@ -117,8 +115,7 @@ namespace CarGO_Control
                             UserID = user.ID,
                             Name = LoginTextBox.Text,
                             Experience = exp,
-                            IDTransportation = 0,
-
+                            IDTransportation = null,
                         };
                         context.Add(dr);
                         break;

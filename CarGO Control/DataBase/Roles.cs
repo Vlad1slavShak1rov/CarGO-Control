@@ -13,6 +13,6 @@ namespace CarGO_Control.DataBase
         public int? RoleID { get; set; }
         public string RoleName { get; set; } = null!;
 
-        public virtual Users Users { get; set; }
+        public Users Users { get; set; }
     }
 }

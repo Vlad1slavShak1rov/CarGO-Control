@@ -16,8 +16,9 @@ namespace CarGO_Control.DataBase
         public int Experience { get; set; }
         public int? IDTransportation { get; set; }
 
-        public Users User { get; set; }
-        public Transportation Transportation { get; set; }
+        public virtual Users Users { get; set; }
+        public virtual Route Routes { get; set; }
+        public virtual Truck Trucks { get; set; }
 
     }
 }

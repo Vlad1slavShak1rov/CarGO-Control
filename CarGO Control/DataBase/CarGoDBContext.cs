@@ -13,7 +13,9 @@ namespace CarGO_Control.DataBase
         public DbSet<Roles> Roles { get; set; }
         public DbSet<Driver> Drivers { get; set; }
         public DbSet<Operator> Operators { get; set; }
-        public DbSet<Transportation> Transportations { get; set; }
+        public DbSet<Truck> Trucks { get; set; }
+        public DbSet<Cargo> Cargos { get; set; }
+        public DbSet<Route> Routes { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -21,30 +23,40 @@ namespace CarGO_Control.DataBase
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Users>()
-                .HasOne(u => u.Driver)
-                .WithOne(up => up.User)
-                .HasForeignKey<Driver>(up => up.UserID);
+            modelBuilder.Entity<Driver>()
+                 .HasOne(u => u.Users)
+                 .WithOne(up => up.Driver)
+                 .HasForeignKey<Driver>(up => up.UserID);
 
-            modelBuilder.Entity<Users>()
-                .HasOne(u => u.Operator)
-                .WithOne(up => up.User)
+            modelBuilder.Entity<Route>()
+                .HasOne(u => u.Driver)
+                .WithOne(up => up.Routes)
+                .HasForeignKey<Route>(up => up.DriverID);
+
+            modelBuilder.Entity<Truck>()
+                .HasOne(u => u.Driver)
+                .WithOne(up => up.Trucks)
+                .HasForeignKey<Truck>(up => up.DriverID);
+
+            modelBuilder.Entity<Route>()
+                .HasOne(u => u.Truck)
+                .WithOne(up => up.Route)
+                .HasForeignKey<Route>(up => up.IDTruck);
+
+            modelBuilder.Entity<Route>()
+                .HasOne(u => u.Cargo)
+                .WithOne(up => up.Route)
+                .HasForeignKey<Route>(up => up.IDCarGo);
+
+            modelBuilder.Entity<Operator>()
+                .HasOne(u => u.User)
+                .WithOne(up => up.Operator)
                 .HasForeignKey<Operator>(up => up.UserID);
 
             modelBuilder.Entity<Users>()
                 .HasOne(u => u.Roles)
                 .WithOne(up => up.Users)
-                .HasForeignKey<Roles>(up => up.RoleID);
-
-            modelBuilder.Entity<Transportation>()
-                .HasOne(u => u.Driver)
-                .WithOne(up => up.Transportation)
-                .HasForeignKey<Driver>(up => up.IDTransportation);
-
-            modelBuilder.Entity<Transportation>()
-                .HasOne(u => u.Route)
-                .WithOne(up => up.Transport)
-                .HasForeignKey<Route>(up => up.TrackNumer);
+                .HasForeignKey<Users>(up => up.RoleID);
         }
 
     }
