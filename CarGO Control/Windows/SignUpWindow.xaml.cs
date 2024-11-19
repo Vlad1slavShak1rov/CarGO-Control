@@ -41,12 +41,14 @@ namespace CarGO_Control
 
         private void DriverCheck(object sender, RoutedEventArgs e)
         {
-            Animation("C:\\Users\\sakir\\source\\repos\\CarGO Control\\CarGO Control\\Resources\\bbsqIiUZ4M4tC561FZ8onewDagtf7gcsGhfyVLW4DygeqhSOB.jpg");
+            Animation("pack://application:,,,/Resources/OperatorMenu.jpg");
         }
+
         private void OperatorCheck(object sender, RoutedEventArgs e)
         {
-            Animation("C:\\Users\\sakir\\source\\repos\\CarGO Control\\CarGO Control\\Resources\\f7ERynfdtWhxnU4A8sqf1tAG3Pp05YxODd9azteiTA1eGDlcC.jpg");
+            Animation("pack://application:,,,/Resources/DriverMenu.jpg");
         }
+
 
         private void SignUpButton_Click(object sender, RoutedEventArgs e)
         {

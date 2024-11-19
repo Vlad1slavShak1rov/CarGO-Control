@@ -34,13 +34,13 @@
     </Window.Resources>
 
     <Grid>
-        
-        <Image HorizontalAlignment="Right" Margin="0,-1,0,-11" Width="416" Source="C:\Users\sakir\source\repos\CarGO Control\CarGO Control\Resources\bbsqIiUZ4M4tC561FZ8onewDagtf7gcsGhfyVLW4DygeqhSOB.jpg" Stretch="UniformToFill" Grid.Column="1" Grid.RowSpan="2"/>
-        <Image HorizontalAlignment="Left" Width="395" Source="C:\Users\sakir\source\repos\CarGO Control\CarGO Control\Resources\f7ERynfdtWhxnU4A8sqf1tAG3Pp05YxODd9azteiTA1eGDlcC.jpg" Stretch="UniformToFill" Grid.ColumnSpan="2" Margin="0,0,0,-24" Grid.RowSpan="2"/>
-        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" Margin="82,0,0,0" Height="95" Width="397">
+
+        <Image Name="OperatorIMG" HorizontalAlignment="Right" Margin="0,-1,0,-11" Width="416" Source="/CarGOControl;component/Resources/OperatorMenu.jpg" Stretch="UniformToFill"/>
+        <Image HorizontalAlignment="Left" Width="395" Source="/CarGOControl;component/Resources/DriverMenu.jpg" Stretch="UniformToFill" Grid.ColumnSpan="2" Margin="0,0,0,-24" Grid.RowSpan="2"/>
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="197,0,0,0" Height="95" Width="398">
             <Label Name="LabelProgramCar" Margin="0,0,0,0" Content="Car" FontSize="64" Foreground="Red"/>
-            <Label Name="LabelProgramGo" Content="Go" FontSize="64" Margin="0,0,-40,0" RenderTransformOrigin="0.5,0.5" Background="{x:Null}" Foreground="Black" VerticalAlignment="Top" HorizontalAlignment="Left" Width="132" />
-            <Label Name="LabelProgramControl" Content="Control" FontSize="64" Margin="0,0,-20,0" RenderTransformOrigin="0.5,0.5" Background="{x:Null}" Foreground="White" VerticalAlignment="Top" />
+            <Label Name="LabelProgramGo" Content="Go" FontSize="64" Margin="0,0,0,0" RenderTransformOrigin="0.5,0.5" Background="{x:Null}" Foreground="Black" VerticalAlignment="Top" HorizontalAlignment="Left" Width="132" />
+            <Label Name="LabelProgramControl" Content="Control" FontSize="64" Margin="0,0,0,0" RenderTransformOrigin="0.5,0.5" Background="{x:Null}" Foreground="White" VerticalAlignment="Top" />
         </StackPanel>
 
         <Rectangle Name="Background" Fill="Black" Opacity="0.6" Margin="298,133,298,44"/>
