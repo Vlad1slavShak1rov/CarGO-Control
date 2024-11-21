@@ -10,17 +10,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace CarGO_Control.Windows
+namespace CarGO_Control.Views
 {
     /// <summary>
-    /// Логика взаимодействия для DriverMainWindow.xaml
+    /// Логика взаимодействия для UserControl1.xaml
     /// </summary>
-    public partial class DriverMainWindow : Window
+    public partial class UserControl1 : UserControl
     {
-        private string _driverName;
-        public DriverMainWindow(string name)
+        public UserControl1()
         {
             InitializeComponent();
         }

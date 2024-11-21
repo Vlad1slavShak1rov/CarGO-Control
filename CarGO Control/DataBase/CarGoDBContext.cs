@@ -55,8 +55,8 @@ namespace CarGO_Control.DataBase
 
             modelBuilder.Entity<Users>()
                 .HasOne(u => u.Roles)
-                .WithOne(up => up.Users)
-                .HasForeignKey<Users>(up => up.RoleID);
+                .WithMany(r => r.Users) 
+                .HasForeignKey(u => u.RoleID); 
         }
 
     }

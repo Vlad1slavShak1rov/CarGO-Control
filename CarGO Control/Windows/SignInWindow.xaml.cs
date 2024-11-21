@@ -33,12 +33,12 @@ namespace CarGO_Control
                         {
                             case 1:
                                 var operatorWindow = MainWindowFactory.CreateWindow(MainWindowFactory.WindowType.Operator);
-                                operatorWindow.Show();
+                                operatorWindow.Show(LoginBox.Text);
                                 this.Close();
                                 return;
                             case 2:
                                 var driverWindow = MainWindowFactory.CreateWindow(MainWindowFactory.WindowType.Driver);
-                                driverWindow.Show();
+                                driverWindow.Show(LoginBox.Text);
                                 this.Close();
                                 return;
 

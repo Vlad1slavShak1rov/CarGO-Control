@@ -117,7 +117,6 @@ namespace CarGO_Control
                             UserID = user.ID,
                             Name = LoginTextBox.Text,
                             Experience = exp,
-                            IDTransportation = null,
                         };
                         context.Add(dr);
                         break;
@@ -174,12 +173,12 @@ namespace CarGO_Control
                     {
                         case 1:
                             var operatorWindow = MainWindowFactory.CreateWindow(MainWindowFactory.WindowType.Operator);
-                            operatorWindow.Show();
+                            operatorWindow.Show(LoginTextBox.Text);
                             this.Close();
                             return;
                         case 2:
                             var driverWindow = MainWindowFactory.CreateWindow(MainWindowFactory.WindowType.Driver);
-                            driverWindow.Show();
+                            driverWindow.Show(LoginTextBox.Text);
                             this.Close();
                             return;
                     }

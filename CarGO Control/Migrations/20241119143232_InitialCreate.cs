@@ -67,8 +67,8 @@ namespace CarGO_Control.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     UserID = table.Column<int>(type: "INTEGER", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Experience = table.Column<int>(type: "INTEGER", nullable: false),
-                    IDTransportation = table.Column<int>(type: "INTEGER", nullable: true)
+                    Experience = table.Column<int>(type: "INTEGER", nullable: false)
+
                 },
                 constraints: table =>
                 {

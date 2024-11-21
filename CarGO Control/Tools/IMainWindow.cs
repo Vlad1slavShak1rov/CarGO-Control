@@ -9,6 +9,6 @@ namespace CarGO_Control.Tools
 { 
     public interface IMainWindow
     {
-        void Show();
+        void Show(string name);
     }
 }

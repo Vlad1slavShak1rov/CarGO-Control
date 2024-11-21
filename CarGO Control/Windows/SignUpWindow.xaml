@@ -12,7 +12,7 @@
         <Label Content="Car" Margin="356,50,0,0" Foreground ="Red" FontSize="24" Height="37" Width="49" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         <Label Content="Go" Margin="395,50,0,0" RenderTransformOrigin="0.467,0.591" Width="44" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         <Label Content="Control" Margin="0,71,0,0" Foreground="White" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-        <TextBox Name = "LoginTextBox" Margin="0,134,0,0" TextWrapping="Wrap" Width="120" Height="22" RenderTransformOrigin="0.505,0.565" HorizontalAlignment="Center" VerticalAlignment="Top" PreviewTextInput ="LoginLabelCheck"/>
+        <TextBox Name = "LoginTextBox" Margin="0,134,0,0" TextWrapping="Wrap" Width="120" Height="22" RenderTransformOrigin="0.505,0.565" HorizontalAlignment="Center" VerticalAlignment="Top" PreviewTextInput ="LoginLabelCheck" UndoLimit="16"/>
         <PasswordBox Name = "PassBoxOne" Width="120" Height="22" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,183,0,0" />
         <PasswordBox Name = "PassBoxTwo" Margin="0,232,0,0"  Width="120" Height="21" HorizontalAlignment="Center" VerticalAlignment="Top"/>
         <Button Name="SignUpButton" Width="120" Height="25" Margin="0,298,0,0" Content="Регистрация" HorizontalAlignment="Center" VerticalAlignment="Top" Click="SignUpButton_Click"/>
