@@ -71,8 +71,6 @@ namespace CarGO_Control
         }
         private void ToggleButton_Click(object sender, RoutedEventArgs e)
         {
-
-
             if (_isShowing)
             {
                 PassBox.Password = PasswordShowBox.Text;

@@ -47,7 +47,7 @@ namespace CarGO_Control.Windows
         private void Timer_Tick(object sender, EventArgs e)
         {
             TimeLabel.Content = "Время: " + DateTime.Now.ToString("HH:mm:ss");
-            DateLabel.Content = "Дата: " + DateTime.Now.ToString("dd:MM:yy");
+            DateLabel.Content = "Дата: " + DateTime.Now.ToString("dd.MM.yy");
         }
 
         private void ManagementButton_Click(object sender, RoutedEventArgs e)
