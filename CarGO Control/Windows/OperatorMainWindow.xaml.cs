@@ -77,11 +77,10 @@ namespace CarGO_Control.Windows
                 foreach (var driver in drivers)
                 {
                     UserControl1 driver_field = new();
-                    driver_field.NameLabel.Content = "Имя " + driver.Name;
-                    driver_field.ExpLabel.Content = "Опыт " + driver.Experience;
-                    driver_field.TruckLabel.Content = "нету ";
-                    Grid.SetColumn(driver_field, 1);
-                    Grid.SetRow(driver_field, 1);
+                    driver_field.NameLabel.Content = "Имя: " + driver.Name;
+                    driver_field.ExpLabel.Content = "Опыт: " + driver.Experience;
+                    driver_field.TruckLabel.Content = "Марка: нету";
+                    driver_field.Margin = new Thickness(0, 0, 0, 10);
                     DriversReg.DriversList.Children.Add(driver_field);
                     _drivers.Add(driver);
                 }
