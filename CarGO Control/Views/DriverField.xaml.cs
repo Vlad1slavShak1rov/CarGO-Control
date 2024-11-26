@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CarGO_Control.DataBase;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,21 +21,27 @@ namespace CarGO_Control.Views
     /// </summary>
     public partial class UserControl1 : UserControl
     {
-        public RoutedEventHandler DeleteButtonClick;
-        public RoutedEventHandler EditButtonClick;
-        public UserControl1()
+        public event EventHandler<Driver> DeleteButtonClick;
+        public event EventHandler<Driver> EditButtonClick;
+
+        private Driver _driver;
+        public UserControl1(Driver driver)
         {
             InitializeComponent();
+            NameLabel.Content = "Имя: " + driver.Name;
+            ExpLabel.Content = "Опыт: " + driver.Experience;
+            TruckLabel.Content = "Марка: нету";
+            _driver = driver;
         }
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
-            DeleteButtonClick?.Invoke(this, new RoutedEventArgs());
+            DeleteButtonClick?.Invoke(this, _driver); 
         }
 
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
-            EditButtonClick?.Invoke(this, new RoutedEventArgs());
+            EditButtonClick?.Invoke(this, _driver);     
         }
     }
 }

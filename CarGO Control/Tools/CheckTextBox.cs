@@ -31,12 +31,9 @@ namespace CarGO_Control.Tools
                 {
                     Number = true;
                 }
-                if (!Upper || !Number) return false;
-                else break;
+                if (Upper && Number) break;
             }
-
             return (Upper && Number);
-
         }
     }
 }

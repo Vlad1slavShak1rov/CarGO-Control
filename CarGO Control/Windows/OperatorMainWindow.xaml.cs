@@ -28,7 +28,7 @@ namespace CarGO_Control.Windows
         private List<Driver> _drivers = new List<Driver>();
         private DriversReg DriversReg = new();
         private string _name;
-        
+
         public OperatorMainWindow(string nick)
         {
             _name = nick;
@@ -62,31 +62,77 @@ namespace CarGO_Control.Windows
             ViewGrid.Children.Add(DriversReg);
 
         }
+
         private void DriversReg_BackButtonClicked(object sender, RoutedEventArgs e)
         {
-            ViewGrid.Children.Clear(); 
+            ViewGrid.Children.Clear();
             RegDriversButton.Visibility = Visibility.Visible;
             ManagementButton.Visibility = Visibility.Visible;
         }
 
-        private void LoadDate(object sender, EventArgs e)
+        private void DeleteButton_Click(object sender, Driver driver)
         {
-            using(var db = new CarGoDBContext())
+            var result = SMB.QuestionMSG($"Вы действительно хотите удалить водителя {driver.Name}?");
+
+            if (result == MessageBoxResult.Yes)
             {
-                var drivers = db.Drivers;
-                foreach (var driver in drivers)
+                    using (var db = new CarGoDBContext())
                 {
-                    UserControl1 driver_field = new();
-                    driver_field.NameLabel.Content = "Имя: " + driver.Name;
-                    driver_field.ExpLabel.Content = "Опыт: " + driver.Experience;
-                    driver_field.TruckLabel.Content = "Марка: нету";
-                    driver_field.Margin = new Thickness(0, 0, 0, 10);
-                    DriversReg.DriversList.Children.Add(driver_field);
-                    _drivers.Add(driver);
+                    var driverToRemove = db.Drivers.
+                        Where(d => d.Name == driver.Name);
+                    foreach (var dr in driverToRemove)
+                    {
+                        {
+                            if (driverToRemove != null)
+                            {
+                                db.Drivers.Remove(dr);
+                                db.SaveChanges();
+                            }
+                        }
+                    }
+
+                    var userToRemove = db.Users.
+                       Where(u => u.Login == driver.Name);
+
+                    foreach (var us in userToRemove)
+                    {
+                        {
+                            if (userToRemove != null)
+                            {
+                                db.Users.Remove(us);
+                                db.SaveChanges();
+                                
+                            }
+                        }
+                    }
+                    LoadDate(null, null);
                 }
-
             }
+            
         }
+            private void EditButton_Click(object sender, Driver driver)
+            {
+                //TODO
+            }
 
+            private void LoadDate(object sender, EventArgs e)
+            {
+                DriversReg.DriversList.Children.Clear();
+                using (var db = new CarGoDBContext())
+                {
+                    var drivers = db.Drivers.ToList();
+                    foreach (var driver in drivers)
+                    {
+                        UserControl1 driver_field = new UserControl1(driver);
+                        driver_field.DeleteButtonClick += DeleteButton_Click;
+                        driver_field.EditButtonClick += EditButton_Click;
+                        driver_field.Margin = new Thickness(0, 0, 0, 10);
+                        DriversReg.DriversList.Children.Add(driver_field);
+                        _drivers.Add(driver);
+                    }
+                }
+            }
+
+        
     }
 }
