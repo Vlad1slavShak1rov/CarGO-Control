@@ -20,9 +20,21 @@ namespace CarGO_Control.Views
     /// </summary>
     public partial class UserControl1 : UserControl
     {
+        public RoutedEventHandler DeleteButtonClick;
+        public RoutedEventHandler EditButtonClick;
         public UserControl1()
         {
             InitializeComponent();
+        }
+
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            DeleteButtonClick?.Invoke(this, new RoutedEventArgs());
+        }
+
+        private void EditButton_Click(object sender, RoutedEventArgs e)
+        {
+            EditButtonClick?.Invoke(this, new RoutedEventArgs());
         }
     }
 }

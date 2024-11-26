@@ -26,14 +26,18 @@ namespace CarGO_Control.Windows
     {
         private DispatcherTimer _timer;
         private List<Driver> _drivers = new List<Driver>();
+        private DriversReg DriversReg = new();
         private string _name;
+        
         public OperatorMainWindow(string nick)
         {
             _name = nick;
             TimerInit();
             InitializeComponent();
             HelloLabel.Content = $"Добро пожаловать: {nick}";
-            
+
+            DriversReg.BackButtonClicked += DriversReg_BackButtonClicked;
+            DriversReg.LoadedFile += LoadDate;
         }
 
         private void TimerInit()
@@ -54,60 +58,36 @@ namespace CarGO_Control.Windows
         {
             RegDriversButton.Visibility = Visibility.Hidden;
             ManagementButton.Visibility = Visibility.Hidden;
-            DriversList.Visibility = Visibility.Visible;
-            TextStack.Visibility = Visibility.Visible;
-            MainGrid.Visibility = Visibility.Visible;
+            ViewGrid.Children.Clear();
+            ViewGrid.Children.Add(DriversReg);
 
-            if (_drivers.Count == 0)
-            {
-                LoadDB();
-            }
         }
-        private void BackButton_Click(object sender, RoutedEventArgs e)
+        private void DriversReg_BackButtonClicked(object sender, RoutedEventArgs e)
         {
+            ViewGrid.Children.Clear(); 
             RegDriversButton.Visibility = Visibility.Visible;
             ManagementButton.Visibility = Visibility.Visible;
-            DriversList.Visibility = Visibility.Hidden;
-            TextStack.Visibility = Visibility.Hidden;
-            MainGrid.Visibility = Visibility.Hidden;
-
         }
 
-        private void LoadDB()
+        private void LoadDate(object sender, EventArgs e)
         {
-                using (var db = new CarGoDBContext())
-                {
-                    var drivers = db.Drivers.ToList();
-                    if (drivers != null)
-                    {
-                        LoadDriversField(drivers);
-                    }
-                    else
-                    {
-                        SMB.ShowWarningMessageBox("Водители отсувствуют!");
-                        return;
-                    }
-                }
-        }
-
-        private void LoadDriversField(List<Driver> drivers)
-        {
-            foreach (var driver in drivers)
+            using(var db = new CarGoDBContext())
             {
-                UserControl1 userControl1 = new();
-                userControl1.Width = 600;
-                userControl1.Height = 80;
-                userControl1.BackGround.Fill = Brushes.White;
-                userControl1.NameLabel.Content = "Имя: " + driver.Name;
-                userControl1.ExpLabel.Content =  "Опыт: " + driver.Experience.ToString();
-                userControl1.TruckLabel.Content = "Марка грузовика: " + "-";
-                userControl1.RouteLabel.Content = "Трек-номер" + "-";
-                userControl1.Margin = new Thickness(0, 0, 0, 10);
+                var drivers = db.Drivers;
+                foreach (var driver in drivers)
+                {
+                    UserControl1 driver_field = new();
+                    driver_field.NameLabel.Content = "Имя " + driver.Name;
+                    driver_field.ExpLabel.Content = "Опыт " + driver.Experience;
+                    driver_field.TruckLabel.Content = "нету ";
+                    Grid.SetColumn(driver_field, 1);
+                    Grid.SetRow(driver_field, 1);
+                    DriversReg.DriversList.Children.Add(driver_field);
+                    _drivers.Add(driver);
+                }
 
-                DriversList.Children.Add(userControl1);
-                _drivers.Add(driver);
-                
             }
         }
+
     }
 }

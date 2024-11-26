@@ -1,0 +1,39 @@
+﻿<UserControl x:Class="CarGO_Control.Views.DriversReg"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CarGO_Control.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <StackPanel Name="TextStack" Visibility="Visible" Margin="0,50,0,0">
+            <Grid Width="750" Height="60">
+                <Rectangle Fill="White" Opacity="0.5" RadiusX="20" RadiusY="50" />
+                <Label Content="Учёт Водителей" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,0,0,0" FontSize="30" />
+                <Button Name="BackButton" Content="&lt;" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Background="{x:Null}" BorderBrush="{x:Null}" FontSize="30" Click="BackButton_Click"/>
+            </Grid>
+        </StackPanel>
+
+        <Grid Name="MainGrid" Visibility="Visible" Margin="0,130,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="50"/>
+            </Grid.ColumnDefinitions>
+            
+            <ProgressBar Name="LoadingDataBar" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Margin="0,-70,0,0" Width="200" Grid.Row="1" Grid.Column="1"/>
+            <Label Name ="ProgressLabel" Content="" HorizontalAlignment="Center" Margin="0,-115,0,0" VerticalAlignment="Center" FontSize="20" Foreground="White" Grid.Row="1" Grid.Column="1"/>
+
+            <Rectangle Name="BackDriverList" Margin ="0,0,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Height="460" Opacity="0.4" Fill="White" Grid.Row="1" Grid.Column="1"/>
+
+            <ScrollViewer Name="ScrollView" Grid.Row="1"  Grid.Column="1" Height="321" VerticalAlignment="Center">
+                <StackPanel Name="DriversList" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+            </ScrollViewer>
+        </Grid>
+    </Grid>
+</UserControl>
