@@ -31,12 +31,7 @@ namespace CarGO_Control
         
         private void LoginLabelCheck(object sender, TextCompositionEventArgs e)
         {
-            string forbiddenChars = "()!@#$%^&*_-+=.,<>№;:?*";
-
-            if (forbiddenChars.Contains(e.Text) || forbiddenChars.Contains('"'))
-            {
-                e.Handled = true;
-            }
+            if (!CheckTextBox.CheckText(e)) e.Handled = true;
         }
 
         private void DriverCheck(object sender, RoutedEventArgs e)
@@ -124,35 +119,7 @@ namespace CarGO_Control
                 context.SaveChanges();
             }
         }
-
-        private bool CheckPass() 
-        {
-            bool Upper = false, Number = false;
-
-            string password = PassBoxOne.Password;
-            foreach (char c in password)
-            {
-                if (char.IsUpper(c))
-                {
-                    Upper = true;
-                    break;
-                }
-                
-            }
-            foreach (char c in password)
-            {
-                if (char.IsNumber(c))
-                {
-                    Number = true;
-                    break;
-                }
-
-            }
-            if(!Upper || !Number) return false;
-
-            return true;
-        }
-
+ 
         private void Authorization()
         {
             if (PassBoxTwo.Password != PassBoxOne.Password)
@@ -165,7 +132,7 @@ namespace CarGO_Control
             }
             else if (LoginTextBox.Text != "" && PassBoxOne.Password.Length >= 5 && PassBoxTwo.Password.Length >= 5)
             {
-                if (CheckPass())
+                if (CheckTextBox.CheckPass(PassBoxOne.Password))
                 {
                     Registration();
                     SMB.SuccessfulMSG("Успешно!");

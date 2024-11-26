@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CarGO_Control"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen" >
+        Title="MainWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen" WindowState ="Maximized">
     <Window.Resources>
         <Style x:Key="RoundedButtonStyle" TargetType="Button">
             <Setter Property="Template">
@@ -62,13 +62,13 @@
         <Rectangle Name="Background" Fill="Black" Opacity="0.6" Margin="0,0,0,0" Width="190" Height="250" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Height="250" Width ="190" Margin="0,0,0,0">
             <Label Name="LoginLabel" Content="Логин" HorizontalAlignment="Center" Margin="0,45,0,0" VerticalAlignment="Top" Foreground="#FFFFFF" HorizontalContentAlignment="Stretch" RenderTransformOrigin="0.642,-1.944"/>
-            <TextBox Name="LoginBox" Background ="#D9D9D9" Margin="0,70,0,0" TextWrapping="Wrap" Text="" Width="140.2" RenderTransformOrigin="0.5,0.5" Height="22" VerticalAlignment="Top" HorizontalContentAlignment="Center" PreviewTextInput ="LoginBoxCheck" UndoLimit="16"/>
+            <TextBox Name="LoginBox" Background ="#D9D9D9" Margin="0,70,0,0" TextWrapping="Wrap" Text="" Width="140.2" RenderTransformOrigin="0.5,0.5" Height="22" VerticalAlignment="Top" HorizontalContentAlignment="Center" PreviewTextInput ="TextBox_PreviewTextInput" UndoLimit="16"/>
             <Label Name="PassLabel" Content="Пароль" Margin="0,0,0,50" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#FFFFFF" HorizontalContentAlignment="Center"/>
-            <PasswordBox Name = "PassBox" Background ="#D9D9D9"  Width="142" Height="22" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Password="" PasswordChar="●" />
-            <TextBox Name = "PasswordShowBox" Grid.Column="1" HorizontalAlignment="Center" Margin="0,0,0,0" Grid.Row="1" TextWrapping="Wrap" Text="хуй" VerticalAlignment="Center" Width="142" Height="21" Background ="#D9D9D9" Visibility="Hidden"/>
+            <PasswordBox Name = "PassBox" Background ="#D9D9D9"  Width="142" Height="22" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Password="" PasswordChar="●" PreviewTextInput="PassBox_PreviewTextInput"/>
+            <TextBox Name = "PasswordShowBox" Grid.Column="1" HorizontalAlignment="Center" Margin="0,0,0,0" Grid.Row="1" TextWrapping="Wrap" Text="хуй" VerticalAlignment="Center" Width="142" Height="21" Background ="#D9D9D9" Visibility="Hidden" PreviewTextInput="PassBox_PreviewTextInput"/>
             <Button Name = "ToggleButton" Content="Показать" VerticalAlignment ="Bottom" HorizontalAlignment="Center" Margin="0,0,0,90" Width="85" Height ="20" Click="ToggleButton_Click"/>
-            <Button Name="SignInButton" Content="Войти" Margin="0,0,0,65" Width="103"  Height ="20" Foreground="White" VerticalAlignment="Bottom" Click="SignInPress" Style="{StaticResource RoundedButtonStyle}" BorderBrush="{x:Null}"/>
-            <Button x:Name="SignUpButton" Content="Регистрация" Margin="0,0,0,40" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="104" Foreground =" #FFFFFF" Click="SingUpPress" Style="{StaticResource RoundedButtonStyle}" BorderBrush="{x:Null}"/>
+            <Button Name="SignInButton" Content="Войти" Margin="44,165,43,0" Width="103"  Height ="26" Foreground="White" VerticalAlignment="Top" Click="SignInPress" Style="{StaticResource RoundedButtonStyle}" BorderBrush="{x:Null}"/>
+            <Button x:Name="SignUpButton" Content="Регистрация" Margin="0,200,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="104" Foreground =" #FFFFFF" Click="SingUpPress" Style="{StaticResource RoundedButtonStyle}" BorderBrush="{x:Null}" Height="26"/>
         </Grid>
     </Grid>
 </Window>

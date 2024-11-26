@@ -1,5 +1,6 @@
 ﻿using CarGO_Control.DataBase;
 using CarGO_Control.Tools;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
 
@@ -52,22 +53,24 @@ namespace CarGO_Control
             else if (PassBox.Password.Length < 5) SMB.ShowWarningMessageBox("Ваш пароль состоит из менее 5 символов");
             else SMB.ShowWarningMessageBox("У вас есть незаполненные поля!");
         }
-
         private void SingUpPress(object sender, RoutedEventArgs e)
         {
             (new SignUpWindow()).Show();
             this.Close();
         }
-
-        private void LoginBoxCheck(object sender, TextCompositionEventArgs e)
+        private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            string forbiddenChars = "()!@#$%^&*_-+=.,<>№;:?*";
+            if (!CheckTextBox.CheckText(e)) e.Handled = true;
+        }
 
-            if (forbiddenChars.Contains(e.Text) || forbiddenChars.Contains('"'))
+        private void PassBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (!CheckTextBox.CheckText(e))
             {
                 e.Handled = true;
+                return;
             }
-
+            CheckTextBox.CheckPass(e.Text);
         }
         private void ToggleButton_Click(object sender, RoutedEventArgs e)
         {
@@ -102,5 +105,7 @@ namespace CarGO_Control
                 return true;
             }
         }
+
+       
     }
 }
