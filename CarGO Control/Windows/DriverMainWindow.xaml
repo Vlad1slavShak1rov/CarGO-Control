@@ -8,6 +8,7 @@
         Title="DriverMainWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen" WindowState ="Maximized">
     <Grid>
         <Image Margin="0,0,0,0" Stretch="Fill" Source="/CarGOControl;component/Resources/DriverBackGround.jpg"/>
+        <Button Content="Button" HorizontalAlignment="Left" Margin="255,183,0,0" VerticalAlignment="Top" Click="Button_Click"/>
     </Grid>
 
 </Window>

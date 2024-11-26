@@ -42,9 +42,9 @@ namespace CarGO_Control.Windows
             HelloLabel.Content = $"Добро пожаловать: {nick}";
 
             editDriver = new(this);
-            DriversReg.BackButtonClicked += BackButtonClicked;
+            DriversReg.BackButtonClicked += BackMenuClick;
             DriversReg.LoadedFile += LoadData;
-            editDriver.BackClick += BackButtonClicked;
+            editDriver.BackClick += BackToTable;
         }
 
         private void TimerInit()
@@ -69,12 +69,19 @@ namespace CarGO_Control.Windows
             ViewGrid.Children.Add(DriversReg);
         }
 
-        private void BackButtonClicked(object sender, RoutedEventArgs e)
+        private void BackMenuClick(object sender, RoutedEventArgs e)
         {
             LoadData(null, null);
             ViewGrid.Children.Clear();
             RegDriversButton.Visibility = Visibility.Visible;
             ManagementButton.Visibility = Visibility.Visible;
+        }
+
+        private void BackToTable(object sender, RoutedEventArgs e)
+        {
+            ViewGrid.Children.Clear();
+            LoadData(null, null);
+            ViewGrid.Children.Add(DriversReg);
         }
 
         private void DeleteButton_Click(object sender, Driver driver)

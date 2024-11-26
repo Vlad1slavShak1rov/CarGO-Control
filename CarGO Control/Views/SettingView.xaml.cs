@@ -10,25 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace CarGO_Control.Windows
+namespace CarGO_Control.Views
 {
     /// <summary>
-    /// Логика взаимодействия для DriverMainWindow.xaml
+    /// Логика взаимодействия для SettingView.xaml
     /// </summary>
-    public partial class DriverMainWindow : Window
+    public partial class SettingView : UserControl
     {
-        private string _driverName;
-        public DriverMainWindow(string name)
+        public SettingView()
         {
             InitializeComponent();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            (new MainWindow()).Show();
-            this.Close();
         }
     }
 }
