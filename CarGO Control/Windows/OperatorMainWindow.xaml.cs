@@ -16,6 +16,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using CarGO_Control.Views;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore;
 
 namespace CarGO_Control.Windows
 {
@@ -27,17 +29,22 @@ namespace CarGO_Control.Windows
         private DispatcherTimer _timer;
         private List<Driver> _drivers = new List<Driver>();
         private DriversReg DriversReg = new();
+        private EditDriver editDriver; 
         private string _name;
+        public event EventHandler<Driver> DriverChanged;
 
         public OperatorMainWindow(string nick)
         {
-            _name = nick;
+            
             TimerInit();
             InitializeComponent();
+            _name = nick;
             HelloLabel.Content = $"Добро пожаловать: {nick}";
 
-            DriversReg.BackButtonClicked += DriversReg_BackButtonClicked;
-            DriversReg.LoadedFile += LoadDate;
+            editDriver = new(this);
+            DriversReg.BackButtonClicked += BackButtonClicked;
+            DriversReg.LoadedFile += LoadData;
+            editDriver.BackClick += BackButtonClicked;
         }
 
         private void TimerInit()
@@ -60,11 +67,11 @@ namespace CarGO_Control.Windows
             ManagementButton.Visibility = Visibility.Hidden;
             ViewGrid.Children.Clear();
             ViewGrid.Children.Add(DriversReg);
-
         }
 
-        private void DriversReg_BackButtonClicked(object sender, RoutedEventArgs e)
+        private void BackButtonClicked(object sender, RoutedEventArgs e)
         {
+            LoadData(null, null);
             ViewGrid.Children.Clear();
             RegDriversButton.Visibility = Visibility.Visible;
             ManagementButton.Visibility = Visibility.Visible;
@@ -76,46 +83,34 @@ namespace CarGO_Control.Windows
 
             if (result == MessageBoxResult.Yes)
             {
-                    using (var db = new CarGoDBContext())
+                using (var db = new CarGoDBContext())
                 {
-                    var driverToRemove = db.Drivers.
-                        Where(d => d.Name == driver.Name);
-                    foreach (var dr in driverToRemove)
-                    {
-                        {
-                            if (driverToRemove != null)
-                            {
-                                db.Drivers.Remove(dr);
-                                db.SaveChanges();
-                            }
-                        }
-                    }
+                    var driverToRemove = db.Drivers
+                        .Include(d => d.Users)
+                        .FirstOrDefault(d => d.Id == driver.Id);
 
-                    var userToRemove = db.Users.
-                       Where(u => u.Login == driver.Name);
-
-                    foreach (var us in userToRemove)
+                    if (driverToRemove != null)
                     {
+                        if (driverToRemove.Users != null)
                         {
-                            if (userToRemove != null)
-                            {
-                                db.Users.Remove(us);
-                                db.SaveChanges();
-                                
-                            }
+                            db.Users.Remove(driverToRemove.Users);
                         }
+                        db.Drivers.Remove(driverToRemove);
+                        db.SaveChanges();
                     }
-                    LoadDate(null, null);
+                    LoadData(null, null);
                 }
             }
-            
         }
-            private void EditButton_Click(object sender, Driver driver)
+
+        private void EditButton_Click(object sender, Driver driver)
             {
-                //TODO
+                ViewGrid.Children.Clear();
+                ViewGrid.Children.Add(editDriver);
+                DriverChanged?.Invoke(this, driver);
             }
 
-            private void LoadDate(object sender, EventArgs e)
+            private void LoadData(object sender, EventArgs e)
             {
                 DriversReg.DriversList.Children.Clear();
                 using (var db = new CarGoDBContext())
