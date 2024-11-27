@@ -29,7 +29,8 @@ namespace CarGO_Control.Windows
         private DispatcherTimer _timer;
         private List<Driver> _drivers = new List<Driver>();
         private DriversReg DriversReg = new();
-        private EditDriver editDriver; 
+        private EditDriver editDriver;
+        private SettingView settingView;
         private string _name;
         public event EventHandler<Driver> DriverChanged;
 
@@ -42,11 +43,16 @@ namespace CarGO_Control.Windows
             HelloLabel.Content = $"Добро пожаловать: {nick}";
 
             editDriver = new(this);
+            settingView = new SettingView(_name);
             DriversReg.BackButtonClicked += BackMenuClick;
             DriversReg.LoadedFile += LoadData;
             editDriver.BackClick += BackToTable;
+            settingView.ChangeData += ChangeNick;
+            settingView.BackToMain += BackMenuClick;
+            settingView.LeaveProfile += LeaveMainProfile;
         }
 
+       
         private void TimerInit()
         {
             _timer = new DispatcherTimer();
@@ -82,6 +88,28 @@ namespace CarGO_Control.Windows
             ViewGrid.Children.Clear();
             LoadData(null, null);
             ViewGrid.Children.Add(DriversReg);
+        }
+
+        private void SettingsButton_Click(object sender, RoutedEventArgs e)
+        {
+            ViewGrid.Children.Clear(); 
+            ViewGrid.Children.Add(settingView);
+        }
+
+        private void ChangeNick(object sender, string nick)
+        {
+            _name = nick;
+            HelloLabel.Content = $"Добро пожаловать: {nick}";
+        }
+
+        private void LeaveMainProfile(object sender, EventArgs e)
+        {
+            var result = SMB.QuestionMSG("Вы действительно хотите выйти?");
+            if (result == MessageBoxResult.Yes)
+            {
+                (new MainWindow()).Show();
+                this.Close();
+            }
         }
 
         private void DeleteButton_Click(object sender, Driver driver)
@@ -134,7 +162,5 @@ namespace CarGO_Control.Windows
                     }
                 }
             }
-
-        
     }
 }

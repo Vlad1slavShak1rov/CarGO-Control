@@ -27,13 +27,13 @@ namespace CarGO_Control.Windows
         public int Result { get; private set; }
         private void SaveClick(object sender, RoutedEventArgs e)
         {
-            if (ExpBox.Text != string.Empty)
+            if (ExpBox.Text != string.Empty && int.Parse(ExpBox.Text) < 100)
             {
                 Result = int.Parse(ExpBox.Text);
                 this.DialogResult = true;
                 this.Close();
             }
-            else SMB.ShowWarningMessageBox("Введите Ваш стаж вождения!");
+            else SMB.ShowWarningMessageBox("Введите нормальный стаж вождения!");
         }
 
         private void ExpBox_PreviewTextInput(object sender, TextCompositionEventArgs e)

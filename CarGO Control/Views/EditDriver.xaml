@@ -6,6 +6,32 @@
              xmlns:local="clr-namespace:CarGO_Control.Views"
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="350">
+    <UserControl.Resources>
+        <Style x:Key="RoundedButtonStyle" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" 
+                            BorderBrush="{TemplateBinding BorderBrush}" 
+                            BorderThickness="{TemplateBinding BorderThickness}" 
+                            CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#575859"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#000000"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Background" Value="#FFDDDDDD"/>
+            <Setter Property="BorderThickness" Value="2"/>
+        </Style>
+    </UserControl.Resources>
     <Grid>
         <Rectangle Fill="White" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.5" Width = "350" Height="400"/>
         <Grid>
@@ -14,7 +40,7 @@
             <TextBox Name = "ExpBox" Margin="0,0,0,70" TextWrapping="Wrap"  VerticalAlignment="Center" HorizontalAlignment="Center" Width="225" Height="35"/>
             <TextBox Name = "TruckMarkBox" Margin="0,70,0,0" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center" Width="225" Height="35"/>
             <TextBox Name = "TrackBox" Margin="0,210,0,0" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center" Width="225" Height="35"/>
-            <Button Name = "SaveButtonClick" Content="Сохранить" HorizontalAlignment="Center" Margin="260,330,0,0" VerticalAlignment="Center" Width="70" Height="30" Click="SaveButtonClick_Click"/>
+            <Button Name = "SaveButtonClick" Content="Сохранить" HorizontalAlignment="Center" Margin="260,330,0,0" VerticalAlignment="Center" Width="80" Height="35" Click="SaveButtonClick_Click" Style= "{StaticResource RoundedButtonStyle}"/>
             <Label Content="Имя" Margin="0,0,0,270" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontFamily="Arial Black" Foreground="White"/>
             <Label Content="Опыт" Margin="0,0,0,130" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontFamily="Arial Black" Foreground="White"/>
             <Label Content="Марка грузовика" Margin="0,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontFamily="Arial Black" Foreground="White"/>

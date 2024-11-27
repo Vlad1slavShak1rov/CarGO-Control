@@ -1,5 +1,6 @@
 ﻿using CarGO_Control.DataBase;
 using CarGO_Control.Tools;
+using Microsoft.EntityFrameworkCore;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
@@ -28,18 +29,21 @@ namespace CarGO_Control
                     using (var context = new CarGoDBContext())
                     {
                         var users = context.Users.
+                            Include(p => p.Driver).
+                            Include(p => p.Operator).
                             FirstOrDefault(p => p.Login == LoginBox.Text);
+
                         int role = users?.RoleID ?? 0;
                         switch (role)
                         {
                             case 1:
                                 var operatorWindow = MainWindowFactory.CreateWindow(MainWindowFactory.WindowType.Operator);
-                                operatorWindow.Show(LoginBox.Text);
+                                operatorWindow.Show(users.Operator.Name);
                                 this.Close();
                                 return;
                             case 2:
                                 var driverWindow = MainWindowFactory.CreateWindow(MainWindowFactory.WindowType.Driver);
-                                driverWindow.Show(LoginBox.Text);
+                                driverWindow.Show(users.Driver.Name);
                                 this.Close();
                                 return;
 

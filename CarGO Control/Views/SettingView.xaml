@@ -6,16 +6,42 @@
              xmlns:local="clr-namespace:CarGO_Control.Views"
              mc:Ignorable="d" 
              d:DesignHeight="350" d:DesignWidth="300">
-    <Grid>
-        <Rectangle HorizontalAlignment="Center" VerticalAlignment="Top" Height="440" Stroke="Black" Fill="White"  Width="320" Opacity="0.45"/>
+    <UserControl.Resources>
+        <Style x:Key="RoundedButtonStyle" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" 
+                        BorderBrush="{TemplateBinding BorderBrush}" 
+                        BorderThickness="{TemplateBinding BorderThickness}" 
+                        CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#575859"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#000000"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Background" Value="#FFDDDDDD"/>
+            <Setter Property="BorderThickness" Value="2"/>
+        </Style>
+    </UserControl.Resources>
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Rectangle HorizontalAlignment="Center" VerticalAlignment="Center" Height="440" Stroke="Black" Fill="White"  Width="320" Opacity="0.45"/>
         <TextBox Name ="LoginBox" Margin = "0,0,0,220" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" Width="190" Height="35" FontSize="22" IsEnabled="False"/>
-        <TextBox Name ="NameBox" Margin = "0,0,0,90" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" Width="190" Height="35" FontSize="22"/>
+        <TextBox Name ="NameBox" Margin = "0,0,0,90" VerticalAlignment="Center" HorizontalAlignment="Center" Width="190" Height="35" FontSize="22" PreviewTextInput="NameBox_PreviewTextInput" MaxLength="16" TextWrapping="NoWrap"/>
         <TextBox Name ="RoleBox" Text ="Оператор" Margin = "0,40,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" Width="190" Height="35" FontSize="22" IsEnabled="False"/>
         <Label Content="Логин" HorizontalAlignment="Center" Margin="0,0,0,280" VerticalAlignment="Center" FontFamily="Arial Black" Foreground="White" Background="{x:Null}"/>
         <Label Content="Имя" HorizontalAlignment="Center" Margin="0,0,0,140" VerticalAlignment="Center" FontFamily="Arial Black" Foreground="White" Background="{x:Null}"/>
         <Label Content="Роль" HorizontalAlignment="Center" Margin="0,0,0,10" VerticalAlignment="Center" FontFamily="Arial Black" Foreground="White" Background="{x:Null}"/>
-        <Button Name="BackButton" Content="Назад" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="220,300,0,0" Width="70" Height="30" FontSize="20"/>
-        <Button Name="SaveChacngeButton" Content="Сохранить" HorizontalAlignment="Center" VerticalAlignment="Center" Width="120" Height="30" Margin="0,160,0,0" FontSize="20" Visibility="Hidden"/>
-
+        <Button Name="BackButton" Content="Назад" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,220,0,0" Width="120" Height="30" FontSize="20" Style="{StaticResource RoundedButtonStyle}" Click="BackButton_Click"/>
+        <Button Name="SaveСhangeButton" Content="Сохранить" HorizontalAlignment="Center" VerticalAlignment="Center" Width="120" Height="30" Margin="0,150,0,0" FontSize="20" Style="{StaticResource RoundedButtonStyle}" Visibility="Visible" Click="SaveСhangeButton_Click"/>
+        <Button Name = "LeaveProfileButton" Content="Выйти" HorizontalAlignment="Center" VerticalAlignment="Center" Width="120" Height="30" Margin="0,290,0,0" FontSize="20" Style="{StaticResource RoundedButtonStyle}" Click="LeaveProfileButton_Click"/>
     </Grid>
 </UserControl>
