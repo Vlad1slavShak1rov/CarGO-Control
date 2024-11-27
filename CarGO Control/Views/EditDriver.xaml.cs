@@ -65,6 +65,7 @@ namespace CarGO_Control.Views
                     db.SaveChanges();
                     SMB.SuccessfulMSG("Данные успешно обновлены!");
                     ReloadList?.Invoke(null, EventArgs.Empty);
+                    BackButtonClick_Click(null, null);
                 }
             }
             else SMB.ShowWarningMessageBox("У вас есть незаполненные поля!");
