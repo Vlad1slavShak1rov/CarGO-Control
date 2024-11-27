@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CarGO_Control.Tools;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,7 @@ namespace CarGO_Control.Views
     {
         public event RoutedEventHandler BackButtonClicked;
         public event EventHandler LoadedFile;
+        public event EventHandler Search;
 
         public DriversReg()
         {
@@ -53,6 +55,12 @@ namespace CarGO_Control.Views
         protected virtual void LoadedFinish(EventArgs e)
         {
             LoadedFile?.Invoke(this, e);
+        }
+
+        private void SearchBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = !CheckTextBox.CheckText(e);
+            Search?.Invoke(this, e);
         }
     }
 }

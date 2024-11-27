@@ -19,9 +19,6 @@ using System.Windows.Shapes;
 
 namespace CarGO_Control.Views
 {
-    /// <summary>
-    /// Логика взаимодействия для SettingView.xaml
-    /// </summary>
     public partial class SettingView : UserControl
     {
         private string _name;
@@ -85,6 +82,16 @@ namespace CarGO_Control.Views
 
         private void LeaveProfileButton_Click(object sender, RoutedEventArgs e)
         {
+            MessageBoxResult result;
+            if (_name != NameBox.Text)
+            {
+                result = SMB.QuestionMSG("У вас есть несохранненые данные! Сохранить?");
+                if (result == MessageBoxResult.Yes)
+                {
+                    SaveСhangeButton_Click(null, null);
+                }
+            }
+
             LeaveProfile?.Invoke(this, e);
         }
     }

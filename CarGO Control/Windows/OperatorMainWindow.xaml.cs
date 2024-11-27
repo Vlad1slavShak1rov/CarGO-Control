@@ -24,6 +24,7 @@ namespace CarGO_Control.Windows
     /// <summary>
     /// Логика взаимодействия для OperatorMainWindow.xaml
     /// </summary>
+    /// НУЖНО РЕАЛИЗОВАТЬ ЧТОБЫ ПОИСК РАБОТАЛ В РЕАЛ ЛАЙФ
     public partial class OperatorMainWindow : Window
     {
         private DispatcherTimer _timer;
@@ -39,17 +40,23 @@ namespace CarGO_Control.Windows
             
             TimerInit();
             InitializeComponent();
+            InitDrivers();
+
             _name = nick;
             HelloLabel.Content = $"Добро пожаловать: {nick}";
 
             editDriver = new(this);
             settingView = new SettingView(_name);
+
             DriversReg.BackButtonClicked += BackMenuClick;
+            editDriver.ReloadList += AcceptData;
             DriversReg.LoadedFile += LoadData;
+            DriversReg.Search += SearcDrivers;
             editDriver.BackClick += BackToTable;
             settingView.ChangeData += ChangeNick;
             settingView.BackToMain += BackMenuClick;
             settingView.LeaveProfile += LeaveMainProfile;
+            
         }
 
        
@@ -65,6 +72,8 @@ namespace CarGO_Control.Windows
         {
             TimeLabel.Content = "Время: " + DateTime.Now.ToString("HH:mm:ss");
             DateLabel.Content = "Дата: " + DateTime.Now.ToString("dd.MM.yy");
+            
+            if (DriversReg.SearchBox.Text == string.Empty) LoadData(null, null);
         }
 
         private void ManagementButton_Click(object sender, RoutedEventArgs e)
@@ -112,6 +121,24 @@ namespace CarGO_Control.Windows
             }
         }
 
+        private void AcceptData(object sender, EventArgs e)
+        {
+            _drivers.Clear();
+            InitDrivers();
+        }
+
+        private void SearcDrivers(object sender, EventArgs e)
+        {
+            DriversReg.DriversList.Children.Clear();
+            string query = DriversReg.SearchBox.Text.ToLower();
+            foreach (var driver in _drivers)
+            {
+                if (driver.Name.ToLower().StartsWith(query))
+                {
+                    AddUseControl(driver);
+                }
+            }
+        }
         private void DeleteButton_Click(object sender, Driver driver)
         {
             var result = SMB.QuestionMSG($"Вы действительно хотите удалить водителя {driver.Name}?");
@@ -139,28 +166,44 @@ namespace CarGO_Control.Windows
         }
 
         private void EditButton_Click(object sender, Driver driver)
-            {
-                ViewGrid.Children.Clear();
-                ViewGrid.Children.Add(editDriver);
-                DriverChanged?.Invoke(this, driver);
-            }
+        {
+            ViewGrid.Children.Clear();
+            ViewGrid.Children.Add(editDriver);
+            DriverChanged?.Invoke(this, driver);
+        }
 
-            private void LoadData(object sender, EventArgs e)
+        private void LoadData(object sender, EventArgs e)
+        {
+            DriversReg.DriversList.Children.Clear();
+            using (var db = new CarGoDBContext())
             {
-                DriversReg.DriversList.Children.Clear();
-                using (var db = new CarGoDBContext())
+                var drivers = db.Drivers.ToList();
+                foreach (var driver in drivers)
                 {
-                    var drivers = db.Drivers.ToList();
-                    foreach (var driver in drivers)
-                    {
-                        UserControl1 driver_field = new UserControl1(driver);
-                        driver_field.DeleteButtonClick += DeleteButton_Click;
-                        driver_field.EditButtonClick += EditButton_Click;
-                        driver_field.Margin = new Thickness(0, 0, 0, 10);
-                        DriversReg.DriversList.Children.Add(driver_field);
-                        _drivers.Add(driver);
-                    }
+                    AddUseControl(driver);
                 }
             }
+        }
+
+        private void AddUseControl(Driver driver)
+        {
+            UserControl1 driver_field = new UserControl1(driver);
+            driver_field.DeleteButtonClick += DeleteButton_Click;
+            driver_field.EditButtonClick += EditButton_Click;
+            driver_field.Margin = new Thickness(0, 0, 0, 10);
+            DriversReg.DriversList.Children.Add(driver_field);
+        }
+
+        private void InitDrivers()
+        {
+            using (var db = new CarGoDBContext())
+            {
+                var drivers = db.Drivers.ToList();
+                foreach (var driver in drivers)
+                {
+                    _drivers.Add(driver);
+                }
+            }
+        }
     }
 }

@@ -14,6 +14,7 @@
     <None Remove="Resources\DriverMenu.jpg" />
     <None Remove="Resources\OperatorBackGroud.jpg" />
     <None Remove="Resources\OperatorMenu.jpg" />
+    <None Remove="Resources\SearchPick.png" />
     <None Remove="Resources\SettingsIco.png" />
   </ItemGroup>
 
@@ -28,6 +29,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\OperatorBackGroud.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\SearchPick.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\SettingsIco.png">

@@ -24,15 +24,17 @@ namespace CarGO_Control.Views
     {
 
         public event RoutedEventHandler BackClick;
+        public event EventHandler ReloadList;
         string _tempName;
         string _tempExp;
+        private List<Driver> _drivers = new List<Driver>();
         public EditDriver(OperatorMainWindow operatorMain)
         {
             InitializeComponent();
-            operatorMain.DriverChanged += AcceptDate;
+            operatorMain.DriverChanged += AcceptData;
         }
 
-        private void AcceptDate(object sender, Driver driver)
+        private void AcceptData(object sender, Driver driver)
         {
             _tempName = driver.Name;
             _tempExp = driver.Experience.ToString();
@@ -62,6 +64,7 @@ namespace CarGO_Control.Views
                     }
                     db.SaveChanges();
                     SMB.SuccessfulMSG("Данные успешно обновлены!");
+                    ReloadList?.Invoke(null, EventArgs.Empty);
                 }
             }
             else SMB.ShowWarningMessageBox("У вас есть незаполненные поля!");
