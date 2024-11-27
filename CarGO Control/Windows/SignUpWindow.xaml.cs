@@ -44,7 +44,10 @@ namespace CarGO_Control
             Animation("pack://application:,,,/Resources/DriverMenu.jpg");
         }
 
-
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter) SignUpButton_Click(this, null);
+        }
         private void SignUpButton_Click(object sender, RoutedEventArgs e)
         {
             using (var context = new CarGoDBContext())
@@ -167,5 +170,7 @@ namespace CarGO_Control
             (new MainWindow()).Show();
             this.Close();
         }
+
+       
     }
 }

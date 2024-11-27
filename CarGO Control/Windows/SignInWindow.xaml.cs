@@ -63,6 +63,14 @@ namespace CarGO_Control
             if (!CheckTextBox.CheckText(e)) e.Handled = true;
         }
 
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                SignInPress(this, null);
+            }
+        }
+
         private void PassBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             if (!CheckTextBox.CheckText(e))
@@ -79,6 +87,7 @@ namespace CarGO_Control
                 PassBox.Password = PasswordShowBox.Text;
                 PasswordShowBox.Visibility = Visibility.Hidden;
                 PassBox.PasswordChar = '●';
+                ToggleButton.IsChecked = false;
                 ToggleButton.Content = "Показать";
             }
             else
@@ -105,7 +114,5 @@ namespace CarGO_Control
                 return true;
             }
         }
-
-       
     }
 }
