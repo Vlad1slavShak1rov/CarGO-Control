@@ -25,7 +25,7 @@ namespace CarGO_Control.Views
         private string _name;
         public EventHandler<string> ChangeData;
         public RoutedEventHandler BackToMain;
-        public EventHandler LeaveProfile;
+        public EventHandler<MessageBoxResult> LeaveProfile;
        
         public SettingView(string Name)
         {
@@ -33,8 +33,6 @@ namespace CarGO_Control.Views
             InitializeComponent();
             SaveСhangeButton.Visibility = Visibility.Hidden;
             LoadData(_name);
-           
-           
         }
         private void LoadData(string Name)
         {
@@ -92,10 +90,15 @@ namespace CarGO_Control.Views
                 if (result == MessageBoxResult.Yes)
                 {
                     SaveСhangeButton_Click(null, null);
+                    LeaveProfile?.Invoke(this, result);
                 }
             }
-
-            LeaveProfile?.Invoke(this, e);
+            else
+            {
+                result = SMB.QuestionMSG("Вы действительно хотите выйти?");
+                if (result == MessageBoxResult.Yes) LeaveProfile?.Invoke(this, result);
+            }
+            
         }
     }
 }

@@ -129,9 +129,8 @@ namespace CarGO_Control.Windows
             HelloLabel.Content = $"Добро пожаловать: {nick}";
         }
 
-        private void LeaveMainProfile(object sender, EventArgs e)
+        private void LeaveMainProfile(object sender, MessageBoxResult result)
         {
-            var result = SMB.QuestionMSG("Вы действительно хотите выйти?");
             if (result == MessageBoxResult.Yes)
             {
                 (new MainWindow()).Show();
