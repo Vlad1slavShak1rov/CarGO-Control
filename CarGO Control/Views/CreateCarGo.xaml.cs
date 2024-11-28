@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GMap.NET.MapProviders;
+using GMap.NET;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,35 +14,29 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
 namespace CarGO_Control.Views
 {
     /// <summary>
-    /// Логика взаимодействия для TransManagement.xaml
+    /// Логика взаимодействия для CreateCarGo.xaml
     /// </summary>
-    public partial class TransManagement : UserControl
+    public partial class CreateCarGo : UserControl
     {
-        public event RoutedEventHandler BackClick;
-        public event RoutedEventHandler CreateCarGoClick;
-        public TransManagement()
+        public event RoutedEventHandler BackButtonClick;
+        public event RoutedEventHandler SelectRouteClick;
+        public CreateCarGo()
         {
             InitializeComponent();
+            //InitializeMap();
         }
-
+        
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-
-            BackClick?.Invoke(this, e);
+            BackButtonClick?.Invoke(null, null);
         }
 
-        private void CreateCarGo_Click(object sender, RoutedEventArgs e)
+        private void SelectRoute_Click(object sender, RoutedEventArgs e)
         {
-            CreateCarGoClick?.Invoke(this, e);
-        }
-
-        private void ViewCarGo_Click(object sender, RoutedEventArgs e)
-        {
-
+            SelectRouteClick?.Invoke(null, null);
         }
     }
 }

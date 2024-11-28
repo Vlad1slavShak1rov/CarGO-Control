@@ -34,18 +34,18 @@
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" MinHeight="50"/>
+            <RowDefinition Height="Auto" MinHeight="55"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
-            <Rectangle Fill="White" Opacity="0.5" RadiusX="20" RadiusY="50" VerticalAlignment="Top" HorizontalAlignment="Center" Width="600" Height="50"/>
-            <Label Content="Учёт Водителей" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,0,0,0" FontSize="30" FontFamily="Arial Black"/>
+            <Rectangle Fill="White" Opacity="0.5" RadiusX="20" RadiusY="50" VerticalAlignment="Top" HorizontalAlignment="Stretch" Width="600" Height="50"/>
+            <Label Content="Управление перевозками" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,0,0,0" FontSize="30" FontFamily="Arial Black"/>
             <Button Name="BackButton" Content="&lt;" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,0,550,0" Background="{x:Null}" BorderBrush="{x:Null}" FontSize="30" Click="BackButton_Click"/>
         </Grid>
 
         <Grid Grid.Row="1">
-            <Button Name="CreateCarGo" Content="Создать перевозку" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,20,0,0" Height ="35" Width="190" FontSize="16" FontFamily="Arial Black" Opacity ="0.5" Style="{StaticResource RoundedButtonStyle}"/>
-            <Button Name="ViewCarGo" Content="Создать перевозку" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,20,20,0" Height ="35" Width="190" FontSize="16" FontFamily="Arial Black" Opacity ="0.5" Style="{StaticResource RoundedButtonStyle}"/>
+            <Button Name="CreateCarGo" Content="Создать перевозку" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,05,0,0" Height ="50" Width="190" FontSize="16" FontFamily="Arial Black" Opacity ="0.5" Style="{StaticResource RoundedButtonStyle}" Click="CreateCarGo_Click"/>
+            <Button Name="ViewCarGo" Content="Посмотреть перевозку" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,05,20,0" Height ="50" Width="190" FontSize="14" FontFamily="Arial Black" Opacity ="0.5" Style="{StaticResource RoundedButtonStyle}" Click="ViewCarGo_Click"/>
         </Grid>
     </Grid>
 </UserControl>

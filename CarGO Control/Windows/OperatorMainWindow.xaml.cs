@@ -31,6 +31,8 @@ namespace CarGO_Control.Windows
         private List<Driver> _drivers = new List<Driver>();
         private DriversReg DriversReg = new();
         private TransManagement transManagement = new();
+        private CreateCarGo createCarGo = new CreateCarGo();
+        private Map map = new();
         private EditDriver editDriver;
         private SettingView settingView;
         
@@ -53,13 +55,17 @@ namespace CarGO_Control.Windows
             editDriver.ReloadList += AcceptData;
             DriversReg.LoadedFile += LoadData;
             DriversReg.Search += SearcDrivers;
+            DriversReg.LoadDataBase += UpdateDataBaseEvent;
             editDriver.BackClick += BackToTable;
             settingView.ChangeData += ChangeNick;
             settingView.BackToMain += BackMenuClick;
             settingView.LeaveProfile += LeaveMainProfile;
             transManagement.BackClick += BackMenuClick;
-            DriversReg.LoadDataBase += UpdateDataBaseEvent;
-        }
+            transManagement.CreateCarGoClick += CreateCGo;
+            createCarGo.BackButtonClick += BackToTransManagment;
+            createCarGo.SelectRouteClick += SelectRoute;
+            map.BackToCreateCarGo += CreateCGo;
+    }
 
         private void TimerInit()
         {
@@ -67,6 +73,26 @@ namespace CarGO_Control.Windows
             _timer.Interval = TimeSpan.FromSeconds(1);
             _timer.Tick += Timer_Tick;
             _timer.Start();
+        }
+
+        private void SelectRoute(object sender, EventArgs e)
+        {
+            ViewGrid.Children.Clear();
+            ViewGrid.Children.Add(map);
+        }
+
+        private void BackToTransManagment(object sender, EventArgs e)
+        {
+            ViewGrid.Children.Clear();
+            transManagement.Margin = new Thickness(0, 15, 0, 0);
+            ViewGrid.Children.Add(transManagement);
+        }
+
+        public void CreateCGo(object sender, RoutedEventArgs e)
+        {
+            ViewGrid.Children.Clear();
+            createCarGo.Margin = new Thickness(0, 15, 0, 0);
+            ViewGrid.Children.Add(createCarGo);
         }
 
         private void UpdateDataBaseEvent(object sender, EventArgs e)
@@ -178,6 +204,7 @@ namespace CarGO_Control.Windows
         private void RegDriversButton_Click(object sender, RoutedEventArgs e)
         {
             ViewGrid.Children.Clear();
+            transManagement.Margin = new Thickness(0, 15, 0, 0);
             ViewGrid.Children.Add(transManagement);
             RegDriversButton.Visibility = Visibility.Hidden;
             ManagementButton.Visibility = Visibility.Hidden;
