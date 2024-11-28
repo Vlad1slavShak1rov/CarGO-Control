@@ -28,6 +28,7 @@ namespace CarGO_Control.Views
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
+
             BackClick?.Invoke(this, e);
         }
     }
