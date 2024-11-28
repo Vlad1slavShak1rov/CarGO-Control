@@ -24,7 +24,7 @@ namespace CarGO_Control.Windows
     /// <summary>
     /// Логика взаимодействия для OperatorMainWindow.xaml
     /// </summary>
-    /// НУЖНО РЕАЛИЗОВАТЬ ЧТОБЫ ПОИСК РАБОТАЛ В РЕАЛ ЛАЙФ
+    
     public partial class OperatorMainWindow : Window
     {
         private DispatcherTimer _timer;
@@ -34,7 +34,7 @@ namespace CarGO_Control.Windows
         private SettingView settingView;
         private string _name;
         public event EventHandler<Driver> DriverChanged;
-
+        private bool _run = false;
         public OperatorMainWindow(string nick)
         {
             
@@ -59,7 +59,6 @@ namespace CarGO_Control.Windows
             
         }
 
-       
         private void TimerInit()
         {
             _timer = new DispatcherTimer();
@@ -68,12 +67,27 @@ namespace CarGO_Control.Windows
             _timer.Start();
         }
 
+        private void UpdateDataBaseEvent(object sender, EventArgs e)
+        {
+            UpdateDataBase();
+        }
+
+        private async void UpdateDataBase()
+        {
+            while (_run)
+            {
+                if (DriversReg.SearchBox.Text == string.Empty)
+                {
+                    LoadData(null, null);
+                }
+                await Task.Delay(100); 
+            }
+        }
+
         private void Timer_Tick(object sender, EventArgs e)
         {
             TimeLabel.Content = "Время: " + DateTime.Now.ToString("HH:mm:ss");
             DateLabel.Content = "Дата: " + DateTime.Now.ToString("dd.MM.yy");
-            
-            if (DriversReg.SearchBox.Text == string.Empty) LoadData(null, null);
         }
 
         private void ManagementButton_Click(object sender, RoutedEventArgs e)
@@ -82,10 +96,14 @@ namespace CarGO_Control.Windows
             ManagementButton.Visibility = Visibility.Hidden;
             ViewGrid.Children.Clear();
             ViewGrid.Children.Add(DriversReg);
+            DriversReg.LoadDataBase += UpdateDataBaseEvent;
+            _run = true;
         }
 
         private void BackMenuClick(object sender, RoutedEventArgs e)
         {
+            DriversReg.LoadDataBase -= UpdateDataBaseEvent;
+            _run = false;
             LoadData(null, null);
             ViewGrid.Children.Clear();
             RegDriversButton.Visibility = Visibility.Visible;

@@ -16,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace CarGO_Control.Views
 {
@@ -25,14 +26,16 @@ namespace CarGO_Control.Views
         public EventHandler<string> ChangeData;
         public RoutedEventHandler BackToMain;
         public EventHandler LeaveProfile;
+       
         public SettingView(string Name)
         {
             _name = Name;
             InitializeComponent();
             SaveСhangeButton.Visibility = Visibility.Hidden;
             LoadData(_name);
+           
+           
         }
-
         private void LoadData(string Name)
         {
             using (var db = new CarGoDBContext())

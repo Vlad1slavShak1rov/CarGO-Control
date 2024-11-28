@@ -25,11 +25,13 @@ namespace CarGO_Control.Views
         public event RoutedEventHandler BackButtonClicked;
         public event EventHandler LoadedFile;
         public event EventHandler Search;
-
+        public EventHandler LoadDataBase;
+        
         public DriversReg()
         {
             InitializeComponent();
             LoadDataAsync();
+            
         }
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
@@ -50,6 +52,7 @@ namespace CarGO_Control.Views
             ProgressLabel.Visibility = Visibility.Hidden;
             LoadingDataBar.Visibility = Visibility.Hidden;
             LoadedFinish(EventArgs.Empty);
+            LoadDataBase?.Invoke(this, EventArgs.Empty);
         }
 
         protected virtual void LoadedFinish(EventArgs e)
