@@ -30,11 +30,12 @@ namespace CarGO_Control.Windows
         private DispatcherTimer _timer;
         private List<Driver> _drivers = new List<Driver>();
         private DriversReg DriversReg = new();
+        private TransManagement transManagement = new();
         private EditDriver editDriver;
         private SettingView settingView;
+        
         private string _name;
         public event EventHandler<Driver> DriverChanged;
-        private bool _run = false;
         public OperatorMainWindow(string nick)
         {
             
@@ -56,7 +57,8 @@ namespace CarGO_Control.Windows
             settingView.ChangeData += ChangeNick;
             settingView.BackToMain += BackMenuClick;
             settingView.LeaveProfile += LeaveMainProfile;
-            
+            transManagement.BackClick += BackMenuClick;
+            DriversReg.LoadDataBase += UpdateDataBaseEvent;
         }
 
         private void TimerInit()
@@ -69,19 +71,7 @@ namespace CarGO_Control.Windows
 
         private void UpdateDataBaseEvent(object sender, EventArgs e)
         {
-            UpdateDataBase();
-        }
-
-        private async void UpdateDataBase()
-        {
-            while (_run)
-            {
-                if (DriversReg.SearchBox.Text == string.Empty)
-                {
-                    LoadData(null, null);
-                }
-                await Task.Delay(100); 
-            }
+            LoadData(null, null);
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -96,15 +86,11 @@ namespace CarGO_Control.Windows
             ManagementButton.Visibility = Visibility.Hidden;
             ViewGrid.Children.Clear();
             ViewGrid.Children.Add(DriversReg);
-            DriversReg.LoadDataBase += UpdateDataBaseEvent;
-            _run = true;
+         
         }
 
         private void BackMenuClick(object sender, RoutedEventArgs e)
         {
-            DriversReg.LoadDataBase -= UpdateDataBaseEvent;
-            _run = false;
-            LoadData(null, null);
             ViewGrid.Children.Clear();
             RegDriversButton.Visibility = Visibility.Visible;
             ManagementButton.Visibility = Visibility.Visible;
@@ -113,8 +99,9 @@ namespace CarGO_Control.Windows
         private void BackToTable(object sender, RoutedEventArgs e)
         {
             ViewGrid.Children.Clear();
-            LoadData(null, null);
             ViewGrid.Children.Add(DriversReg);
+            RegDriversButton.Visibility = Visibility.Hidden;
+            ManagementButton.Visibility = Visibility.Hidden;
         }
 
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
@@ -188,6 +175,13 @@ namespace CarGO_Control.Windows
             ViewGrid.Children.Add(editDriver);
             DriverChanged?.Invoke(this, driver);
         }
+        private void RegDriversButton_Click(object sender, RoutedEventArgs e)
+        {
+            ViewGrid.Children.Clear();
+            ViewGrid.Children.Add(transManagement);
+            RegDriversButton.Visibility = Visibility.Hidden;
+            ManagementButton.Visibility = Visibility.Hidden;
+        }
 
         private void LoadData(object sender, EventArgs e)
         {
@@ -222,5 +216,7 @@ namespace CarGO_Control.Windows
                 }
             }
         }
+
+        
     }
 }

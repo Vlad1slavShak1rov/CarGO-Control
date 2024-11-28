@@ -54,7 +54,6 @@ namespace CarGO_Control.Views
             LoadedFinish(EventArgs.Empty);
             LoadDataBase?.Invoke(this, EventArgs.Empty);
         }
-
         protected virtual void LoadedFinish(EventArgs e)
         {
             LoadedFile?.Invoke(this, e);
@@ -64,6 +63,14 @@ namespace CarGO_Control.Views
         {
             e.Handled = !CheckTextBox.CheckText(e);
             Search?.Invoke(this, e);
+        }
+
+        private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if(SearchBox.Text == string.Empty || DriversList.Children.Count == 0)
+            {
+                LoadDataBase?.Invoke(this, EventArgs.Empty);
+            }
         }
     }
 }
