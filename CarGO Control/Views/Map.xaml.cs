@@ -18,6 +18,7 @@ using Newtonsoft.Json.Linq;
 using System.Net.Http;
 using CarGO_Control.Tools;
 
+
 namespace CarGO_Control.Views
 {
     /// <summary>
@@ -26,6 +27,7 @@ namespace CarGO_Control.Views
     public partial class Map : UserControl
     {
         public event RoutedEventHandler BackToCreateCarGo;
+        Random rand = new Random();
         private static readonly HttpClient httpClient = new HttpClient();
         ApiGetCity apiGetCity = new();
         public Map()
@@ -50,16 +52,20 @@ namespace CarGO_Control.Views
 
         private async void SearchButton_Click_1(object sender, RoutedEventArgs e)
         {
+            MyProgressBar.Visibility = Visibility.Visible;
+            MyProgressBar.Value = 0;
             var coord = await apiGetCity.ReturnResponse(SearchBox.Text);
+            while(MyProgressBar.Value < 100)
+                 MyProgressBar.Value += rand.Next(10, 20); await Task.Delay(100);
+
+            MyProgressBar.Visibility = Visibility.Hidden;
             DataHandler(coord); 
         }
 
         private void DataHandler(PointLatLng data)
         {
-            
             MyMaps.Position = data;
             MyMaps.Zoom = 10;
-
         }
 
     }
