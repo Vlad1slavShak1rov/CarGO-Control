@@ -14,10 +14,12 @@
         </Grid.ColumnDefinitions>
         <gmap:GMapControl Name="MyMaps" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1"/>
         <Button Name = "SaveButton" Content="&lt;" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Height="30" Width="26" Click="SaveButton_Click"/>
-        <Button Name ="ButtonBack" Content="Сохранить" HorizontalAlignment="Left" Margin="60,35,0,0" VerticalAlignment="Center"/>
-        <TextBox Name ="CityFromBox" HorizontalAlignment="Left" Margin="20,120,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="159" Height="30"/>
-        <TextBox Name ="CitiToBox" HorizontalAlignment="Left" Margin="20,190,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="159" Height="30"/>
-        <Label Content="Откуда" HorizontalAlignment="Left" Margin="65,100,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Arial Black"/>
-        <Label Content="Куда" HorizontalAlignment="Left" Margin="65,170,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Arial Black"/>
+        <Button Name = "SearchButton" Content="Поиск" Margin = "0,0,0,190" HorizontalAlignment="Center" VerticalAlignment="Center" Width="60" Height="20" Click="SearchButton_Click_1"/>
+        <TextBox Name = "SearchBox"  Margin = "0,0,0,250" Width="159" Height="30"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Button Name ="ButtonBack" Content="Сохранить" HorizontalAlignment="Center" Margin="0,90,0,0" VerticalAlignment="Center"/>
+        <TextBox Name ="CityFromBox" HorizontalAlignment="Center" Margin="0,175,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="159" Height="30"/>
+        <TextBox Name ="CitiToBox" HorizontalAlignment="Center" Margin="0,225,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="159" Height="30"/>
+        <Label Content="Откуда" HorizontalAlignment="Center" Margin="0,150,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Arial Black"/>
+        <Label Content="Куда" HorizontalAlignment="Center" Margin="0,200,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Arial Black"/>
     </Grid>
 </UserControl>
