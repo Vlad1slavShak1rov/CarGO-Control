@@ -78,6 +78,7 @@ namespace CarGO_Control.Windows
         private void SelectRoute(object sender, EventArgs e)
         {
             ViewGrid.Children.Clear();
+            map.Margin = new Thickness(0, 10, 0, 0);
             ViewGrid.Children.Add(map);
         }
 

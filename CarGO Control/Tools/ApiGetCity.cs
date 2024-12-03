@@ -17,7 +17,7 @@ namespace CarGO_Control.Tools
     {
         protected HttpResponseMessage response;
         PointLatLng pointLat;
-        private async void GetResponse(string q)
+        private async Task GetResponse(string q)
         {
             using (var client = new HttpClient())
             {
@@ -33,19 +33,16 @@ namespace CarGO_Control.Tools
                     var coordsArr = jsonArray.First as JObject;
                     var lat = coordsArr?["lat"].ToString().Replace('.',',');
                     var lon = coordsArr?["lon"].ToString().Replace('.', ',');
-                    //var name = coordsArr?["name"];
                     double latitude = double.Parse(lat);
                     double longitude = double.Parse(lon);
-
-                    pointLat = new PointLatLng(latitude, longitude);
-                    
+                    pointLat = new PointLatLng(latitude, longitude);  
                 }
                 else
                 {
                     SMB.ShowWarningMessageBox($"Ошибка: {response.StatusCode}"); 
                     
                 }
-                await Task.Delay(1500);
+                await Task.Delay(1000);
             }
         }
         
@@ -139,10 +136,9 @@ namespace CarGO_Control.Tools
             return polylinePoints.ToArray();
         }
 
-        public PointLatLng ReturnResponse(string query)
-
+        public async Task<PointLatLng> ReturnResponse(string query)
         {
-            GetResponse(query);
+            await GetResponse(query);
             return pointLat;
         }
     }

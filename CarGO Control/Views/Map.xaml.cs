@@ -43,14 +43,15 @@ namespace CarGO_Control.Views
             MyMaps.Zoom = 10;
         }
 
-        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        private void BackButton_Click(object sender, RoutedEventArgs e)
         {
             BackToCreateCarGo?.Invoke(null, null);
         }
 
         private async void SearchButton_Click_1(object sender, RoutedEventArgs e)
         {
-            DataHandler(apiGetCity.ReturnResponse(SearchBox.Text));
+            var coord = await apiGetCity.ReturnResponse(SearchBox.Text);
+            DataHandler(coord); 
         }
 
         private void DataHandler(PointLatLng data)
