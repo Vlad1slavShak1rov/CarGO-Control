@@ -7,9 +7,8 @@ using System.Windows;
 using Newtonsoft.Json.Linq;
 using GMap.NET;
 using GMap.NET.MapProviders;
-using GMap.NET.WindowsPresentation;
 using CarGO_Control.Views;
-using System.Windows.Media;
+using GMap.NET.WindowsForms;
 
 namespace CarGO_Control.Tools
 {
@@ -45,62 +44,50 @@ namespace CarGO_Control.Tools
                 await Task.Delay(1000);
             }
         }
-        
-        private async void GetRoute(GMapControl gMapControl, double startLat, double startLon, double endLat, double endLon)
+
+        private async Task GetRoute(GMapControl gmap, double startLat, double startLon, double endLat, double endLon)
         {
             using var client = new HttpClient();
             client.BaseAddress = new Uri("http://router.project-osrm.org/");
-            string requestUrl = $"route/v1/driving/{startLon},{startLat};{endLon},{endLat}?overview=full";
+            string requestUrl = $"route/v1/driving/{startLon.ToString().Replace(',', '.')},{startLat.ToString().Replace(',', '.')};{endLon.ToString().Replace(',', '.')},{endLat.ToString().Replace(',', '.')}?overview=full";
             HttpResponseMessage response = await client.GetAsync(requestUrl);
             if (response.IsSuccessStatusCode)
             {
                 string result = await response.Content.ReadAsStringAsync();
                 var jsonResult = JObject.Parse(result);
-                var route = jsonResult["route"].First;
-                if (route != null)
+                if (jsonResult != null)
                 {
+                    var route = jsonResult["routes"].First;
                     var geometry = route["geometry"]?.ToString();
                     if (!string.IsNullOrEmpty(geometry))
                     {
                         var points = DecodePolyline(geometry);
-                        //DrawRoute(points, gMapControl);
+                        DrawRoute(points, ref gmap);
                     }
                 }
+
             }
-            else 
+            else
             {
-                //todo
+                SMB.ShowWarningMessageBox("Маршрут не найден");
             }
         }
-        /*
-        private void DrawRoute(PointLatLng[] points, GMapControl gMapControl)
+        private void DrawRoute(PointLatLng[] points, ref GMapControl gmap)
         {
-            
-
-            // Создаем маршрут на основе переданных точек
-            var routesLayer = new GMapRoute(points)
+            var routesLayer = new GMapRoute(points, "MyRoute")
             {
-                Stroke = new System.Windows.Media.Pen(System.Windows.Media.Brushes.Blue, 3) // Задаем цвет и толщину линии
+                Stroke = new Pen(new SolidBrush(Color.Red), 3)
             };
 
-            // Создаем новый слой для маршрута
             var routesOverlay = new GMapOverlay("routes");
             routesOverlay.Routes.Add(routesLayer);
-
-            // Очищаем предыдущие слои (если нужно)
-            gMapControl.Markers.Clear(); // Если у вас есть маркеры, очищаем их
-            gMapControl.Overlays.Clear(); // Очищаем предыдущие слои
-
-            // Добавляем новый слой на карту
-            gMapControl.Overlays.Add(routesOverlay);
-
-            // Устанавливаем позицию карты на первую точку маршрута
+            gmap.Overlays.Clear();
+            gmap.Overlays.Add(routesOverlay);
             if (points.Length > 0)
             {
-                gMapControl.Position = points[0];
+                gmap.Position = points[0];
             }
         }
-        */
         private PointLatLng[] DecodePolyline(string encoded)
         {
             var polylinePoints = new List<PointLatLng>();
@@ -140,6 +127,12 @@ namespace CarGO_Control.Tools
         {
             await GetResponse(query);
             return pointLat;
+        }
+
+        public async Task<GMapControl> ReturnRoute(GMapControl gmap, double startLat, double startLon, double endLat, double endLon)
+        {
+            await GetRoute(gmap, startLat, startLon, endLat, endLon);
+            return gmap;
         }
     }
 }

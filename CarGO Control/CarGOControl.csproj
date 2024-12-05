@@ -7,6 +7,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <UseWindowsForms>True</UseWindowsForms>
   </PropertyGroup>
 
   <ItemGroup>
@@ -43,6 +44,7 @@
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
     <PackageReference Include="GMap.NET" Version="1.0.1" />
     <PackageReference Include="GMap.NET.Core" Version="2.1.7" />
+    <PackageReference Include="GMap.NET.WinForms" Version="2.1.7" />
     <PackageReference Include="GMap.NET.WinPresentation" Version="2.1.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.10">

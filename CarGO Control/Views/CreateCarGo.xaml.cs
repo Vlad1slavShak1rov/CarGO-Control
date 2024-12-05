@@ -19,7 +19,7 @@ namespace CarGO_Control.Views
     /// <summary>
     /// Логика взаимодействия для CreateCarGo.xaml
     /// </summary>
-    public partial class CreateCarGo : UserControl
+    public partial class CreateCarGo : System.Windows.Controls.UserControl
     {
         public event RoutedEventHandler BackButtonClick;
         public event RoutedEventHandler SelectRouteClick;

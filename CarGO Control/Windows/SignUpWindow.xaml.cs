@@ -18,6 +18,7 @@ using System.Security.Cryptography;
 using CarGO_Control.Tools;
 using CarGO_Control.Windows;
 using System.Windows.Navigation;
+using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 
 namespace CarGO_Control
 {

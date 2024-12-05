@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using MessageBox = System.Windows.MessageBox;
 
 namespace CarGO_Control.Tools
 {

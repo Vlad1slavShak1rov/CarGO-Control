@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using CarGO_Control.DataBase;
 using CarGO_Control.Tools;
+using UserControl = System.Windows.Controls.UserControl;
 namespace CarGO_Control.Views
 {
     /// <summary>

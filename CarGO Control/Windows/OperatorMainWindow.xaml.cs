@@ -32,7 +32,6 @@ namespace CarGO_Control.Windows
         private DriversReg DriversReg = new();
         private TransManagement transManagement = new();
         private CreateCarGo createCarGo = new CreateCarGo();
-        private Map map = new();
         private EditDriver editDriver;
         private SettingView settingView;
         
@@ -64,7 +63,6 @@ namespace CarGO_Control.Windows
             transManagement.CreateCarGoClick += CreateCGo;
             createCarGo.BackButtonClick += BackToTransManagment;
             createCarGo.SelectRouteClick += SelectRoute;
-            map.BackToCreateCarGo += CreateCGo;
     }
 
         private void TimerInit()
@@ -77,9 +75,7 @@ namespace CarGO_Control.Windows
 
         private void SelectRoute(object sender, EventArgs e)
         {
-            ViewGrid.Children.Clear();
-            map.Margin = new Thickness(0, 10, 0, 0);
-            ViewGrid.Children.Add(map);
+            (new MapForm()).ShowDialog();
         }
 
         private void BackToTransManagment(object sender, EventArgs e)

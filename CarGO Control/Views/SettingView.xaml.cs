@@ -17,6 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using UserControl = System.Windows.Controls.UserControl;
 
 namespace CarGO_Control.Views
 {
