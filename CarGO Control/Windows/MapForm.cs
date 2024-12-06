@@ -80,7 +80,7 @@ namespace CarGO_Control.Windows
                 }
                 LoadProgressBar.Visible = false;
                 LoadProgressBar.Value = 0;
-                gmap.Zoom = 14;
+                gmap.Zoom = 10;
                 gmap.Position = pos;
             }
         }
@@ -109,7 +109,7 @@ namespace CarGO_Control.Windows
 
 
                         gmap.Position = new PointLatLng(((start.Lat + end.Lat) / 2), ((start.Lng + end.Lng) / 2));
-                        gmap.Zoom = 14;
+                        gmap.Zoom = 10;
                     }
                 }
                 else

@@ -5,6 +5,7 @@
             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
             xmlns:local="clr-namespace:CarGO_Control.Windows"
             mc:Ignorable="d"
+            
             Title="OperatorMainWindow" Height="640" Width="1200" WindowStartupLocation="CenterScreen" WindowState ="Maximized">
         <Window.Resources>
             <Style x:Key="RoundedButtonStyle" TargetType="Button">

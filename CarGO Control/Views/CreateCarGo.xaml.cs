@@ -14,6 +14,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using CarGO_Control.DataBase;
+using CarGO_Control.Tools;
+using System.Data.Entity;
 namespace CarGO_Control.Views
 {
     /// <summary>
@@ -26,9 +29,41 @@ namespace CarGO_Control.Views
         public CreateCarGo()
         {
             InitializeComponent();
-            //InitializeMap();
+            InitComboBox();
         }
-        
+        private void InitComboBox()
+        {
+            var items = new List<string>
+            {
+                "Хрупкие грузы",
+                "Негабаритные грузы",
+                "Сыпучие грузы",
+                "Жидкие грузы",
+                "Мягкие грузы",
+                "Сухие грузы",
+                "Перевозимые товары"
+            };
+
+            foreach (string item in items)
+            {
+                TypeLoadBox.Items.Add(item);
+            }
+
+            using (var db = new CarGoDBContext())
+            {
+                var drivers = db.Drivers.ToList(); 
+                foreach (var driver in drivers)
+                {
+                    if (driver?.Name != null) 
+                    {
+                        DriversNameBox.Items.Add(driver.Name);
+                    }
+                }
+            }
+
+        }
+
+
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
             BackButtonClick?.Invoke(null, null);
@@ -37,6 +72,11 @@ namespace CarGO_Control.Views
         private void SelectRoute_Click(object sender, RoutedEventArgs e)
         {
             SelectRouteClick?.Invoke(null, null);
+        }
+
+        private void LoadBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = !CheckTextBox.CheckText(e);
         }
     }
 }

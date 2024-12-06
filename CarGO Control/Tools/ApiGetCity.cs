@@ -32,9 +32,12 @@ namespace CarGO_Control.Tools
                     var coordsArr = jsonArray.First as JObject;
                     var lat = coordsArr?["lat"].ToString().Replace('.',',');
                     var lon = coordsArr?["lon"].ToString().Replace('.', ',');
-                    double latitude = double.Parse(lat);
-                    double longitude = double.Parse(lon);
-                    pointLat = new PointLatLng(latitude, longitude);  
+                    if (lat != null && lon != null)
+                    {
+                        double latitude = double.Parse(lat);
+                        double longitude = double.Parse(lon);
+                        pointLat = new PointLatLng(latitude, longitude);
+                    }
                 }
                 else
                 {
