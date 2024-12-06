@@ -34,12 +34,12 @@ namespace CarGO_Control.Windows
         private CreateCarGo createCarGo = new CreateCarGo();
         private EditDriver editDriver;
         private SettingView settingView;
-        
+        private AddTruck addTruck = new();
         private string _name;
+
         public event EventHandler<Driver> DriverChanged;
         public OperatorMainWindow(string nick)
         {
-            
             TimerInit();
             InitializeComponent();
             InitDrivers();
@@ -61,9 +61,11 @@ namespace CarGO_Control.Windows
             settingView.LeaveProfile += LeaveMainProfile;
             transManagement.BackClick += BackMenuClick;
             transManagement.CreateCarGoClick += CreateCGo;
+            transManagement.AddTruck += AddTruck;
             createCarGo.BackButtonClick += BackToTransManagment;
             createCarGo.SelectRouteClick += SelectRoute;
-    }
+            addTruck.BackButtonClick += BackToTransManagment;
+        }
 
         private void TimerInit()
         {
@@ -71,6 +73,13 @@ namespace CarGO_Control.Windows
             _timer.Interval = TimeSpan.FromSeconds(1);
             _timer.Tick += Timer_Tick;
             _timer.Start();
+        }
+
+        private void AddTruck(object sender, EventArgs e)
+        {
+            ViewGrid.Children.Clear();
+            addTruck.Margin = new Thickness(0, 15, 0, 0);
+            ViewGrid.Children.Add(addTruck);
         }
 
         private void SelectRoute(object sender, EventArgs e)

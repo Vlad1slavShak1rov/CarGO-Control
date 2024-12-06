@@ -40,6 +40,20 @@ namespace CarGO_Control.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Trucks",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    LicensePlate = table.Column<string>(type: "TEXT", nullable: false),
+                    CarMake = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Trucks", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
@@ -67,12 +81,17 @@ namespace CarGO_Control.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     UserID = table.Column<int>(type: "INTEGER", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Experience = table.Column<int>(type: "INTEGER", nullable: false)
-
+                    Experience = table.Column<int>(type: "INTEGER", nullable: false),
+                    TruckID = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Drivers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Drivers_Trucks_TruckID",
+                        column: x => x.TruckID,
+                        principalTable: "Trucks",
+                        principalColumn: "ID");
                     table.ForeignKey(
                         name: "FK_Drivers_Users_UserID",
                         column: x => x.UserID,
@@ -98,27 +117,6 @@ namespace CarGO_Control.Migrations
                         column: x => x.UserID,
                         principalTable: "Users",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Trucks",
-                columns: table => new
-                {
-                    ID = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    DriverID = table.Column<int>(type: "INTEGER", nullable: false),
-                    LicensePlate = table.Column<string>(type: "TEXT", nullable: false),
-                    CarMake = table.Column<string>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Trucks", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_Trucks_Drivers_DriverID",
-                        column: x => x.DriverID,
-                        principalTable: "Drivers",
-                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -159,6 +157,12 @@ namespace CarGO_Control.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Drivers_TruckID",
+                table: "Drivers",
+                column: "TruckID",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Drivers_UserID",
                 table: "Drivers",
                 column: "UserID",
@@ -189,16 +193,9 @@ namespace CarGO_Control.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Trucks_DriverID",
-                table: "Trucks",
-                column: "DriverID",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Users_RoleID",
                 table: "Users",
-                column: "RoleID",
-                unique: true);
+                column: "RoleID");
         }
 
         /// <inheritdoc />
@@ -214,10 +211,10 @@ namespace CarGO_Control.Migrations
                 name: "Cargos");
 
             migrationBuilder.DropTable(
-                name: "Trucks");
+                name: "Drivers");
 
             migrationBuilder.DropTable(
-                name: "Drivers");
+                name: "Trucks");
 
             migrationBuilder.DropTable(
                 name: "Users");

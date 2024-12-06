@@ -11,11 +11,11 @@ namespace CarGO_Control.DataBase
     {
         [Key]
         public int ID { get; set; }
-        public int DriverID {  get; set; }
-        public string LicensePlate { get; set; } = null!;
-        public string CarMake { get; set; } = null!;
+        public string LicensePlate { get; set; }
+        public string CarMake { get; set; }
 
         public virtual Route Route { get; set; }
         public virtual Driver Driver { get; set; }
     }
+
 }

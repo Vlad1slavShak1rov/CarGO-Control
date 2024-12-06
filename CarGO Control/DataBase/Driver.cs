@@ -14,10 +14,11 @@ namespace CarGO_Control.DataBase
         public int UserID { get; set; }
         public string Name { get; set; } = null!;
         public int Experience { get; set; }
-
+        public int? TruckID { get; set; }
         public virtual Users Users { get; set; }
         public virtual Route Routes { get; set; }
-        public virtual Truck Trucks { get; set; }
-
+        public virtual Truck Truck { get; set; } 
     }
+
+
 }

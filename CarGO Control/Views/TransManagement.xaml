@@ -45,6 +45,7 @@
 
         <Grid Grid.Row="1">
             <Button Name="CreateCarGo" Content="Создать перевозку" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,05,0,0" Height ="50" Width="190" FontSize="16" FontFamily="Arial Black" Opacity ="0.5" Style="{StaticResource RoundedButtonStyle}" Click="CreateCarGo_Click"/>
+            <Button Name="AddTruckButton" Content="Добавить грузовик" HorizontalAlignment="Center" VerticalAlignment="Top" Margin = "0,05,0,0" Height="50" Width="190" FontSize="14" FontFamily="Arial Black" Opacity="0.5" Style="{StaticResource RoundedButtonStyle}" Click ="AddTruckButton_Click"/>
             <Button Name="ViewCarGo" Content="Посмотреть перевозку" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,05,20,0" Height ="50" Width="190" FontSize="14" FontFamily="Arial Black" Opacity ="0.5" Style="{StaticResource RoundedButtonStyle}" Click="ViewCarGo_Click"/>
         </Grid>
     </Grid>

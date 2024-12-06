@@ -116,6 +116,7 @@ namespace CarGO_Control
                             UserID = user.ID,
                             Name = LoginTextBox.Text,
                             Experience = exp,
+                            Users = user
                         };
                         context.Add(dr);
                         break;
