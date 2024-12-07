@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarGO_Control.Migrations
 {
     [DbContext(typeof(CarGoDBContext))]
-    [Migration("20241206160424_InitialCreate")]
+    [Migration("20241207125313_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -141,8 +141,9 @@ namespace CarGO_Control.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("TrackNumer")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("TrackNumer")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.HasKey("ID");
 

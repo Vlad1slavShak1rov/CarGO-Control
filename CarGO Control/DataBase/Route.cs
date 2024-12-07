@@ -14,7 +14,7 @@ namespace CarGO_Control.DataBase
         public int? DriverID {  get; set; }
         public int? IDCarGo {  get; set; }
         public int? IDTruck { get; set; }
-        public int TrackNumer { get; set; }
+        public string TrackNumer { get; set; }
         public string CityFrom { get; set; } = null!;
         public string CityTo { get; set; } = null!;
         public string RouteHTTP { get; set; } = null!;

@@ -18,6 +18,12 @@ namespace CarGO_Control.Tools
             return Regex.IsMatch(e.Text, pattern);
         }
 
+        public static bool CheckNum(TextCompositionEventArgs e)
+        {
+            string pattern = @"^[0-9]*$";
+            return Regex.IsMatch(e.Text, pattern);
+        }
+
         public static bool CheckPass(string password)
         {
             bool Upper = false, Number = false;

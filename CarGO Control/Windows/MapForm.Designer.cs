@@ -29,15 +29,17 @@
         private void InitializeComponent()
         {
             MapPanel = new Panel();
+            LoadProgressBar = new ProgressBar();
             SearchButton = new Button();
-            SaveButton = new Button();
+            ShowButton = new Button();
             ToBox = new TextBox();
             FromBox = new TextBox();
             SearchBox = new TextBox();
             label1 = new Label();
             label2 = new Label();
             label3 = new Label();
-            LoadProgressBar = new ProgressBar();
+            SaveButton = new Button();
+            DistanceLabel = new Label();
             MapPanel.SuspendLayout();
             SuspendLayout();
             // 
@@ -49,6 +51,14 @@
             MapPanel.Size = new Size(758, 550);
             MapPanel.TabIndex = 0;
             // 
+            // LoadProgressBar
+            // 
+            LoadProgressBar.Location = new Point(251, 210);
+            LoadProgressBar.Name = "LoadProgressBar";
+            LoadProgressBar.Size = new Size(280, 29);
+            LoadProgressBar.TabIndex = 0;
+            LoadProgressBar.Visible = false;
+            // 
             // SearchButton
             // 
             SearchButton.Location = new Point(101, 135);
@@ -59,15 +69,15 @@
             SearchButton.UseVisualStyleBackColor = true;
             SearchButton.Click += SearchButton_Click;
             // 
-            // SaveButton
+            // ShowButton
             // 
-            SaveButton.Location = new Point(101, 405);
-            SaveButton.Name = "SaveButton";
-            SaveButton.Size = new Size(94, 29);
-            SaveButton.TabIndex = 2;
-            SaveButton.Text = "Сохранить";
-            SaveButton.UseVisualStyleBackColor = true;
-            SaveButton.Click += SaveButton_Click;
+            ShowButton.Location = new Point(101, 405);
+            ShowButton.Name = "ShowButton";
+            ShowButton.Size = new Size(94, 29);
+            ShowButton.TabIndex = 2;
+            ShowButton.Text = "Показать";
+            ShowButton.UseVisualStyleBackColor = true;
+            ShowButton.Click += ShowButton_Click;
             // 
             // ToBox
             // 
@@ -117,26 +127,39 @@
             label3.TabIndex = 8;
             label3.Text = "Куда";
             // 
-            // LoadProgressBar
+            // SaveButton
             // 
-            LoadProgressBar.Location = new Point(251, 210);
-            LoadProgressBar.Name = "LoadProgressBar";
-            LoadProgressBar.Size = new Size(280, 29);
-            LoadProgressBar.TabIndex = 0;
-            LoadProgressBar.Visible = false;
+            SaveButton.Location = new Point(101, 454);
+            SaveButton.Name = "SaveButton";
+            SaveButton.Size = new Size(94, 29);
+            SaveButton.TabIndex = 9;
+            SaveButton.Text = "Сохранить";
+            SaveButton.UseVisualStyleBackColor = true;
+            SaveButton.Click += SaveButton_Click;
+            // 
+            // DistanceLabel
+            // 
+            DistanceLabel.AutoSize = true;
+            DistanceLabel.Location = new Point(46, 189);
+            DistanceLabel.Name = "DistanceLabel";
+            DistanceLabel.Size = new Size(99, 20);
+            DistanceLabel.TabIndex = 10;
+            DistanceLabel.Text = "Дистанция: 0";
             // 
             // MapForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1099, 566);
+            Controls.Add(DistanceLabel);
+            Controls.Add(SaveButton);
             Controls.Add(label3);
             Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(SearchBox);
             Controls.Add(FromBox);
             Controls.Add(ToBox);
-            Controls.Add(SaveButton);
+            Controls.Add(ShowButton);
             Controls.Add(SearchButton);
             Controls.Add(MapPanel);
             FormBorderStyle = FormBorderStyle.FixedSingle;
@@ -152,7 +175,7 @@
 
         private Panel MapPanel;
         private Button SearchButton;
-        private Button SaveButton;
+        private Button ShowButton;
         private TextBox ToBox;
         private TextBox FromBox;
         private TextBox SearchBox;
@@ -160,5 +183,7 @@
         private Label label2;
         private Label label3;
         private ProgressBar LoadProgressBar;
+        private Button SaveButton;
+        public Label DistanceLabel;
     }
 }

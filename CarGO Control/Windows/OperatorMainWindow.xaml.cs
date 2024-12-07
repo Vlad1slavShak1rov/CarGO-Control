@@ -31,13 +31,14 @@ namespace CarGO_Control.Windows
         private List<Driver> _drivers = new List<Driver>();
         private DriversReg DriversReg = new();
         private TransManagement transManagement = new();
-        private CreateCarGo createCarGo = new CreateCarGo();
+        private CreateCarGo createCarGo;
         private EditDriver editDriver;
         private SettingView settingView;
         private AddTruck addTruck = new();
         private string _name;
 
         public event EventHandler<Driver> DriverChanged;
+        public event EventHandler LoadDataHandler;
         public OperatorMainWindow(string nick)
         {
             TimerInit();
@@ -49,6 +50,7 @@ namespace CarGO_Control.Windows
 
             editDriver = new(this);
             settingView = new SettingView(_name);
+            createCarGo = new CreateCarGo(this);
 
             DriversReg.BackButtonClicked += BackMenuClick;
             editDriver.ReloadList += AcceptData;
@@ -63,7 +65,6 @@ namespace CarGO_Control.Windows
             transManagement.CreateCarGoClick += CreateCGo;
             transManagement.AddTruck += AddTruck;
             createCarGo.BackButtonClick += BackToTransManagment;
-            createCarGo.SelectRouteClick += SelectRoute;
             addTruck.BackButtonClick += BackToTransManagment;
         }
 
@@ -82,11 +83,6 @@ namespace CarGO_Control.Windows
             ViewGrid.Children.Add(addTruck);
         }
 
-        private void SelectRoute(object sender, EventArgs e)
-        {
-            (new MapForm()).ShowDialog();
-        }
-
         private void BackToTransManagment(object sender, EventArgs e)
         {
             ViewGrid.Children.Clear();
@@ -98,6 +94,7 @@ namespace CarGO_Control.Windows
         {
             ViewGrid.Children.Clear();
             createCarGo.Margin = new Thickness(0, 15, 0, 0);
+            LoadDataHandler?.Invoke(null, null);
             ViewGrid.Children.Add(createCarGo);
         }
 
@@ -117,6 +114,7 @@ namespace CarGO_Control.Windows
             RegDriversButton.Visibility = Visibility.Hidden;
             ManagementButton.Visibility = Visibility.Hidden;
             ViewGrid.Children.Clear();
+            LoadDataHandler?.Invoke(null, null);
             ViewGrid.Children.Add(DriversReg);
          
         }

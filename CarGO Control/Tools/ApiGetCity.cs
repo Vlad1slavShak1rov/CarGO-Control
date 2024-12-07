@@ -9,6 +9,8 @@ using GMap.NET;
 using GMap.NET.MapProviders;
 using CarGO_Control.Views;
 using GMap.NET.WindowsForms;
+using CarGO_Control.Windows;
+using Microsoft.Ajax.Utilities;
 
 namespace CarGO_Control.Tools
 {
@@ -16,6 +18,8 @@ namespace CarGO_Control.Tools
     {
         protected HttpResponseMessage response;
         PointLatLng pointLat;
+        public static string _urlRoute = "";
+        public static JToken Distance { get; set; } 
         private async Task GetResponse(string q)
         {
             using (var client = new HttpClient())
@@ -27,6 +31,7 @@ namespace CarGO_Control.Tools
                 string result;
                 if (response.IsSuccessStatusCode)
                 {
+                    _urlRoute = query;
                     result = await response.Content.ReadAsStringAsync();
                     var jsonArray = JArray.Parse(result);
                     var coordsArr = jsonArray.First as JObject;
@@ -62,6 +67,7 @@ namespace CarGO_Control.Tools
                 {
                     var route = jsonResult["routes"].First;
                     var geometry = route["geometry"]?.ToString();
+                    Distance = route["distance"].ToString();
                     if (!string.IsNullOrEmpty(geometry))
                     {
                         var points = DecodePolyline(geometry);
@@ -125,7 +131,7 @@ namespace CarGO_Control.Tools
             }
             return polylinePoints.ToArray();
         }
-
+       
         public async Task<PointLatLng> ReturnResponse(string query)
         {
             await GetResponse(query);

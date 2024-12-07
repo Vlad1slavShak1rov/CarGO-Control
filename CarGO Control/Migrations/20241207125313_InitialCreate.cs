@@ -129,7 +129,7 @@ namespace CarGO_Control.Migrations
                     DriverID = table.Column<int>(type: "INTEGER", nullable: true),
                     IDCarGo = table.Column<int>(type: "INTEGER", nullable: true),
                     IDTruck = table.Column<int>(type: "INTEGER", nullable: true),
-                    TrackNumer = table.Column<int>(type: "INTEGER", nullable: false),
+                    TrackNumer = table.Column<string>(type: "TEXT", nullable: false),
                     CityFrom = table.Column<string>(type: "TEXT", nullable: false),
                     CityTo = table.Column<string>(type: "TEXT", nullable: false),
                     RouteHTTP = table.Column<string>(type: "TEXT", nullable: false),

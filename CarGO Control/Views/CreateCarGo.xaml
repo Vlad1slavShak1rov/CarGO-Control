@@ -37,27 +37,45 @@
 
                     <Label Content="Тип груза" Foreground="Black" Margin="20,125,0,0" HorizontalAlignment="Center"  VerticalAlignment="Top" FontSize="16" FontFamily="Arial Black" FontWeight="Bold" Canvas.Left="0" Canvas.Top="2"/>
                     <Label Content="Тип груза" Foreground="White" Margin="20,125,0,0" HorizontalAlignment="Center"  VerticalAlignment="Top" FontSize="16" FontFamily="Arial Black"/>
+
+                    <Label Content="Вес (в кг)" Foreground="Black" Margin="20,200,0,0" HorizontalAlignment="Center"  VerticalAlignment="Top" FontSize="16" FontFamily="Arial Black" FontWeight="Bold" Canvas.Left="0" Canvas.Top="2"/>
+                    <Label Content="Вес (в кг)" Foreground="White" Margin="20,200,0,0" HorizontalAlignment="Center"  VerticalAlignment="Top" FontSize="16" FontFamily="Arial Black"/>
                 </Canvas>
+                <Canvas VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,50,300,0">
+                    <Label Content="Водитель" Foreground="Black" Margin="110,0,0,0" HorizontalAlignment="Center"  VerticalAlignment="Top" FontSize="16" FontFamily="Arial Black"  FontWeight="Bold" Canvas.Left="0" Canvas.Top="2"/>
+                    <Label Content="Водитель" Foreground="White" Margin="110,0,0,0" HorizontalAlignment="Center"  VerticalAlignment="Top" FontSize="16" FontFamily="Arial Black"/>
 
-                <Canvas VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,50,75,0">
-                    <Label Content="Водитель" Foreground="Black" Margin="0,0,0,0" HorizontalAlignment="Center"  VerticalAlignment="Top" FontSize="16" FontFamily="Arial Black"  FontWeight="Bold" Canvas.Left="0" Canvas.Top="2"/>
-                    <Label Content="Водитель" Foreground="White" Margin="0,0,0,0" HorizontalAlignment="Center"  VerticalAlignment="Top" FontSize="16" FontFamily="Arial Black"/>
+                    <Label Content="Грузовик" Foreground="Black" Margin="110,60,0,0" HorizontalAlignment="Center"  VerticalAlignment="Top" FontSize="16" FontFamily="Arial Black"  FontWeight="Bold" Canvas.Left="0" Canvas.Top="2"/>
+                    <Label Content="Грузовик" Foreground="White" Margin="110,60,0,0" HorizontalAlignment="Center"  VerticalAlignment="Top" FontSize="16" FontFamily="Arial Black"/>
 
-                    <Label Content="Грузовик" Foreground="Black" Margin="0,60,0,0" HorizontalAlignment="Center"  VerticalAlignment="Top" FontSize="16" FontFamily="Arial Black"  FontWeight="Bold" Canvas.Left="0" Canvas.Top="2"/>
-                    <Label Content="Грузовик" Foreground="White" Margin="0,60,0,0" HorizontalAlignment="Center"  VerticalAlignment="Top" FontSize="16" FontFamily="Arial Black"/>
+                    <Label Content="Стаж" Foreground="Black" Margin="130,120,0,0" HorizontalAlignment="Center"  VerticalAlignment="Top" FontSize="16" FontFamily="Arial Black"  FontWeight="Bold" Canvas.Left="0" Canvas.Top="2"/>
+                    <Label Content="Стаж" Foreground="White" Margin="130,120,0,0" HorizontalAlignment="Center"  VerticalAlignment="Top" FontSize="16" FontFamily="Arial Black"/>
 
-                    <Label Content="Стаж" Foreground="Black" Margin="10,120,0,0" HorizontalAlignment="Center"  VerticalAlignment="Top" FontSize="16" FontFamily="Arial Black"  FontWeight="Bold" Canvas.Left="0" Canvas.Top="2"/>
-                    <Label Content="Стаж" Foreground="White" Margin="10,120,0,0" HorizontalAlignment="Center"  VerticalAlignment="Top" FontSize="16" FontFamily="Arial Black"/>
+                    <Label Content="Дата отправки" Foreground="Black" Margin="14,200,0,0" HorizontalAlignment="Center"  VerticalAlignment="Top" FontSize="15" FontFamily="Arial Black"  FontWeight="Bold" Canvas.Left="0" Canvas.Top="2"/>
+                    <Label Content="Дата отправки" Foreground="White" Margin="14,201,70,0" HorizontalAlignment="Center"  VerticalAlignment="Top" FontSize="15" FontFamily="Arial Black"/>
+
+                    <Label Content="Дата прибытия" Foreground="Black" Margin="160,200,0,0" HorizontalAlignment="Center"  VerticalAlignment="Top" FontSize="15" FontFamily="Arial Black"  FontWeight="Bold" Canvas.Left="0" Canvas.Top="2"/>
+                    <Label Content="Дата прибытия" Foreground="White" Margin="160,201,70,0" HorizontalAlignment="Center"  VerticalAlignment="Top" FontSize="15" FontFamily="Arial Black"/>
+
+                    <Label Name ="BackGroundCity" Content="Город отбытие  - Прибытия" Foreground="Black" Margin="270,30,0,0" HorizontalAlignment="Center"  VerticalAlignment="Top" FontSize="15" FontFamily="Arial Black"  FontWeight="Bold" Canvas.Left="0" Canvas.Top="2"/>
+                    <Label Name ="ForeGroundCity" Content="Город отбытие  - Прибытия" Foreground="White" Margin="270,30,70,0" HorizontalAlignment="Center"  VerticalAlignment="Top" FontSize="15" FontFamily="Arial Black"/>
+
                 </Canvas>
                 
-                <TextBox Name = "TrackNumberBox"  TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" Width="170" Height="30" Margin = "0,80,500,0" IsEnabled="False"/>
-                <TextBox Name = "LoadBox" HorizontalAlignment="Center"  VerticalAlignment="Top" TextWrapping="NoWrap"  Margin = "0,140,500,0"  Width="170" Height="30" PreviewTextInput="LoadBox_PreviewTextInput"/>
-                <ComboBox Name ="TypeLoadBox" HorizontalAlignment="Center"  VerticalAlignment="Top"  Width="170" Height="30"  Margin = "0,210,500,0"/>
-                <ComboBox Name ="DriversNameBox" HorizontalAlignment="Center" VerticalAlignment="Top"  Width="170" Height="30" Margin = "10,80,0,0"/>
-                <ComboBox Name ="TruckMark" HorizontalAlignment="Center"  VerticalAlignment="Top"  Width="170" Height="30" Margin = "10,140,0,0"/>
-                <TextBox Name ="ExpDriversLabel" HorizontalAlignment="Center" VerticalAlignment="Top" Width="70" Height="30" Margin = "10,200,0,0" IsEnabled="False"/>
-                <Button Name="SelectRoute" HorizontalAlignment="Center" VerticalAlignment="Top" Width="150" Height="25" Content ="Выбрать маршрут" Click="SelectRoute_Click" Margin = "500,120,0,0"/>
-                </Grid>
+                <TextBox Name = "TrackNumberBox"  TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" Width="170" Height="30" Margin = "0,80,500,0" IsEnabled="False" MaxLength="8" FontSize="18"/>
+                <TextBox Name = "LoadBox" HorizontalAlignment="Center"  VerticalAlignment="Top" TextWrapping="NoWrap"  Margin = "0,140,500,0"  Width="170" Height="30" PreviewTextInput="LoadBox_PreviewTextInput" FontSize="18"/>
+                <ComboBox Name ="TypeLoadBox" HorizontalAlignment="Center"  VerticalAlignment="Top"  Width="170" Height="30"  Margin = "0,210,500,0" FontSize="18"/>
+                <TextBox Name ="WeightBox"  HorizontalAlignment="Center"  VerticalAlignment="Top"  Width="170" Height="30"  Margin = "0,280,500,0" FontSize="18" PreviewTextInput="WeightBox_PreviewTextInput"/>
+                <ComboBox Name ="DriversNameBox" HorizontalAlignment="Center" VerticalAlignment="Top"  Width="170" Height="30" Margin = "10,80,0,0" SelectionChanged="DriversNameBox_SelectionChanged" FontSize="18"/>
+                <ComboBox Name ="TruckMark" HorizontalAlignment="Center"  VerticalAlignment="Top"  Width="170" Height="30" Margin = "10,140,0,0" FontSize="18"/>
+                <TextBox Name ="ExpDriversLabel" HorizontalAlignment="Center" VerticalAlignment="Top" Width="70" Height="30" Margin = "10,200,0,0" IsEnabled="False" FontSize="18"/>
+                <Calendar Name="Calendar" HorizontalAlignment="Center" VerticalAlignment="Top" Margin = "500,200,0,0" SelectedDatesChanged="Calendar_SelectedDatesChanged"/>
+                <TextBox Name ="DateDepartBox" HorizontalAlignment="Center" VerticalAlignment="Top" Width="120" Height="30" Margin = "0,280,140,0"  FontSize="18"/>
+                <TextBox Name ="DateArrivalBox" HorizontalAlignment="Center" VerticalAlignment="Top" Width="120" Height="30" Margin = "150,280,0,0"  FontSize="18" IsEnabled="False"/>
+                <Button Name="SelectRoute" HorizontalAlignment="Center" VerticalAlignment="Top" Width="150" Height="25" Content ="Выбрать маршрут" Click="SelectRoute_Click" Margin = "500,120,0,0" FontSize="15"/>
+                <Button Name = "SaveButton" HorizontalAlignment="Center" VerticalAlignment="Top" Width="150" Height="25" Content ="Сохранить" Margin = "500,160,0,0" FontSize="15" Click ="SaveButton_Click"/>
+                <Button Name = "ChangeDate" HorizontalAlignment="Center" VerticalAlignment="Top" Width="150" Height="25" Content ="Изменить дату" Margin = "0,330,0,0" FontSize="15" Click="ChangeDate_Click"/>
+            </Grid>
             </Grid>
     </Grid>
 </UserControl>

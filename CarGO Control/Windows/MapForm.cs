@@ -10,6 +10,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CarGO_Control.Views;
+using GMap.NET.MapProviders;
 
 namespace CarGO_Control.Windows
 {
@@ -17,6 +19,8 @@ namespace CarGO_Control.Windows
     {
         ApiGetCity api = new();
         GMapControl gmap = new();
+       
+        bool isPressed = false;
         public MapForm()
         {
             InitializeComponent();
@@ -30,8 +34,8 @@ namespace CarGO_Control.Windows
                 Dock = DockStyle.Fill,
                 MapProvider = GMap.NET.MapProviders.OpenStreetMapProvider.Instance,
                 Position = new PointLatLng(55.7558, 37.6173),
-                MinZoom = 2, 
-                MaxZoom = 18 
+                MinZoom = 2,
+                MaxZoom = 18
             };
             gmap.MouseDown += gmap_MouseDown;
             gmap.MouseWheel += gmap_MouseWheel;
@@ -78,6 +82,7 @@ namespace CarGO_Control.Windows
                     LoadProgressBar.Value += 20;
                     await Task.Delay(100);
                 }
+
                 LoadProgressBar.Visible = false;
                 LoadProgressBar.Value = 0;
                 gmap.Zoom = 10;
@@ -85,7 +90,7 @@ namespace CarGO_Control.Windows
             }
         }
 
-        private async void SaveButton_Click(object sender, EventArgs e)
+        private async void ShowButton_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(FromBox.Text) && !string.IsNullOrEmpty(ToBox.Text))
             {
@@ -97,12 +102,18 @@ namespace CarGO_Control.Windows
                     gmap = await api.ReturnRoute(gmap, start.Lat, start.Lng, end.Lat, end.Lng);
                     if (gmap != null)
                     {
-                        
+
                         while (LoadProgressBar.Value < 100)
                         {
                             LoadProgressBar.Value += 20;
                             await Task.Delay(100);
                         }
+
+                        double distanceInKm = double.Parse(ApiGetCity.Distance.ToString()) / 1000;
+                        distanceInKm = Math.Round(distanceInKm, 1); 
+
+                        DistanceLabel.Text = "Дистанция: " + distanceInKm + " км";
+
 
                         LoadProgressBar.Visible = false;
                         LoadProgressBar.Value = 0;
@@ -110,6 +121,7 @@ namespace CarGO_Control.Windows
 
                         gmap.Position = new PointLatLng(((start.Lat + end.Lat) / 2), ((start.Lng + end.Lng) / 2));
                         gmap.Zoom = 10;
+                        isPressed = true;
                     }
                 }
                 else
@@ -121,6 +133,18 @@ namespace CarGO_Control.Windows
             {
                 MessageBox.Show("Пожалуйста, укажите начальную и конечную точки.");
             }
+        }
+
+        private void SaveButton_Click(object sender, EventArgs e)
+        {
+            if (isPressed)
+            {
+                CreateCarGo.UrlRoute = ApiGetCity._urlRoute;
+                CreateCarGo.CiryFrom = FromBox.Text;
+                CreateCarGo.CityTo = ToBox.Text;
+                this.Close();
+            }
+            else SMB.ShowWarningMessageBox("Маршрут не построен!");
         }
     }
 }
