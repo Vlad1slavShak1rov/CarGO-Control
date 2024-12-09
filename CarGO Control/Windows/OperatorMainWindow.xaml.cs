@@ -39,6 +39,8 @@ namespace CarGO_Control.Windows
 
         public event EventHandler<Driver> DriverChanged;
         public event EventHandler LoadDataHandler;
+
+        DriverRepository _driver;
         public OperatorMainWindow(string nick)
         {
             TimerInit();
@@ -219,7 +221,8 @@ namespace CarGO_Control.Windows
             DriversReg.DriversList.Children.Clear();
             using (var db = new CarGoDBContext())
             {
-                var drivers = db.Drivers.ToList();
+                _driver = new(db);
+                var drivers = _driver.GetAll();
                 foreach (var driver in drivers)
                 {
                     AddUseControl(driver);
@@ -240,14 +243,13 @@ namespace CarGO_Control.Windows
         {
             using (var db = new CarGoDBContext())
             {
-                var drivers = db.Drivers.ToList();
+                _driver = new(db);
+                var drivers = _driver.GetAll();
                 foreach (var driver in drivers)
                 {
                     _drivers.Add(driver);
                 }
             }
-        }
-
-        
+        }  
     }
 }

@@ -30,18 +30,18 @@ namespace CarGO_Control.DataBase
 
             modelBuilder.Entity<Route>()
                 .HasOne(u => u.Driver)
-                .WithOne(up => up.Routes)
-                .HasForeignKey<Route>(up => up.DriverID);
+                .WithMany()
+                .HasForeignKey(up => up.DriverID);
 
             modelBuilder.Entity<Driver>()
                .HasOne(t => t.Truck)
-               .WithOne(d => d.Driver)
-               .HasForeignKey<Driver>(d => d.TruckID);
+               .WithMany()
+               .HasForeignKey(d => d.TruckID);
 
             modelBuilder.Entity<Route>()
                 .HasOne(u => u.Truck)
-                .WithOne(up => up.Route)
-                .HasForeignKey<Route>(up => up.IDTruck);
+                .WithMany()
+                .HasForeignKey(up => up.IDTruck);
 
             modelBuilder.Entity<Route>()
                 .HasOne(u => u.Cargo)

@@ -14,7 +14,7 @@ namespace CarGO_Control
     public partial class MainWindow : Window
     {
         private bool _isShowing = false;
-
+        UsersRepository _user;
         public MainWindow()
         {
             InitializeComponent();
@@ -109,8 +109,9 @@ namespace CarGO_Control
         {
             using (var context = new CarGoDBContext())
             {
+                _user = new(context);
                 string search = LoginBox.Text;
-                var users = context.Users.FirstOrDefault(p => p.Login == search);
+                var users = _user.GetByLogin(search);
 
                 if (users == null || users.Login != LoginBox.Text) return false;
 

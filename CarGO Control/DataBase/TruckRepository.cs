@@ -15,7 +15,7 @@ namespace CarGO_Control.DataBase
         }
         public IEnumerable<Truck> GetAll()
         {
-            return _context.Trucks.ToList();
+            return _context.Trucks;
         }
 
         public void Add(Truck entity)
@@ -33,7 +33,11 @@ namespace CarGO_Control.DataBase
         {
             return _context.Trucks.Find(id);
         }
-
+        
+        public Truck GetBySignleLicensePlate(string licensePlat)
+        {
+            return _context.Trucks.SingleOrDefault(tr => tr.LicensePlate == licensePlat);
+        }
         public void Delete(Truck entity)
         {
             _context.Trucks.Remove(entity);

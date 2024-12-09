@@ -30,6 +30,11 @@ namespace CarGO_Control.Views
         public event RoutedEventHandler BackButtonClick;
         OperatorMainWindow operatorMainWindow;
 
+        DriverRepository _driversRepository;
+        TruckRepository _truckRepository;
+        CargoRepository _cargoRepository;
+        RouteRepository _routeRepository;
+
         List<Driver> _drivers = new();
         string alphabet = "abcdefghijklmnopqrstuvwxyz";
         Random random = new Random();
@@ -69,7 +74,9 @@ namespace CarGO_Control.Views
 
             using (var db = new CarGoDBContext())
             {
-                var drivers = db.Drivers.ToList();
+                _driversRepository = new(db);
+                _truckRepository = new(db);
+                var drivers = _driversRepository.GetAll().ToList();
                 _drivers = drivers;
                 foreach (var driver in drivers)
                 {
@@ -79,7 +86,7 @@ namespace CarGO_Control.Views
                     }
                 }
 
-                var trucks = db.Trucks.ToList();
+                var trucks = _truckRepository.GetAll().ToList();
                 foreach (var truck in trucks)
                 {
                     if (truck?.CarMake != null)
@@ -143,6 +150,10 @@ namespace CarGO_Control.Views
             {
                 using (var db = new CarGoDBContext())
                 {
+                    _cargoRepository = new(db);
+                    _driversRepository = new(db);
+                    _routeRepository = new(db);
+                    _truckRepository = new(db);
                     var cargo = new Cargo()
                     {
                         CargoType = TypeLoadBox.Text,
@@ -150,15 +161,14 @@ namespace CarGO_Control.Views
                         Weight = int.Parse(WeightBox.Text)
                     };
 
-                    db.Add(cargo);
-                    db.SaveChanges();
+                    _cargoRepository.Add(cargo);
                     int cargoId = cargo.ID;
 
                     string licensePlate = TruckMark.Text.Split(' ')[1];
-                    var truck = db.Trucks.SingleOrDefault(tr => tr.LicensePlate == licensePlate);
-                    var driver = db.Drivers.FirstOrDefault(d => d.Name == DriversNameBox.Text);
+                    var truck = _truckRepository.GetBySignleLicensePlate(licensePlate);
+                    var driver = _driversRepository.GetByLogin(DriversNameBox.Text);
                     driver.TruckID = truck.ID;
-                    db.SaveChanges();
+                   
 
                     var route = new Route()
                     {
@@ -173,9 +183,7 @@ namespace CarGO_Control.Views
                         DataIn = DateTime.Parse(DateArrivalBox.Text)
 
                     };
-
-                    db.Add(route);
-                    db.SaveChanges();
+                    _routeRepository.Add(route);
                 }
             }
             else SMB.ShowWarningMessageBox("У вас есть незаполненные поля!");            

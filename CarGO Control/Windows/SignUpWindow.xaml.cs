@@ -24,6 +24,7 @@ namespace CarGO_Control
 {
     public partial class SignUpWindow : Window
     {
+        UsersRepository _usersRepository;
         public SignUpWindow()
         {
             InitializeComponent();
@@ -53,9 +54,8 @@ namespace CarGO_Control
         {
             using (var context = new CarGoDBContext())
             {
-                var users = context.Users.
-                    FirstOrDefault(p => LoginTextBox.Text == p.Login);
-
+                _usersRepository = new(context);
+                var users = _usersRepository.GetByLogin(LoginTextBox.Text);
                 if (users == null) Authorization();
                 else SMB.ShowWarningMessageBox("Пользователь с таким же логином уже зарегистрирован!");
             } 
@@ -97,8 +97,8 @@ namespace CarGO_Control
                     Password = password,
                     RoleID = RoleID,
                 };
-                context.Add(user);
-                context.SaveChanges();
+                _usersRepository = new(context);
+                _usersRepository.Add(user);
 
                 switch (RoleID)
                 {
@@ -108,7 +108,7 @@ namespace CarGO_Control
                             Name = LoginTextBox.Text,
                             UserID = user.ID,
                         };
-                        context.Add(op);
+                        _usersRepository.AddCascadeOperator(op);
                         break;
                     case 2:
                         var dr = new Driver
@@ -118,10 +118,9 @@ namespace CarGO_Control
                             Experience = exp,
                             Users = user
                         };
-                        context.Add(dr);
+                        _usersRepository.AddCascadeDriver(dr);
                         break;
                 }
-                context.SaveChanges();
             }
         }
  

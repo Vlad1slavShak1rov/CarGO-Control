@@ -35,6 +35,10 @@ namespace CarGO_Control.DataBase
             return _context.Operators.Find(id);
         }
 
+        public Operator GetByLogin(string login)
+        {
+            return _context.Operators.FirstOrDefault(us => us.Name == login);
+        }
         public void Delete(Operator entity)
         {
             _context.Operators.Remove(entity);

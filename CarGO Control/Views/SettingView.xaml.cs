@@ -27,7 +27,8 @@ namespace CarGO_Control.Views
         public EventHandler<string> ChangeData;
         public RoutedEventHandler BackToMain;
         public EventHandler<MessageBoxResult> LeaveProfile;
-       
+
+        OperatorRepository _operator;
         public SettingView(string Name)
         {
             _name = Name;
@@ -67,12 +68,11 @@ namespace CarGO_Control.Views
         {
             using (var db = new CarGoDBContext())
             {
-                var @operator = db.Operators.
-                    FirstOrDefault(d => d.Name == _name);
+                _operator = new(db);
+                var @operator = _operator.GetByLogin(_name);
                 @operator.Name = NameBox.Text;
+                _operator.Update(@operator);
                 _name = @operator.Name;
-                db.SaveChanges();
-
                 ChangeData?.Invoke(this, NameBox.Text);
             }
         }

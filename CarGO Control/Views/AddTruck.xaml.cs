@@ -27,6 +27,8 @@ namespace CarGO_Control.Views
     {
         private const string FormatPattern = "A000AA|00";
         public event RoutedEventHandler BackButtonClick;
+        TruckRepository _truckRepository;
+
         public AddTruck()
         {
             InitializeComponent();
@@ -45,6 +47,7 @@ namespace CarGO_Control.Views
             {
                 using (var db = new CarGoDBContext())
                 {
+                    _truckRepository = new(db);
                     var Truck = new Truck
                     {
                         LicensePlate = LicensePlatBox.Text,
@@ -53,8 +56,7 @@ namespace CarGO_Control.Views
 
                     try
                     {
-                        db.Trucks.Add(Truck);
-                        db.SaveChanges();
+                       _truckRepository.Add(Truck);
                         SMB.SuccessfulMSG($"Успешно добавлено!");
                         BackButtonClick?.Invoke(null, null);
                     }

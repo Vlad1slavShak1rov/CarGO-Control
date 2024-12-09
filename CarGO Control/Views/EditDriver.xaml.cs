@@ -29,6 +29,7 @@ namespace CarGO_Control.Views
         string _tempName;
         string _tempExp;
         private List<Driver> _drivers = new List<Driver>();
+        DriverRepository _driversRepositroy;
         public EditDriver(OperatorMainWindow operatorMain)
         {
             InitializeComponent();
@@ -54,16 +55,17 @@ namespace CarGO_Control.Views
             {
                 using(var db = new CarGoDBContext())
                 {
-                    var drivers = db.Drivers.
+                    _driversRepositroy = new(db);
+                    var drivers = _driversRepositroy.GetAll().
                         Where(dr => dr.Name == _tempName).
                         ToList();
-                    
+
                     foreach(var driver in drivers)
                     {
                         driver.Name = NameBox.Text;
                         driver.Experience = int.Parse(ExpBox.Text);
+                        _driversRepositroy.Update(driver);
                     }
-                    db.SaveChanges();
                     SMB.SuccessfulMSG("Данные успешно обновлены!");
                     ReloadList?.Invoke(null, EventArgs.Empty);
                     BackButtonClick_Click(null, null);

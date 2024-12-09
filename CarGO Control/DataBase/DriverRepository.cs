@@ -16,7 +16,7 @@ namespace CarGO_Control.DataBase
 
         public IEnumerable<Driver> GetAll()
         {
-            return _context.Drivers.ToList();
+            return _context.Drivers;
         }
 
         public void Add(Driver entity)
@@ -35,6 +35,10 @@ namespace CarGO_Control.DataBase
             return _context.Drivers.Find(id);
         }
 
+        public Driver GetByLogin(string name)
+        {
+            return _context.Drivers.FirstOrDefault(us => us.Name == name);
+        }
         public void Delete(Driver entity)
         {
             _context.Drivers.Remove(entity);
