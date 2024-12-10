@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace CarGO_Control.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class InitalCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -77,7 +77,7 @@ namespace CarGO_Control.Migrations
                 name: "Drivers",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                    ID = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     UserID = table.Column<int>(type: "INTEGER", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
@@ -86,7 +86,7 @@ namespace CarGO_Control.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Drivers", x => x.Id);
+                    table.PrimaryKey("PK_Drivers", x => x.ID);
                     table.ForeignKey(
                         name: "FK_Drivers_Trucks_TruckID",
                         column: x => x.TruckID,
@@ -148,7 +148,7 @@ namespace CarGO_Control.Migrations
                         name: "FK_Routes_Drivers_DriverID",
                         column: x => x.DriverID,
                         principalTable: "Drivers",
-                        principalColumn: "Id");
+                        principalColumn: "ID");
                     table.ForeignKey(
                         name: "FK_Routes_Trucks_IDTruck",
                         column: x => x.IDTruck,

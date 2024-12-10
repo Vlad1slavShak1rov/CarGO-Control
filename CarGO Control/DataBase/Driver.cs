@@ -10,11 +10,12 @@ namespace CarGO_Control.DataBase
     public class Driver
     {
         [Key]
-        public int Id { get; set; }
+        public int ID { get; set; }
         public int UserID { get; set; }
         public string Name { get; set; } = null!;
         public int Experience { get; set; }
         public int? TruckID { get; set; }
+        public bool InWay { get; set; } = false;
         public virtual Users Users { get; set; }
         public virtual Route Routes { get; set; }
         public virtual Truck Truck { get; set; } 

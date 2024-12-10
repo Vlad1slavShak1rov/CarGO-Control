@@ -185,7 +185,7 @@ namespace CarGO_Control.Windows
                 {
                     var driverToRemove = db.Drivers
                         .Include(d => d.Users)
-                        .FirstOrDefault(d => d.Id == driver.Id);
+                        .FirstOrDefault(d => d.ID == driver.ID);
 
                     if (driverToRemove != null)
                     {

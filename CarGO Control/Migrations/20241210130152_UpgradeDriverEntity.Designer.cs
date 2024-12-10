@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarGO_Control.Migrations
 {
     [DbContext(typeof(CarGoDBContext))]
-    [Migration("20241207125313_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20241210130152_UpgradeDriverEntity")]
+    partial class UpgradeDriverEntity
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -44,11 +44,14 @@ namespace CarGO_Control.Migrations
 
             modelBuilder.Entity("CarGO_Control.DataBase.Driver", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("Experience")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("InWay")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
@@ -61,7 +64,7 @@ namespace CarGO_Control.Migrations
                     b.Property<int>("UserID")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
                     b.HasIndex("TruckID")
                         .IsUnique();

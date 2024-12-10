@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,7 +34,13 @@ namespace CarGO_Control.DataBase
         {
             return _context.Trucks.Find(id);
         }
-        
+
+        public Truck GetByIDDriver(int id)
+        {
+            return _context.Trucks
+                .Include(r => r.Driver)
+               .FirstOrDefault(r => r.ID == id);
+        }
         public Truck GetBySignleLicensePlate(string licensePlat)
         {
             return _context.Trucks.SingleOrDefault(tr => tr.LicensePlate == licensePlat);

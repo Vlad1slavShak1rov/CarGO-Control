@@ -116,7 +116,7 @@ namespace CarGO_Control
                             UserID = user.ID,
                             Name = LoginTextBox.Text,
                             Experience = exp,
-                            Users = user
+                            Users = user,
                         };
                         _usersRepository.AddCascadeDriver(dr);
                         break;

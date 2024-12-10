@@ -48,21 +48,32 @@ namespace CarGO_Control.Views
                 using (var db = new CarGoDBContext())
                 {
                     _truckRepository = new(db);
+
                     var Truck = new Truck
                     {
                         LicensePlate = LicensePlatBox.Text,
                         CarMake = CarMakeBox.Text
                     };
 
-                    try
+                    var trucks = _truckRepository.GetAll().FirstOrDefault(l => l.LicensePlate == Truck.LicensePlate);
+                    if(trucks != null)
                     {
-                       _truckRepository.Add(Truck);
-                        SMB.SuccessfulMSG($"Успешно добавлено!");
-                        BackButtonClick?.Invoke(null, null);
+                        SMB.ShowWarningMessageBox("Грузовик с данным номером уже существует!");
+                        return;
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        SMB.ShowWarningMessageBox($"{ex.Message}");
+                        try
+                        {
+
+                            _truckRepository.Add(Truck);
+                            SMB.SuccessfulMSG($"Успешно добавлено!");
+                            BackButtonClick?.Invoke(null, null);
+                        }
+                        catch (Exception ex)
+                        {
+                            SMB.ShowWarningMessageBox($"{ex.Message}");
+                        }
                     }
                 }
             }

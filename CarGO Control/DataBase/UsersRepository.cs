@@ -15,7 +15,7 @@ namespace CarGO_Control.DataBase
         }
         public IEnumerable<Users> GetAll()
         {
-            return _context.Users.ToList();
+            return _context.Users;
         }
 
         public void Add(Users entity)

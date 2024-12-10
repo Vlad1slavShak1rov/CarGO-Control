@@ -100,29 +100,26 @@ namespace CarGO_Control.Windows
                 if (start != null && end != null)
                 {
                     gmap = await api.ReturnRoute(gmap, start.Lat, start.Lng, end.Lat, end.Lng);
-                    if (gmap != null)
+
+                    while (LoadProgressBar.Value < 100)
                     {
-
-                        while (LoadProgressBar.Value < 100)
-                        {
-                            LoadProgressBar.Value += 20;
-                            await Task.Delay(100);
-                        }
-
-                        double distanceInKm = double.Parse(ApiGetCity.Distance.ToString()) / 1000;
-                        distanceInKm = Math.Round(distanceInKm, 1); 
-
-                        DistanceLabel.Text = "Дистанция: " + distanceInKm + " км";
-
-
-                        LoadProgressBar.Visible = false;
-                        LoadProgressBar.Value = 0;
-
-
-                        gmap.Position = new PointLatLng(((start.Lat + end.Lat) / 2), ((start.Lng + end.Lng) / 2));
-                        gmap.Zoom = 10;
-                        isPressed = true;
+                        LoadProgressBar.Value += 20;
+                        await Task.Delay(100);
                     }
+
+                    double distanceInKm = double.Parse(ApiGetCity.Distance.ToString()) / 1000;
+                    distanceInKm = Math.Round(distanceInKm, 1);
+
+                    DistanceLabel.Text = "Дистанция: " + distanceInKm + " км";
+
+
+                    LoadProgressBar.Visible = false;
+                    LoadProgressBar.Value = 0;
+
+
+                    gmap.Position = new PointLatLng(((start.Lat + end.Lat) / 2), ((start.Lng + end.Lng) / 2));
+                    gmap.Zoom = 10;
+                    isPressed = true;
                 }
                 else
                 {

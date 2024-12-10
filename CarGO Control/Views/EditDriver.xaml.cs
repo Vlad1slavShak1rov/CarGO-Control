@@ -42,6 +42,20 @@ namespace CarGO_Control.Views
             _tempExp = driver.Experience.ToString();
             NameBox.Text = driver.Name;
             ExpBox.Text = driver.Experience.ToString();
+            using (var context = new CarGoDBContext())
+            {
+                RouteRepository routes = new(context);
+                string? trackNum = routes.GetByIDrivers(driver.ID)?.TrackNumer;
+                if (trackNum != null) TrackBox.Text = trackNum;
+                else TrackBox.Text = "Отсутствует";
+
+
+                TruckRepository trucks = new(context);
+                string? truck = trucks.GetByIDDriver(driver.ID)?.CarMake;
+                if (truck != null) TruckMarkBox.Text = truck;
+                else TruckMarkBox.Text = "Отсутствует";
+            }
+            
         }
 
         private void BackButtonClick_Click(object sender, RoutedEventArgs e)

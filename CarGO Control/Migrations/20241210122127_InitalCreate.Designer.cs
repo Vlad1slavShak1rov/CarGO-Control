@@ -3,6 +3,7 @@ using System;
 using CarGO_Control.DataBase;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarGO_Control.Migrations
 {
     [DbContext(typeof(CarGoDBContext))]
-    partial class CarGoDBContextModelSnapshot : ModelSnapshot
+    [Migration("20241210122127_InitalCreate")]
+    partial class InitalCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.10");
@@ -46,9 +49,6 @@ namespace CarGO_Control.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("Experience")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<bool>("InWay")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
@@ -168,9 +168,6 @@ namespace CarGO_Control.Migrations
                     b.Property<string>("CarMake")
                         .IsRequired()
                         .HasColumnType("TEXT");
-
-                    b.Property<bool>("InWay")
-                        .HasColumnType("INTEGER");
 
                     b.Property<string>("LicensePlate")
                         .IsRequired()

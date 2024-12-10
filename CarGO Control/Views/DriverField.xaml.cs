@@ -28,9 +28,22 @@ namespace CarGO_Control.Views
         public UserControl1(Driver driver)
         {
             InitializeComponent();
+            using (var context = new CarGoDBContext())
+            {
+                RouteRepository routes = new(context);
+                string? trackNum = routes.GetByIDrivers(driver.ID)?.TrackNumer;
+                if (trackNum != null) RouteLabel.Content = "Трек-номер: " + trackNum;
+                else RouteLabel.Content = "Трек-номер: отсутствует";
+
+
+                TruckRepository trucks = new(context);
+                string? truck = trucks.GetByIDDriver(driver.ID)?.CarMake;
+                if (truck != null) TruckLabel.Content = "Марка: " + truck;
+                else TruckLabel.Content = "Марка: отсутствует";
+            }
+
             NameLabel.Content = "Имя: " + driver.Name;
             ExpLabel.Content = "Опыт: " + driver.Experience;
-            TruckLabel.Content = "Марка: нету";
             _driver = driver;
         }
 

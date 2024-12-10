@@ -39,7 +39,7 @@ namespace CarGO_Control.Views
         string alphabet = "abcdefghijklmnopqrstuvwxyz";
         Random random = new Random();
         int _driverId;
-        public static string UrlRoute { get; set; }
+        public static string UrlRoute { get; set; } = "null";
         public static string CityTo { get; set; }
         public static string CiryFrom {  get; set; }
         public CreateCarGo(OperatorMainWindow operatorMainWindow)
@@ -50,6 +50,8 @@ namespace CarGO_Control.Views
 
         private void OperatorMainWindow_LoadDataHandler(object? sender, EventArgs e)
         {
+            DriversNameBox.Items.Clear();
+            TruckMark.Items.Clear();
             InitComboBox();
             TrackNumGenerator();
         }
@@ -78,20 +80,26 @@ namespace CarGO_Control.Views
                 _truckRepository = new(db);
                 var drivers = _driversRepository.GetAll().ToList();
                 _drivers = drivers;
+                string name;
                 foreach (var driver in drivers)
                 {
+                    name = driver.Name;
                     if (driver?.Name != null) 
                     {
-                        DriversNameBox.Items.Add(driver.Name);
+                        if (driver.InWay) name += " (в пути)";
+                        DriversNameBox.Items.Add(name);
                     }
                 }
 
                 var trucks = _truckRepository.GetAll().ToList();
+                string truckName;
                 foreach (var truck in trucks)
                 {
+                    truckName = $"{truck.CarMake} {truck.LicensePlate}";
                     if (truck?.CarMake != null)
                     {
-                        TruckMark.Items.Add($"{truck.CarMake} {truck.LicensePlate}");
+                        if (truck.InWay) truckName += " (в пути)";
+                        TruckMark.Items.Add(truckName);
                     }
                 }
             }
@@ -146,14 +154,38 @@ namespace CarGO_Control.Views
         {
             if (TypeLoadBox.Text != string.Empty && LoadBox.Text != string.Empty && DateDepartBox.Text != string.Empty
                 && DateArrivalBox.Text != string.Empty && TruckMark.Text != string.Empty && LoadBox.Text != string.Empty
-                && WeightBox.Text != string.Empty)
+                && WeightBox.Text != string.Empty && UrlRoute != "null")
             {
                 using (var db = new CarGoDBContext())
                 {
-                    _cargoRepository = new(db);
                     _driversRepository = new(db);
-                    _routeRepository = new(db);
                     _truckRepository = new(db);
+                    var driver = _driversRepository.GetByLogin(DriversNameBox.Text);
+                    string licensePlate = TruckMark.Text.Split(' ')[1];
+                    var truck = _truckRepository.GetBySignleLicensePlate(licensePlate);
+
+                    if (driver.InWay)
+                    {
+                        SMB.ShowWarningMessageBox("Невозможно добавить этого водителя,\n т.к. он в пути");
+                        return;
+                    }
+
+                    driver.TruckID = truck.ID;
+                    if (_truckRepository.GetByID(driver.TruckID!.Value).InWay)
+                    {
+                        SMB.ShowWarningMessageBox("Невозможно использовать этот грузовик,\n т.к. он в пути");
+                        driver.TruckID = null;
+                        return;
+                    }
+                    
+
+                    _routeRepository = new(db);
+
+                    while(_routeRepository.GetByTrackNum(TrackNumberBox.Text) != null)
+                        TrackNumGenerator();
+
+                    _cargoRepository = new(db);
+                   
                     var cargo = new Cargo()
                     {
                         CargoType = TypeLoadBox.Text,
@@ -164,11 +196,8 @@ namespace CarGO_Control.Views
                     _cargoRepository.Add(cargo);
                     int cargoId = cargo.ID;
 
-                    string licensePlate = TruckMark.Text.Split(' ')[1];
-                    var truck = _truckRepository.GetBySignleLicensePlate(licensePlate);
-                    var driver = _driversRepository.GetByLogin(DriversNameBox.Text);
-                    driver.TruckID = truck.ID;
-                   
+                    driver.InWay = true;
+                    truck.InWay = true;
 
                     var route = new Route()
                     {
@@ -184,6 +213,7 @@ namespace CarGO_Control.Views
 
                     };
                     _routeRepository.Add(route);
+                    SMB.SuccessfulMSG("Успешно!");
                 }
             }
             else SMB.ShowWarningMessageBox("У вас есть незаполненные поля!");            
@@ -197,7 +227,7 @@ namespace CarGO_Control.Views
                 if (driver.Name == DriversNameBox.SelectedItem.ToString())
                 {
                     ExpDriversLabel.Text = driver.Experience.ToString();
-                    _driverId = driver.Id;
+                    _driverId = driver.ID;
                 }
                 await Task.Delay(100);
             }

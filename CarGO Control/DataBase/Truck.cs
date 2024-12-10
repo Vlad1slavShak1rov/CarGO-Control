@@ -14,6 +14,7 @@ namespace CarGO_Control.DataBase
         public string LicensePlate { get; set; }
         public string CarMake { get; set; }
 
+        public bool InWay { get; set; } = false;
         public virtual Route Route { get; set; }
         public virtual Driver Driver { get; set; }
     }

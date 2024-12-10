@@ -1,6 +1,7 @@
 ﻿using CarGO_Control.DataBase;
 using CarGO_Control.Tools;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic.ApplicationServices;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;

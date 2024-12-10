@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ namespace CarGO_Control.DataBase
         }
         public IEnumerable<Route> GetAll()
         {
-            return _context.Routes.ToList();
+            return _context.Routes;
         }
 
         public void Add(Route entity)
@@ -34,6 +35,17 @@ namespace CarGO_Control.DataBase
             return _context.Routes.Find(id);
         }
 
+        public Route GetByIDrivers(int id)
+        {
+            return _context.Routes
+               .Include(r => r.Driver) 
+               .FirstOrDefault(r => r.ID == id);
+        }
+
+        public Route GetByTrackNum(string tracknum)
+        {
+            return _context.Routes.FirstOrDefault(r => r.TrackNumer == tracknum);
+        }
         public void Delete(Route entity)
         {
             _context.Routes.Remove(entity);
