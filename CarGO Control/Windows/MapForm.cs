@@ -11,7 +11,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CarGO_Control.Views;
+using CarGO_Control.DataBase;
 using GMap.NET.MapProviders;
+using Route = CarGO_Control.DataBase.Route;
 
 namespace CarGO_Control.Windows
 {
@@ -19,12 +21,15 @@ namespace CarGO_Control.Windows
     {
         ApiGetCity api = new();
         GMapControl gmap = new();
-       
+
+        Route _route;
         bool isPressed = false;
-        public MapForm()
+        public MapForm(Route route)
         {
             InitializeComponent();
             InitMap();
+            _route = route;
+            if (route != null) InitRoute();
         }
 
         private void InitMap()
@@ -33,7 +38,7 @@ namespace CarGO_Control.Windows
             {
                 Dock = DockStyle.Fill,
                 MapProvider = GMap.NET.MapProviders.OpenStreetMapProvider.Instance,
-                Position = new PointLatLng(55.7558, 37.6173),
+                Position = new PointLatLng(64.6863136, 97.7453061),
                 MinZoom = 2,
                 MaxZoom = 18
             };
@@ -41,6 +46,21 @@ namespace CarGO_Control.Windows
             gmap.MouseWheel += gmap_MouseWheel;
             MapPanel.Controls.Add(gmap);
         }
+
+        private void InitRoute()
+        {
+            SaveButton.Enabled = false;
+            SearchBox.Enabled = false;
+            ShowButton.Enabled = false;
+            SearchButton.Enabled = false;
+            FromBox.Enabled = false;
+            ToBox.Enabled = false;
+
+            FromBox.Text = _route.CityFrom;
+            ToBox.Text = _route.CityTo;
+            ShowButton_Click(null,null);
+        }
+
 
         private void gmap_MouseDown(object sender, MouseEventArgs e)
         {
@@ -95,8 +115,22 @@ namespace CarGO_Control.Windows
             if (!string.IsNullOrEmpty(FromBox.Text) && !string.IsNullOrEmpty(ToBox.Text))
             {
                 LoadProgressBar.Visible = true;
-                PointLatLng start = await api.ReturnResponse(FromBox.Text);
-                PointLatLng end = await api.ReturnResponse(ToBox.Text);
+
+                string FromWay;
+                string ToWay;
+                if(_route == null)
+                {
+                    FromWay = _route.CityFrom;
+                    ToWay = _route.CityTo;
+                }
+                else
+                {
+                    FromWay = FromBox.Text;
+                    ToWay = ToBox.Text;
+                }
+
+                PointLatLng start = await api.ReturnResponse(FromWay);
+                PointLatLng end = await api.ReturnResponse(ToWay);
                 if (start != null && end != null)
                 {
                     gmap = await api.ReturnRoute(gmap, start.Lat, start.Lng, end.Lat, end.Lng);

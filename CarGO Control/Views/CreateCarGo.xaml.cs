@@ -114,7 +114,7 @@ namespace CarGO_Control.Views
 
         private void SelectRoute_Click(object sender, RoutedEventArgs e)
         {
-            (new MapForm()).ShowDialog();
+            (new MapForm(null)).ShowDialog();
             BackGroundCity.Content = $"{CiryFrom} - {CityTo}";
             ForeGroundCity.Content = $"{CiryFrom} - {CityTo}";
         }

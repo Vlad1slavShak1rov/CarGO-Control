@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,7 +17,7 @@ namespace CarGO_Control.DataBase
         }
         public IEnumerable<Roles> GetAll()
         {
-            return _context.Roles.ToList();
+            return _context.Roles;
         }
 
         public void Add(Roles entity)

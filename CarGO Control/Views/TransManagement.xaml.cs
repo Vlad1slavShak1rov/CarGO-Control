@@ -24,6 +24,7 @@ namespace CarGO_Control.Views
         public event RoutedEventHandler BackClick;
         public event RoutedEventHandler CreateCarGoClick;
         public event RoutedEventHandler AddTruck;
+        public event RoutedEventHandler RoutesReg;
         public TransManagement()
         {
             InitializeComponent();
@@ -42,7 +43,7 @@ namespace CarGO_Control.Views
 
         private void ViewCarGo_Click(object sender, RoutedEventArgs e)
         {
-
+            RoutesReg?.Invoke(this, e);
         }
 
         private void AddTruckButton_Click(object sender, RoutedEventArgs e)

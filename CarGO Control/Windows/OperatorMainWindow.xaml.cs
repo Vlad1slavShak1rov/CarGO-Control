@@ -35,10 +35,12 @@ namespace CarGO_Control.Windows
         private EditDriver editDriver;
         private SettingView settingView;
         private AddTruck addTruck = new();
+        private RoutesReg routesReg;
         private string _name;
 
         public event EventHandler<Driver> DriverChanged;
         public event EventHandler LoadDataHandler;
+        public event EventHandler LoadRoutes;
 
         DriverRepository _driver;
         public OperatorMainWindow(string nick)
@@ -53,21 +55,24 @@ namespace CarGO_Control.Windows
             editDriver = new(this);
             settingView = new SettingView(_name);
             createCarGo = new CreateCarGo(this);
+            routesReg = new(this);
 
             DriversReg.BackButtonClicked += BackMenuClick;
             editDriver.ReloadList += AcceptData;
+            editDriver.BackClick += BackToTable;
             DriversReg.LoadedFile += LoadData;
             DriversReg.Search += SearcDrivers;
             DriversReg.LoadDataBase += UpdateDataBaseEvent;
-            editDriver.BackClick += BackToTable;
             settingView.ChangeData += ChangeNick;
             settingView.BackToMain += BackMenuClick;
             settingView.LeaveProfile += LeaveMainProfile;
             transManagement.BackClick += BackMenuClick;
             transManagement.CreateCarGoClick += CreateCGo;
             transManagement.AddTruck += AddTruck;
+            transManagement.RoutesReg += RouterRegShow;
             createCarGo.BackButtonClick += BackToTransManagment;
             addTruck.BackButtonClick += BackToTransManagment;
+            routesReg.BackButtonClicked += BackToTransManagment;
         }
 
         private void TimerInit()
@@ -76,6 +81,13 @@ namespace CarGO_Control.Windows
             _timer.Interval = TimeSpan.FromSeconds(1);
             _timer.Tick += Timer_Tick;
             _timer.Start();
+        }
+
+        private void RouterRegShow(object sender, RoutedEventArgs e)
+        {
+            ViewGrid.Children.Clear();
+            ViewGrid.Children.Add(routesReg);
+            LoadRoutes?.Invoke(this, null);
         }
 
         private void AddTruck(object sender, EventArgs e)
