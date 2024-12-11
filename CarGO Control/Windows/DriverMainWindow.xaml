@@ -6,9 +6,47 @@
         xmlns:local="clr-namespace:CarGO_Control.Windows"
         mc:Ignorable="d"
         Title="DriverMainWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen" WindowState ="Maximized">
+    <Window.Resources>
+        <Style x:Key="RoundedButtonStyle" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" 
+                        BorderBrush="{TemplateBinding BorderBrush}" 
+                        BorderThickness="{TemplateBinding BorderThickness}" 
+                        CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#575859"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#000000"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Background" Value="#FFDDDDDD"/>
+            <Setter Property="BorderThickness" Value="2"/>
+        </Style>
+    </Window.Resources>
     <Grid>
         <Image Margin="0,0,0,0" Stretch="Fill" Source="/CarGOControl;component/Resources/DriverBackGround.jpg"/>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="255,183,0,0" VerticalAlignment="Top" Click="Button_Click"/>
-    </Grid>
+        <Button Name = "SettingsButton" VerticalAlignment="Top" HorizontalAlignment="Left" Width="35" Height="35" BorderBrush="{x:Null}" Foreground="{x:Null}" Margin="10,5,0,0" Click="SettingsButton_Click">
+            <Button.Background>
+                <ImageBrush ImageSource="/CarGoControl;component/Resources/SettingsIco.png"/>
+            </Button.Background>
+        </Button>
+        <Rectangle Margin="0,50,0,0" Height="3" Fill="#D9D9D9" HorizontalAlignment="Stretch" VerticalAlignment="Top" />
+        <Canvas HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,360,0">
+            <Label Name ="HelloLabelBack" Margin="0,0,0,0" VerticalAlignment="Top" Content="Welcome Back, User!" Foreground="Black" HorizontalAlignment="Center" FontSize="20" Canvas.Top="1"/>
+            <Label Name ="HelloLabel" Margin="0,0,0,0" VerticalAlignment="Top" Content="Welcome Back, User!" Foreground="#FFFFFF" HorizontalAlignment="Center" FontSize="20"/>
+        </Canvas>
 
+        <Label Name ="DateLabel" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="51,-4,0,0" Content="Date 01.01.2025" Foreground="White" FontSize="15"/>
+        <Label Name ="TimeLabel" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="51,17,0,0" Content="Time 00:00:00" Foreground="White" FontSize="15"/>
+        <Grid Margin="0,40,0,0" Name="ViewGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+    </Grid>
 </Window>

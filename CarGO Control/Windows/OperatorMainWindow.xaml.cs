@@ -53,7 +53,7 @@ namespace CarGO_Control.Windows
             HelloLabel.Content = $"Добро пожаловать: {nick}";
 
             editDriver = new(this);
-            settingView = new SettingView(_name);
+            settingView = new SettingView(_name,1);
             createCarGo = new CreateCarGo(this);
             routesReg = new(this);
 

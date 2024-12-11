@@ -4,6 +4,7 @@ using CarGO_Control.Windows;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,11 +28,13 @@ namespace CarGO_Control.Views
         public EventHandler<string> ChangeData;
         public RoutedEventHandler BackToMain;
         public EventHandler<MessageBoxResult> LeaveProfile;
-
+        int _role;
         OperatorRepository _operator;
-        public SettingView(string Name)
+        DriverRepository _driver;
+        public SettingView(string Name, int role)
         {
             _name = Name;
+            _role = role;
             InitializeComponent();
             SaveСhangeButton.Visibility = Visibility.Hidden;
             LoadData(_name);
@@ -40,18 +43,40 @@ namespace CarGO_Control.Views
         {
             using (var db = new CarGoDBContext())
             {
-                var @operator = db.Operators.
-                    Include(d => d.User).
-                    FirstOrDefault(d => d.Name == Name);
-                if (@operator != null)
+                switch (_role)
                 {
-                    NameBox.Text = @operator.Name;
-                    var user = @operator.User.Login;
-                    if (user != null)
-                    {
-                        LoginBox.Text = user; 
-                    }
+                    case 1:
+                        RoleBox.Text = "Оператор";
+                        var @operator = db.Operators.
+                        Include(d => d.User).
+                        FirstOrDefault(d => d.Name == Name);
+                        if (@operator != null)
+                        {
+                            NameBox.Text = @operator.Name;
+                            var user = @operator.User.Login;
+                            if (user != null)
+                            {
+                                LoginBox.Text = user;
+                            }
+                        }
+                        break;
+                    case 2:
+                        RoleBox.Text = "Водитель";
+                        var driver = db.Drivers.
+                        Include(d => d.Users).
+                        FirstOrDefault(d => d.Name == Name);
+                        if (driver != null)
+                        {
+                            NameBox.Text = driver.Name;
+                            var user = driver.Users.Login;
+                            if (user != null)
+                            {
+                                LoginBox.Text = user;
+                            }
+                        }
+                        break;
                 }
+                
             }
         }
 
@@ -68,11 +93,24 @@ namespace CarGO_Control.Views
         {
             using (var db = new CarGoDBContext())
             {
-                _operator = new(db);
-                var @operator = _operator.GetByLogin(_name);
-                @operator.Name = NameBox.Text;
-                _operator.Update(@operator);
-                _name = @operator.Name;
+                switch (_role)
+                {
+                    case 1:
+                        _operator = new(db);
+                        var @operator = _operator.GetByLogin(_name);
+                        @operator.Name = NameBox.Text;
+                        _operator.Update(@operator);
+                        _name = @operator.Name;
+                        break;
+                    case 2:
+                        _driver = new(db);
+                        var driver = _driver.GetByLogin(_name);
+                        driver.Name = NameBox.Text;
+                        _driver.Update(driver);
+                        _name = driver.Name;
+                        break;
+                }
+               
                 ChangeData?.Invoke(this, NameBox.Text);
             }
         }
