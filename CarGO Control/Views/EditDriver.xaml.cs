@@ -51,9 +51,16 @@ namespace CarGO_Control.Views
 
 
                 TruckRepository trucks = new(context);
-                string? truck = trucks.GetByIDDriver(driver.ID)?.CarMake;
-                if (truck != null) TruckMarkBox.Text = truck;
-                else TruckMarkBox.Text = "Отсутствует";
+
+                if (driver.TruckID!.HasValue)
+                {
+                    string? truck = trucks.GetByIDDriver(driver.TruckID!.Value)?.CarMake;
+                    if (truck != null) TruckMarkBox.Text = truck;
+                }
+                else
+                {
+                    TruckMarkBox.Text = "Отсутствует";
+                }
             }
             
         }

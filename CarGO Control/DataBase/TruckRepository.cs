@@ -37,9 +37,8 @@ namespace CarGO_Control.DataBase
 
         public Truck GetByIDDriver(int id)
         {
-            return _context.Drivers
-            .Include(d => d.Truck) 
-            .FirstOrDefault(d => d.ID == id)?.Truck;
+            return _context.Trucks.
+                SingleOrDefault(x => x.ID == id);
 
         }
         public Truck GetBySignleLicensePlate(string licensePlat)

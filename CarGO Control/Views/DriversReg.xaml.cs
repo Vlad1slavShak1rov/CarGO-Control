@@ -31,15 +31,16 @@ namespace CarGO_Control.Views
         public DriversReg()
         {
             InitializeComponent();
-            LoadDataAsync();
-            
         }
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
             BackButtonClicked?.Invoke(this, new RoutedEventArgs());
         }
-
-        private async void LoadDataAsync()
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            LoadDataAsync();
+        }
+        private void LoadDataAsync()
         {
             LoadingDataBar.Visibility = Visibility.Visible;
             LoadingDataBar.Value = 0;
@@ -48,7 +49,7 @@ namespace CarGO_Control.Views
             {
                 LoadingDataBar.Value += random.Next(10, 35);
                 ProgressLabel.Content = $"{LoadingDataBar.Value} %";
-                await Task.Delay(700);
+                Task.Delay(700);
             }
             ProgressLabel.Visibility = Visibility.Hidden;
             LoadingDataBar.Visibility = Visibility.Hidden;
@@ -73,5 +74,7 @@ namespace CarGO_Control.Views
                 LoadDataBase?.Invoke(this, EventArgs.Empty);
             }
         }
+
+       
     }
 }
