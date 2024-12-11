@@ -52,6 +52,7 @@ namespace CarGO_Control.Views
         {
             DriversNameBox.Items.Clear();
             TruckMark.Items.Clear();
+            TypeLoadBox.Items.Clear();
             InitComboBox();
             TrackNumGenerator();
         }

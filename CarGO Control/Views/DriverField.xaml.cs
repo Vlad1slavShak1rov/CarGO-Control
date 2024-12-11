@@ -35,11 +35,12 @@ namespace CarGO_Control.Views
                 if (trackNum != null) RouteLabel.Content = "Трек-номер: " + trackNum;
                 else RouteLabel.Content = "Трек-номер: отсутствует";
 
-
+                //НУЖНО ПОФИКСИТЬ!!!!
                 TruckRepository trucks = new(context);
                 string? truck = trucks.GetByIDDriver(driver.ID)?.CarMake;
                 if (truck != null) TruckLabel.Content = "Марка: " + truck;
                 else TruckLabel.Content = "Марка: отсутствует";
+                //======
             }
 
             NameLabel.Content = "Имя: " + driver.Name;

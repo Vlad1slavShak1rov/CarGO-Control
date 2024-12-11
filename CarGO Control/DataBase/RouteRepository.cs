@@ -39,7 +39,7 @@ namespace CarGO_Control.DataBase
         {
             return _context.Routes
                .Include(r => r.Driver) 
-               .FirstOrDefault(r => r.ID == id);
+               .FirstOrDefault(r => r.DriverID == id);
         }
 
         public Route GetByTrackNum(string tracknum)

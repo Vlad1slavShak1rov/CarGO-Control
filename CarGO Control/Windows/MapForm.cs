@@ -118,7 +118,7 @@ namespace CarGO_Control.Windows
 
                 string FromWay;
                 string ToWay;
-                if(_route == null)
+                if(_route != null)
                 {
                     FromWay = _route.CityFrom;
                     ToWay = _route.CityTo;

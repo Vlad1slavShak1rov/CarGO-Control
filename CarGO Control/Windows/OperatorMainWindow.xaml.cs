@@ -128,6 +128,7 @@ namespace CarGO_Control.Windows
             RegDriversButton.Visibility = Visibility.Hidden;
             ManagementButton.Visibility = Visibility.Hidden;
             ViewGrid.Children.Clear();
+            DriversReg.DriversList.Children.Clear();
             LoadDataHandler?.Invoke(null, null);
             ViewGrid.Children.Add(DriversReg);
          
