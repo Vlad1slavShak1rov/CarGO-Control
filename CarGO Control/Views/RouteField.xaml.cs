@@ -46,8 +46,10 @@ namespace CarGO_Control.Views
                 TruckBox.Text = $"{truck.CarMake} ({truck.LicensePlate})";
             }
            
-            ArrivalBox.Text = $"{_route.CityFrom} - {_route.DataOut}";
-            DepartBox.Text = $"{_route.CityTo} - {_route.DataIn}";
+            ArrivalBox.Text = $"{_route.CityFrom}";
+            DataArrivaltBox.Text = $"{ _route.DataOut}";
+            DepartBox.Text = $"{_route.CityTo}";
+            DataDepartBox.Text = $"{_route.DataIn}";
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

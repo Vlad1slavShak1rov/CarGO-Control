@@ -48,11 +48,38 @@ namespace CarGO_Control.Views
 
                 foreach (var route in routes)
                 {
-                    _routeField = new(route);
-                    _routeField.Margin = new Thickness(0, 15, 0, 0);
-                    RouteList.Children.Add(_routeField);
+                    if (route.DataIn <= DateTime.Now.Date) DeleteRoute(context, route);
+                    else 
+                    {
+                        _routeField = new(route);
+                        _routeField.Margin = new Thickness(0, 15, 0, 0);
+                        RouteList.Children.Add(_routeField);
+                    }
                 }
             }
+        }
+
+        private void DeleteRoute(CarGoDBContext context, Route route)
+        {
+            _routeRepository = new(context);
+            DriverRepository driverRepository = new(context);
+            CargoRepository cargoRepository = new(context);
+            TruckRepository truckRepository = new(context);
+
+            var driver = driverRepository.GetByID(route.DriverID!.Value);
+            var cargo = cargoRepository.GetByID(route.IDCarGo!.Value);
+            var truck = truckRepository.GetByID(route.IDTruck!.Value);
+
+            driver.InWay = false;
+            driver.TruckID = null;
+
+            driverRepository.Update(driver);
+
+            truck.InWay = false;
+            truckRepository.Update(truck);
+
+            cargoRepository.Delete(cargo);
+            _routeRepository.Delete(route);
         }
     }
 }

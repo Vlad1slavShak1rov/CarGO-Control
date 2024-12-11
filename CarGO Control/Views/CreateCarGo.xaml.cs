@@ -208,8 +208,8 @@ namespace CarGO_Control.Views
                         CityFrom = CiryFrom,
                         CityTo = CityTo,
                         RouteHTTP = UrlRoute,
-                        DataOut = DateTime.Parse(DateDepartBox.Text),
-                        DataIn = DateTime.Parse(DateArrivalBox.Text)
+                        DataOut = DateTime.Parse(DateDepartBox.Text).Date,
+                        DataIn = DateTime.Parse(DateArrivalBox.Text).Date
 
                     };
                     _routeRepository.Add(route);
@@ -231,7 +231,6 @@ namespace CarGO_Control.Views
                 }
                 await Task.Delay(100);
             }
-
         }
 
         private void WeightBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
