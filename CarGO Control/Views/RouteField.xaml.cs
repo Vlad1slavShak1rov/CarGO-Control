@@ -26,6 +26,7 @@ namespace CarGO_Control.Views
         private Route _route;
         private DriverRepository _driverRepository;
         private TruckRepository _truckRepository;
+        private CargoRepository _cargoRepository;
         public RouteField(Route route)
         {
             InitializeComponent();
@@ -38,18 +39,24 @@ namespace CarGO_Control.Views
             using (var context = new CarGoDBContext()) 
             {
                 _driverRepository = new(context);
-                _truckRepository = new(context);    
+                _truckRepository = new(context);
+                _cargoRepository = new(context);
                 var driver = _driverRepository.GetByID(_route.DriverID!.Value);
                 DriverBox.Text = driver.Name;
 
                 var truck = _truckRepository.GetByID(_route.IDTruck!.Value);
                 TruckBox.Text = $"{truck.CarMake} ({truck.LicensePlate})";
+
+                var cargo = _cargoRepository.GetByID(_route.IDCarGo!.Value);
+                LoadBox.Text = cargo.Contents;
+                LoadTypeBox.Text = cargo.CargoType;
             }
            
             ArrivalBox.Text = $"{_route.CityFrom}";
-            DataArrivaltBox.Text = $"{ _route.DataOut}";
+            DataArrivaltBox.Text = $"{ _route.DataOut.Date}";
             DepartBox.Text = $"{_route.CityTo}";
-            DataDepartBox.Text = $"{_route.DataIn}";
+            DataDepartBox.Text = $"{_route.DataIn.Date}";
+            
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
