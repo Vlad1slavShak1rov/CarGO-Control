@@ -1,4 +1,6 @@
-﻿using CarGO_Control.Views;
+﻿using CarGO_Control.DataBase;
+using CarGO_Control.Tools;
+using CarGO_Control.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +27,7 @@ namespace CarGO_Control.Windows
         private string _driverName;
         private DispatcherTimer _timer;
         private SettingView settingView;
+        private RouteRepository routeRepository;
         public DriverMainWindow(string name)
         {
             InitializeComponent();
@@ -54,11 +57,18 @@ namespace CarGO_Control.Windows
 
         private void BackClick(object sender, EventArgs e)
         {
+            TrackNumberBox.Visibility = Visibility.Visible;
+            WriteLabel.Visibility = Visibility.Visible;
+            StatButton.Visibility = Visibility.Visible;
             ViewGrid.Children.Clear();
         }
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
             ViewGrid.Children.Clear();
+            TrackNumberBox.Visibility = Visibility.Hidden;
+            WriteLabel.Visibility = Visibility.Hidden;
+            StatButton.Visibility = Visibility.Hidden;
+
             ViewGrid.Children.Add(settingView);
         }
 
@@ -75,6 +85,37 @@ namespace CarGO_Control.Windows
                 (new MainWindow()).Show();
                 this.Close();
             }
+        }
+
+        private void StatButton_Click(object sender, RoutedEventArgs e)
+        {
+            if(TrackNumberBox.Text.Count() == 9)
+            {
+                using (var context = new CarGoDBContext())
+                {
+                    routeRepository = new(context);
+                    var route = routeRepository.GetByTrackNum(TrackNumberBox.Text);
+                    if (route != null)
+                    {
+                        this.Hide();
+                        (new DriverMaps(this, route)).Show();
+                    }
+                    else
+                    {
+                        SMB.ShowWarningMessageBox("Перевозки с таким Трек-Номер не существует\nЕсли это ошибка, обратитесь к оператору.");
+                    }
+                }
+
+            }
+            else
+            {
+                SMB.ShowWarningMessageBox("Трек-Номер должен содержать 9 символов!");
+            }
+        }
+
+        private void TrackNumberBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = !CheckTextBox.CheckText(e);
         }
     }
 }

@@ -48,5 +48,10 @@
         <Label Name ="DateLabel" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="51,-4,0,0" Content="Date 01.01.2025" Foreground="White" FontSize="15"/>
         <Label Name ="TimeLabel" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="51,17,0,0" Content="Time 00:00:00" Foreground="White" FontSize="15"/>
         <Grid Margin="0,40,0,0" Name="ViewGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+        
+        <TextBox Name = "TrackNumberBox" VerticalAlignment="Center" HorizontalAlignment="Center" Width="200" Height="30" Opacity="0.7" FontFamily="Arial Black" FontSize="16" MaxLength="9" PreviewTextInput="TrackNumberBox_PreviewTextInput"/>
+        <Label Name ="WriteLabel" Content="Введите свой Трек-Номер" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,60" Foreground="White" FontSize="18" />
+        <Button Name="StatButton" Content="Начать поездку" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,70,0,0" Width="190" Height="25" FontSize="16" FontFamily="Arial Black" Click="StatButton_Click" />
+        
     </Grid>
 </Window>
