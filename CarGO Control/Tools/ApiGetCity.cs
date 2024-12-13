@@ -11,6 +11,10 @@ using CarGO_Control.Views;
 using GMap.NET.WindowsForms;
 using CarGO_Control.Windows;
 using Microsoft.Ajax.Utilities;
+using GMap.NET.WindowsForms.Markers;
+using GMap.NET.WindowsPresentation;
+using GMapRoute = GMap.NET.WindowsForms.GMapRoute;
+using GMapControl = GMap.NET.WindowsForms.GMapControl;
 
 namespace CarGO_Control.Tools
 {
@@ -53,11 +57,18 @@ namespace CarGO_Control.Tools
             }
         }
 
-        private async Task GetRoute(GMapControl gmap, double startLat, double startLon, double endLat, double endLon)
+        private async Task<GMapControl> GetRoute(GMapControl gmap, string startCity, string endCity)
         {
             using var client = new HttpClient();
+            PointLatLng start = await ReturnResponse(startCity);
+            PointLatLng end = await ReturnResponse(endCity);
+
+            gmap.Overlays.Clear();
+            gmap = AddMarker(gmap, start.Lat, start.Lng, "Откуда", $"{startCity}", GMarkerGoogleType.blue_dot);
+            gmap = AddMarker(gmap, end.Lat, end.Lng, "Куда", $"{endCity}", GMarkerGoogleType.red_dot);
+
             client.BaseAddress = new Uri("http://router.project-osrm.org/");
-            string requestUrl = $"route/v1/driving/{startLon.ToString().Replace(',', '.')},{startLat.ToString().Replace(',', '.')};{endLon.ToString().Replace(',', '.')},{endLat.ToString().Replace(',', '.')}?overview=full";
+            string requestUrl = $"route/v1/driving/{start.Lng.ToString().Replace(',', '.')},{start.Lat.ToString().Replace(',', '.')};{end.Lng.ToString().Replace(',', '.')},{end.Lat.ToString().Replace(',', '.')}?overview=full";
             HttpResponseMessage response = await client.GetAsync(requestUrl);
             if (response.IsSuccessStatusCode)
             {
@@ -80,6 +91,7 @@ namespace CarGO_Control.Tools
             {
                 SMB.ShowWarningMessageBox("Маршрут не найден");
             }
+            return gmap;
         }
         private void DrawRoute(PointLatLng[] points, ref GMapControl gmap)
         {
@@ -90,7 +102,7 @@ namespace CarGO_Control.Tools
 
             var routesOverlay = new GMapOverlay("routes");
             routesOverlay.Routes.Add(routesLayer);
-            gmap.Overlays.Clear();
+            
             gmap.Overlays.Add(routesOverlay);
             if (points.Length > 0)
             {
@@ -131,16 +143,31 @@ namespace CarGO_Control.Tools
             }
             return polylinePoints.ToArray();
         }
-       
+
+        private GMapControl AddMarker(GMapControl gmap, double lat, double lng, string title, string tooltip, GMarkerGoogleType markerType)
+        {
+            
+            var marker = new GMarkerGoogle(new PointLatLng(lat, lng), markerType)
+            {
+                ToolTipText = tooltip,
+                ToolTipMode = MarkerTooltipMode.Always
+            };
+
+            var markersOverlay = new GMapOverlay("markers");
+            markersOverlay.Markers.Add(marker);
+            gmap.Overlays.Add(markersOverlay);
+            return gmap;
+        }   
+
         public async Task<PointLatLng> ReturnResponse(string query)
         {
             await GetResponse(query);
             return pointLat;
         }
 
-        public async Task<GMapControl> ReturnRoute(GMapControl gmap, double startLat, double startLon, double endLat, double endLon)
+        public async Task<GMapControl> ReturnRoute(GMapControl gmap, string start, string end)
         {
-            await GetRoute(gmap, startLat, startLon, endLat, endLon);
+            gmap = await GetRoute(gmap, start, end);
             return gmap;
         }
     }

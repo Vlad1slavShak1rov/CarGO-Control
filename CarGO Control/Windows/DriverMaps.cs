@@ -28,6 +28,8 @@ namespace CarGO_Control.Windows
         public DriverMaps(Window window, Route route)
         {
             InitializeComponent();
+            GMaps.Instance.Mode = AccessMode.ServerAndCache;
+
             MapPanel.Controls.Add(LoadBar);
             _window = window;
             _route = route;
@@ -51,7 +53,8 @@ namespace CarGO_Control.Windows
                 MapProvider = GMap.NET.MapProviders.OpenStreetMapProvider.Instance,
                 Position = new PointLatLng(64.6863136, 97.7453061),
                 MinZoom = 2,
-                MaxZoom = 18
+                MaxZoom = 18,
+                Zoom = 10
             };
 
             LoadBar.Value += 50;
@@ -63,17 +66,18 @@ namespace CarGO_Control.Windows
 
             PointLatLng start = await api.ReturnResponse(FromWay);
             PointLatLng end = await api.ReturnResponse(ToWay);
+
             LoadBar.Value += 25;
             Task.Delay(100);
             if (start != null && end != null)
             {
-                gmap = await api.ReturnRoute(gmap, start.Lat, start.Lng, end.Lat, end.Lng);
+                gmap = await api.ReturnRoute(gmap, FromWay, ToWay);
 
                 double distanceInKm = double.Parse(ApiGetCity.Distance.ToString()) / 1000;
                 distanceInKm = Math.Round(distanceInKm, 1);
 
                 gmap.Position = new PointLatLng(((start.Lat + end.Lat) / 2), ((start.Lng + end.Lng) / 2));
-                gmap.Zoom = (distanceInKm + 1) % 18;
+                gmap.Zoom = (distanceInKm + 2) % 18;
 
                 LoadBar.Value += 15;
                 Task.Delay(100);

@@ -14,6 +14,8 @@ using CarGO_Control.Views;
 using CarGO_Control.DataBase;
 using GMap.NET.MapProviders;
 using Route = CarGO_Control.DataBase.Route;
+using GMap.NET.WindowsPresentation;
+using GMapControl = GMap.NET.WindowsForms.GMapControl;
 
 namespace CarGO_Control.Windows
 {
@@ -28,6 +30,8 @@ namespace CarGO_Control.Windows
         {
             InitializeComponent();
             InitMap();
+            GMaps.Instance.Mode = AccessMode.ServerAndCache;
+
             _route = route;
             if (route != null) InitRoute();
         }
@@ -39,8 +43,9 @@ namespace CarGO_Control.Windows
                 Dock = DockStyle.Fill,
                 MapProvider = GMap.NET.MapProviders.OpenStreetMapProvider.Instance,
                 Position = new PointLatLng(64.6863136, 97.7453061),
-                MinZoom = 2,
-                MaxZoom = 18
+                MinZoom = 2, 
+                MaxZoom = 17,
+                Zoom = 18
             };
             gmap.MouseDown += gmap_MouseDown;
             gmap.MouseWheel += gmap_MouseWheel;
@@ -131,9 +136,10 @@ namespace CarGO_Control.Windows
 
                 PointLatLng start = await api.ReturnResponse(FromWay);
                 PointLatLng end = await api.ReturnResponse(ToWay);
+
                 if (start != null && end != null)
                 {
-                    gmap = await api.ReturnRoute(gmap, start.Lat, start.Lng, end.Lat, end.Lng);
+                    gmap = await api.ReturnRoute(gmap, FromWay, ToWay);
 
                     while (LoadProgressBar.Value < 100)
                     {
