@@ -2,6 +2,7 @@
 using CarGO_Control.Tools;
 using GMap.NET;
 using GMap.NET.WindowsForms;
+using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -22,12 +23,21 @@ namespace CarGO_Control.Windows
         GMapControl gmap;
         ApiGetCity api = new();
 
+        CargoRepository cargoRepository;
+
         public DriverMaps(Window window, Route route)
         {
             InitializeComponent();
             MapPanel.Controls.Add(LoadBar);
             _window = window;
             _route = route;
+        }
+        private void DriverMaps_Load(object sender, EventArgs e)
+        {
+            MapPanel.Controls.Clear();
+            InitMap();
+            InitBox();
+
         }
 
         private async void InitMap()
@@ -106,10 +116,20 @@ namespace CarGO_Control.Windows
             }
         }
 
-        private void DriverMaps_Load(object sender, EventArgs e)
+        private void InitBox()
         {
-            MapPanel.Controls.Clear();
-            InitMap();
+            CityDepartBox.Text = _route.CityFrom;
+            CityArrivalBox.Text = _route.CityTo;
+
+            using(var context = new CarGoDBContext())
+            {
+                cargoRepository = new(context);
+
+                var cargo = cargoRepository.GetByID(_route.IDCarGo!.Value);
+
+                ContentBox.Text = cargo.Contents;
+                TypeContentBox.Text = cargo.CargoType;
+            }
         }
 
         private void BackButon_Click(object sender, EventArgs e)

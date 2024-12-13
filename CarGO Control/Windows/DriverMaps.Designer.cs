@@ -29,11 +29,16 @@
         private void InitializeComponent()
         {
             MapPanel = new Panel();
+            LoadBar = new ProgressBar();
             CityDepartBox = new TextBox();
             CityArrivalBox = new TextBox();
             DistanceLabel = new Label();
             BackButon = new Button();
-            LoadBar = new ProgressBar();
+            label1 = new Label();
+            label2 = new Label();
+            label3 = new Label();
+            ContentBox = new TextBox();
+            TypeContentBox = new TextBox();
             MapPanel.SuspendLayout();
             SuspendLayout();
             // 
@@ -45,28 +50,37 @@
             MapPanel.Size = new Size(1112, 456);
             MapPanel.TabIndex = 0;
             // 
+            // LoadBar
+            // 
+            LoadBar.Location = new Point(386, 169);
+            LoadBar.Name = "LoadBar";
+            LoadBar.Size = new Size(367, 33);
+            LoadBar.TabIndex = 0;
+            // 
             // CityDepartBox
             // 
-            CityDepartBox.Location = new Point(295, 31);
+            CityDepartBox.Location = new Point(247, 34);
             CityDepartBox.Name = "CityDepartBox";
+            CityDepartBox.ReadOnly = true;
             CityDepartBox.Size = new Size(185, 27);
             CityDepartBox.TabIndex = 1;
             // 
             // CityArrivalBox
             // 
-            CityArrivalBox.Location = new Point(520, 31);
+            CityArrivalBox.Location = new Point(471, 33);
             CityArrivalBox.Name = "CityArrivalBox";
+            CityArrivalBox.ReadOnly = true;
             CityArrivalBox.Size = new Size(188, 27);
             CityArrivalBox.TabIndex = 2;
             // 
             // DistanceLabel
             // 
             DistanceLabel.AutoSize = true;
-            DistanceLabel.Location = new Point(765, 34);
+            DistanceLabel.Location = new Point(764, 10);
             DistanceLabel.Name = "DistanceLabel";
-            DistanceLabel.Size = new Size(50, 20);
+            DistanceLabel.Size = new Size(39, 20);
             DistanceLabel.TabIndex = 3;
-            DistanceLabel.Text = "label1";
+            DistanceLabel.Text = "Груз";
             // 
             // BackButon
             // 
@@ -78,24 +92,66 @@
             BackButon.UseVisualStyleBackColor = true;
             BackButon.Click += BackButon_Click;
             // 
-            // LoadBar
+            // label1
             // 
-            LoadBar.Location = new Point(386, 169);
-            LoadBar.Name = "LoadBar";
-            LoadBar.Size = new Size(367, 33);
-            LoadBar.TabIndex = 0;
+            label1.AutoSize = true;
+            label1.Location = new Point(304, 9);
+            label1.Name = "label1";
+            label1.Size = new Size(56, 20);
+            label1.TabIndex = 5;
+            label1.Text = "Откуда";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(536, 10);
+            label2.Name = "label2";
+            label2.Size = new Size(41, 20);
+            label2.TabIndex = 6;
+            label2.Text = "Куда";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(949, 10);
+            label3.Name = "label3";
+            label3.Size = new Size(76, 20);
+            label3.TabIndex = 7;
+            label3.Text = "Тип груза";
+            // 
+            // ContentBox
+            // 
+            ContentBox.Location = new Point(696, 34);
+            ContentBox.Name = "ContentBox";
+            ContentBox.ReadOnly = true;
+            ContentBox.Size = new Size(175, 27);
+            ContentBox.TabIndex = 8;
+            // 
+            // TypeContentBox
+            // 
+            TypeContentBox.Location = new Point(899, 34);
+            TypeContentBox.Name = "TypeContentBox";
+            TypeContentBox.ReadOnly = true;
+            TypeContentBox.Size = new Size(175, 27);
+            TypeContentBox.TabIndex = 9;
             // 
             // DriverMaps
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1136, 569);
+            Controls.Add(TypeContentBox);
+            Controls.Add(ContentBox);
+            Controls.Add(label3);
+            Controls.Add(label2);
+            Controls.Add(label1);
             Controls.Add(BackButon);
             Controls.Add(DistanceLabel);
             Controls.Add(CityArrivalBox);
             Controls.Add(CityDepartBox);
             Controls.Add(MapPanel);
             Name = "DriverMaps";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "DriverMaps";
             Load += DriverMaps_Load;
             MapPanel.ResumeLayout(false);
@@ -111,5 +167,10 @@
         private Label DistanceLabel;
         private Button BackButon;
         private ProgressBar LoadBar;
+        private Label label1;
+        private Label label2;
+        private Label label3;
+        private TextBox ContentBox;
+        private TextBox TypeContentBox;
     }
 }
