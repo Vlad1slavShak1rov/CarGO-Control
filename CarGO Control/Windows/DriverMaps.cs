@@ -54,7 +54,7 @@ namespace CarGO_Control.Windows
                 Position = new PointLatLng(64.6863136, 97.7453061),
                 MinZoom = 2,
                 MaxZoom = 18,
-                Zoom = 10
+                Zoom = 4
             };
 
             LoadBar.Value += 50;
@@ -76,8 +76,8 @@ namespace CarGO_Control.Windows
                 double distanceInKm = double.Parse(ApiGetCity.Distance.ToString()) / 1000;
                 distanceInKm = Math.Round(distanceInKm, 1);
 
-                gmap.Position = new PointLatLng(((start.Lat + end.Lat) / 2), ((start.Lng + end.Lng) / 2));
-                gmap.Zoom = (distanceInKm + 2) % 18;
+                gmap.Position = new PointLatLng(start.Lat , start.Lng);
+                gmap.Zoom = 13;
 
                 LoadBar.Value += 15;
                 Task.Delay(100);

@@ -6,7 +6,7 @@
             xmlns:local="clr-namespace:CarGO_Control.Windows"
             mc:Ignorable="d"
             
-            Title="OperatorMainWindow" Height="640" Width="1200" WindowStartupLocation="CenterScreen" WindowState ="Maximized">
+            Title="OperatorMainWindow" Height="640" Width="1200" WindowStartupLocation="CenterScreen" WindowState ="Maximized" Closed="Window_Closed">
         <Window.Resources>
             <Style x:Key="RoundedButtonStyle" TargetType="Button">
                 <Setter Property="Template">

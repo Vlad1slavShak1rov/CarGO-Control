@@ -283,7 +283,7 @@ namespace CarGO_Control.Windows
                 {
                     foreach (var route in routes)
                     {
-                        if (route.DataIn.Date >= DateTime.Now.Date)
+                        if (route.DataIn.Date <= DateTime.Now.Date)
                         {
                             var driver = _driversRepository.GetByID(route.DriverID!.Value);
                             var truck = _truckRepository.GetByIDDriver(driver.TruckID!.Value);
@@ -305,6 +305,11 @@ namespace CarGO_Control.Windows
                 else return;
             }
 
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            MemClear.Clear();
         }
     }
 }

@@ -70,8 +70,8 @@
                 <ComboBox Name ="TruckMark" HorizontalAlignment="Center"  VerticalAlignment="Top"  Width="170" Height="30" Margin = "10,140,0,0" FontSize="18"/>
                 <TextBox Name ="ExpDriversLabel" HorizontalAlignment="Center" VerticalAlignment="Top" Width="70" Height="30" Margin = "10,200,0,0" IsEnabled="False" FontSize="18"/>
                 <Calendar Name="Calendar" HorizontalAlignment="Center" VerticalAlignment="Top" Margin = "500,200,0,0" SelectedDatesChanged="Calendar_SelectedDatesChanged"/>
-                <TextBox Name ="DateDepartBox" HorizontalAlignment="Center" VerticalAlignment="Top" Width="120" Height="30" Margin = "0,280,140,0"  FontSize="18"/>
-                <TextBox Name ="DateArrivalBox" HorizontalAlignment="Center" VerticalAlignment="Top" Width="120" Height="30" Margin = "150,280,0,0"  FontSize="18" IsEnabled="False"/>
+                <TextBox Name ="DateDepartBox" HorizontalAlignment="Center" VerticalAlignment="Top" Width="120" Height="30" Margin = "0,280,140,0"  FontSize="18" IsReadOnly="True"/>
+                <TextBox Name ="DateArrivalBox" HorizontalAlignment="Center" VerticalAlignment="Top" Width="120" Height="30" Margin = "150,280,0,0"  FontSize="18" IsEnabled="False" IsReadOnly="True"/>
                 <Button Name="SelectRoute" HorizontalAlignment="Center" VerticalAlignment="Top" Width="150" Height="25" Content ="Выбрать маршрут" Click="SelectRoute_Click" Margin = "500,120,0,0" FontSize="15"/>
                 <Button Name = "SaveButton" HorizontalAlignment="Center" VerticalAlignment="Top" Width="150" Height="25" Content ="Сохранить" Margin = "500,160,0,0" FontSize="15" Click ="SaveButton_Click"/>
                 <Button Name = "ChangeDate" HorizontalAlignment="Center" VerticalAlignment="Top" Width="150" Height="25" Content ="Изменить дату" Margin = "0,330,0,0" FontSize="15" Click="ChangeDate_Click"/>

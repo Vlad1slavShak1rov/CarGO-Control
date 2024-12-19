@@ -213,6 +213,7 @@ namespace CarGO_Control.Views
                     };
                     _routeRepository.Add(route);
                     SMB.SuccessfulMSG("Успешно!");
+                    ClearData();
                     BackButtonClick?.Invoke(null, null);
                 }
             }
@@ -243,20 +244,22 @@ namespace CarGO_Control.Views
             DateTime selectedDate = (sender as Calendar)?.SelectedDate ?? DateTime.MinValue;
             if (selectedDate >= DateTime.Now)
             {
-                if (DateArrivalBox.IsEnabled)
-                {
-
-                    DateArrivalBox.Text = selectedDate.Date.ToString("dd.MM.yyyy");
-                    DateArrivalBox.IsEnabled = false;
-
-                }
-                if (DateDepartBox.IsEnabled && selectedDate.Date > DateTime.Parse(DateArrivalBox.Text).Date)
+                if (DateDepartBox.IsEnabled)
                 {
                     DateDepartBox.Text = selectedDate.Date.ToString("dd.MM.yyyy");
                     DateDepartBox.IsEnabled = false;
                     DateArrivalBox.IsEnabled = true;
+                    return;
                 }
-                else SMB.ShowWarningMessageBox($"Выбранная вами даты не может быть ниже {DateTime.Parse(DateArrivalBox.Text).Date}");
+                if (DateArrivalBox.IsEnabled)
+                {
+                    if(selectedDate.Date > DateTime.Parse(DateDepartBox.Text).Date)
+                    {
+                        DateArrivalBox.Text = selectedDate.Date.ToString("dd.MM.yyyy");
+                        DateArrivalBox.IsEnabled = false;
+                    }
+                    else SMB.ShowWarningMessageBox($"Выбранная вами даты не может быть ниже {DateTime.Parse(DateDepartBox.Text).Date}");
+                }
             }
             else SMB.ShowWarningMessageBox($"Выбранная вами даты не может быть ниже {DateTime.Now.Date}");
         }
@@ -267,6 +270,17 @@ namespace CarGO_Control.Views
             DateArrivalBox.Text = "";
             DateDepartBox.IsEnabled = true;
             DateArrivalBox.IsEnabled = false;
+        }
+
+        private void ClearData()
+        {
+            TrackNumberBox.Text = string.Empty;
+            LoadBox.Text = string.Empty;
+            WeightBox.Text = string.Empty;
+            ExpDriversLabel.Text = string.Empty;
+            DateDepartBox.Text = string.Empty;
+            DateArrivalBox.Text = string.Empty ;
+
         }
     }
 }

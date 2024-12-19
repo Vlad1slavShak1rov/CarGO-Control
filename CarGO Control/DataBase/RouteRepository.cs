@@ -37,9 +37,7 @@ namespace CarGO_Control.DataBase
 
         public Route GetByIDrivers(int id)
         {
-            return _context.Routes
-               .Include(r => r.Driver) 
-               .FirstOrDefault(r => r.DriverID == id);
+            return _context.Routes.SingleOrDefault(r => r.DriverID == id);
         }
 
         public Route GetByTrackNum(string tracknum)

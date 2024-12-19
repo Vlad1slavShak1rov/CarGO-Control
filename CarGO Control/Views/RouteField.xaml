@@ -29,7 +29,9 @@
 
         <Label Content="Тип груза" HorizontalAlignment="Center"  VerticalAlignment="Top" Margin="0,62,300,0" FontFamily="Arial Black" FontSize="14"/>
         <TextBox Name ="LoadTypeBox" HorizontalAlignment="Center"  VerticalAlignment="Top" Width="140" Height="25" Margin="0,85,300,0" IsReadOnly="True" FontSize="14"/>
-        <Button Content="Показать маршрут" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="650,40,0,0" FontSize="14" Height="25" Click="Button_Click"/>
+        <Button Content="Показать маршрут" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="650,80,0,0" FontSize="14" Height="25" Click="Button_Click"/>
 
+        <Label Content="Трек Номре" HorizontalAlignment="Center"  VerticalAlignment="Top" Margin="650,17,0,0" FontFamily="Arial Black" FontSize="14"/>
+        <TextBox Name ="TrackNumBox" HorizontalAlignment="Center"  VerticalAlignment="Top" Width="140" Height="25" IsReadOnly="True" Margin="650,40,0,0"/>
     </Grid>
 </UserControl>

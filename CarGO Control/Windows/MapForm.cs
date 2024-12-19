@@ -45,7 +45,7 @@ namespace CarGO_Control.Windows
                 Position = new PointLatLng(64.6863136, 97.7453061),
                 MinZoom = 2, 
                 MaxZoom = 17,
-                Zoom = 18
+                Zoom = 4
             };
             gmap.MouseDown += gmap_MouseDown;
             gmap.MouseWheel += gmap_MouseWheel;
@@ -110,7 +110,7 @@ namespace CarGO_Control.Windows
 
                 LoadProgressBar.Visible = false;
                 LoadProgressBar.Value = 0;
-                gmap.Zoom = 10;
+                gmap.Zoom = 5;
                 gmap.Position = pos;
             }
         }
@@ -158,7 +158,7 @@ namespace CarGO_Control.Windows
 
 
                     gmap.Position = new PointLatLng(((start.Lat + end.Lat) / 2), ((start.Lng + end.Lng) / 2));
-                    gmap.Zoom = 10;
+                    gmap.Zoom = 5;
                     isPressed = true;
                 }
                 else

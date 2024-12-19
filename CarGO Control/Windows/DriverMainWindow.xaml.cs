@@ -117,5 +117,10 @@ namespace CarGO_Control.Windows
         {
             e.Handled = !CheckTextBox.CheckText(e);
         }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            MemClear.Clear();
+        }
     }
 }
