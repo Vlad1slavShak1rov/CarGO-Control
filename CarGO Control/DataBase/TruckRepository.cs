@@ -14,7 +14,7 @@ namespace CarGO_Control.DataBase
         {
             _context = context;
         }
-        public IEnumerable<Truck> GetAll()
+        public IQueryable<Truck> GetAll()
         {
             return _context.Trucks;
         }

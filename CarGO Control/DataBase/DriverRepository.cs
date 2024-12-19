@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace CarGO_Control.DataBase
 {
     public class DriverRepository :ICarGoRepository<Driver>
@@ -14,7 +15,7 @@ namespace CarGO_Control.DataBase
             _context = context;
         }
 
-        public IEnumerable<Driver> GetAll()
+        public IQueryable<Driver> GetAll()
         {
             return _context.Drivers;
         }

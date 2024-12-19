@@ -13,7 +13,7 @@ namespace CarGO_Control.DataBase
         {
             _context = context;
         }
-        public IEnumerable<Users> GetAll()
+        public IQueryable<Users> GetAll()
         {
             return _context.Users;
         }

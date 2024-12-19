@@ -9,7 +9,7 @@ namespace CarGO_Control.DataBase
     public interface ICarGoRepository<T> : IDisposable
         where T : class
     {
-        IEnumerable<T> GetAll();
+        IQueryable<T> GetAll();
         T GetByID(int id);
         void Add(T entity);
         void Update(T entity);

@@ -48,7 +48,7 @@ namespace CarGO_Control.Windows
             TimerInit();
             InitializeComponent();
             InitDrivers();
-
+            UpdateInfo();
             _name = nick;
             HelloLabel.Content = $"Добро пожаловать: {nick}";
 
@@ -264,5 +264,47 @@ namespace CarGO_Control.Windows
                 }
             }
         }  
+
+        private void UpdateInfo()
+        {
+            TruckRepository _truckRepository;
+            DriverRepository _driversRepository;
+            RouteRepository _routeRepository;
+            CargoRepository _cargoRepository;
+            using (var db = new CarGoDBContext())
+            {
+                _driversRepository = new(db);
+                _truckRepository = new(db);
+                _routeRepository = new(db);
+                _cargoRepository = new(db);
+
+                var routes = _routeRepository.GetAll();
+                if (routes.Any())
+                {
+                    foreach (var route in routes)
+                    {
+                        if (route.DataIn.Date >= DateTime.Now.Date)
+                        {
+                            var driver = _driversRepository.GetByID(route.DriverID!.Value);
+                            var truck = _truckRepository.GetByIDDriver(driver.TruckID!.Value);
+                            var cargo = _cargoRepository.GetByID(route.IDCarGo!.Value);
+                            
+
+                            _cargoRepository.Delete(cargo);
+                            driver.InWay = false;
+                            driver.TruckID = null;
+                            truck.InWay = false;
+
+                            _truckRepository.Update(truck);
+                            _driversRepository.Update(driver);
+                            _routeRepository.Delete(route);
+                        }
+                        else return;   
+                    }
+                }
+                else return;
+            }
+
+        }
     }
 }

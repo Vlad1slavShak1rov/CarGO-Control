@@ -74,7 +74,6 @@ namespace CarGO_Control.Views
             {
                 TypeLoadBox.Items.Add(item);
             }
-
             using (var db = new CarGoDBContext())
             {
                 _driversRepository = new(db);
@@ -85,7 +84,7 @@ namespace CarGO_Control.Views
                 foreach (var driver in drivers)
                 {
                     name = driver.Name;
-                    if (driver?.Name != null) 
+                    if (driver?.Name != null)
                     {
                         if (driver.InWay) name += " (в пути)";
                         DriversNameBox.Items.Add(name);
@@ -104,7 +103,6 @@ namespace CarGO_Control.Views
                     }
                 }
             }
-
         }
 
 
@@ -215,6 +213,7 @@ namespace CarGO_Control.Views
                     };
                     _routeRepository.Add(route);
                     SMB.SuccessfulMSG("Успешно!");
+                    BackButtonClick?.Invoke(null, null);
                 }
             }
             else SMB.ShowWarningMessageBox("У вас есть незаполненные поля!");            
@@ -251,12 +250,13 @@ namespace CarGO_Control.Views
                     DateArrivalBox.IsEnabled = false;
 
                 }
-                if (DateDepartBox.IsEnabled)
+                if (DateDepartBox.IsEnabled && selectedDate.Date > DateTime.Parse(DateArrivalBox.Text).Date)
                 {
                     DateDepartBox.Text = selectedDate.Date.ToString("dd.MM.yyyy");
                     DateDepartBox.IsEnabled = false;
                     DateArrivalBox.IsEnabled = true;
                 }
+                else SMB.ShowWarningMessageBox($"Выбранная вами даты не может быть ниже {DateTime.Parse(DateArrivalBox.Text).Date}");
             }
             else SMB.ShowWarningMessageBox($"Выбранная вами даты не может быть ниже {DateTime.Now.Date}");
         }

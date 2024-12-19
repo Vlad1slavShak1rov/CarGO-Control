@@ -14,9 +14,9 @@ namespace CarGO_Control.DataBase
             _context = context;
         }
 
-        public IEnumerable<Cargo> GetAll()
+        public IQueryable<Cargo> GetAll()
         {
-            return _context.Cargos.ToList();
+            return _context.Cargos;
         }
 
         public void Add(Cargo entity)
