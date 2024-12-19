@@ -172,6 +172,9 @@ namespace CarGO_Control
             this.Close();
         }
 
-       
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            MemClear.Clear();
+        }
     }
 }

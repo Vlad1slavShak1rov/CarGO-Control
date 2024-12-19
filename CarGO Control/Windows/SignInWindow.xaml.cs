@@ -121,5 +121,10 @@ namespace CarGO_Control
                 return true;
             }
         }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            MemClear.Clear();
+        }
     }
 }
